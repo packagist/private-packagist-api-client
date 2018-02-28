@@ -1,5 +1,5 @@
 {
-    "name": "priavate-packagist/api-client",
+    "name": "private-packagist/api-client",
     "description": "Private Packagist Api Client",
     "keywords": ["private packagist", "composer", "api"],
     "type": "library",

@@ -10,12 +10,12 @@
 Via Composer:
 
 ```bash
-$ composer require priavate-packagist/api-client php-http/guzzle6-adapter
+$ composer require private-packagist/api-client php-http/guzzle6-adapter
 ```
 
 Why `php-http/guzzle6-adapter`? We are decoupled from any HTTP messaging client with help by [HTTPlug](http://httplug.io/).
 
-## Basic usage of `priavate-packagist/api-client` client
+## Basic usage of `private-packagist/api-client` client
 
 ```php
 <?php
@@ -36,4 +36,4 @@ TODO
 
 ## License
 
-`priavate-packagist/api-client` is licensed under the MIT License
+`private-packagist/api-client` is licensed under the MIT License
