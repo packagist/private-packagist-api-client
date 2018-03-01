@@ -34,7 +34,7 @@ From `$client` object, you can access the full Private Packagist Api.
 
 #### Customer
 
-##### List all customers for the organization
+##### List an organization's customers
 ```php
 $customers = $client->customers()->all();
 ```
@@ -53,13 +53,13 @@ $customerId = 42;
 $client->customers()->remove($customerId);
 ```
 
-##### List all packages a customer
+##### List a customer's packages
 ```php
 $packages = $client->customers()->listPackages();
 ```
 Returns an array of customer packages.
 
-##### Add packages to a customer
+##### Grant a customer access to a package
 ```php
 $customerId = 42;
 $packages = [
@@ -69,7 +69,7 @@ $packages = $client->customers()->addPackages($customerId, $packages);
 ```
 Returns an array of added customer packages.
 
-##### Remove a package from a customer
+##### Revoke access to a package from a customer
 ```php
 $customerId = 42;
 $packageId = 12;
@@ -78,7 +78,7 @@ $client->customers()->removePackage($customerId, $packageId);
 
 #### Package
 
-##### List all packages for the organization
+##### List an organization's packages
 ```php
 $packages = $client->packages()->all();
 ```
