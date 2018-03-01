@@ -1,4 +1,4 @@
-# Private Packagist Api Client
+# Private Packagist API Client
 
 ## Requirements
 
@@ -28,7 +28,7 @@ $client->authenticate('api-token', 'api-secret');
 $packages = $client->packages()->all();
 ```
 
-From `$client` object, you can access the full Private Packagist Api.
+From `$client` object, you can access the full Private Packagist API.
 
 ## Documentation
 
