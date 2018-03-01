@@ -29,7 +29,10 @@ abstract class AbstractApi
         if (count($parameters) > 0) {
             $path .= '?'.http_build_query($parameters);
         }
-        $response = $this->client->getHttpClient()->get($path, $headers);
+        $response = $this->client->getHttpClient()->get(
+            $path,
+            array_merge($headers, ['Accept' => 'application/json'])
+        );
 
         return $this->responseMediator->getContent($response);
     }
@@ -44,7 +47,7 @@ abstract class AbstractApi
     {
         $response = $this->client->getHttpClient()->post(
             $path,
-            $headers,
+            array_merge($headers, ['Accept' => 'application/json']),
             $this->createJsonBody($parameters)
         );
 
@@ -61,7 +64,7 @@ abstract class AbstractApi
     {
         $response = $this->client->getHttpClient()->delete(
             $path,
-            $headers,
+            array_merge($headers, ['Accept' => 'application/json']),
             $this->createJsonBody($parameters)
         );
 

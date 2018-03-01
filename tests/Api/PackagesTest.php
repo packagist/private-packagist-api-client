@@ -13,7 +13,7 @@ class PackagesTest extends ApiTestCase
             ],
         ];
 
-        /** @var Packages $api */
+        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')

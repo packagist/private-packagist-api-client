@@ -11,7 +11,7 @@ class Customers extends AbstractApi
 
     public function create($name)
     {
-        return $this->postRaw('/customers/', $this->createJsonBody(['name' => $name]));
+        return $this->post('/customers/', ['name' => $name]);
     }
 
     public function remove($customerId)
@@ -26,7 +26,7 @@ class Customers extends AbstractApi
 
     public function addPackages($customerId, array $packages)
     {
-        return $this->postRaw(sprintf('/customers/%s/packages/', $customerId), $this->createJsonBody($packages));
+        return $this->post(sprintf('/customers/%s/packages/', $customerId), $packages);
     }
 
     public function removePackage($customerId, $packageId)

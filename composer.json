@@ -25,7 +25,6 @@
         "php-http/mock-client": "^1.0",
         "guzzlehttp/psr7": "^1.2",
         "cache/array-adapter": "^0.4",
-        "phpstan/phpstan": "^0.9.1",
         "friendsofphp/php-cs-fixer": "^2.10"
     },
     "autoload": {

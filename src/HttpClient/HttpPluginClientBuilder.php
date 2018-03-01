@@ -8,16 +8,15 @@ use Http\Client\Common\PluginClient;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
-use Http\Message\MessageFactory;
 use Http\Message\RequestFactory;
 
 class HttpPluginClientBuilder
 {
     /** @var HttpClient */
     private $httpClient;
-    /** @var HttpMethodsClient */
+    /** @var HttpMethodsClient|null */
     private $pluginClient;
-    /** @var MessageFactory */
+    /** @var RequestFactory */
     private $requestFactory;
     /** @var Plugin[] */
     private $plugins = [];

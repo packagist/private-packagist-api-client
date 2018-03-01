@@ -14,7 +14,7 @@ class CustomersTest extends ApiTestCase
             ],
         ];
 
-        /** @var Customers $api */
+        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -34,11 +34,11 @@ class CustomersTest extends ApiTestCase
             ],
         ];
 
-        /** @var Customers $api */
+        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('postRaw')
-            ->with($this->equalTo('/customers/'), $this->equalTo(json_encode(['name' => $name])))
+            ->method('post')
+            ->with($this->equalTo('/customers/'), $this->equalTo(['name' => $name]))
             ->will($this->returnValue($expected));
 
         $this->assertSame($expected, $api->create($name));
@@ -47,7 +47,8 @@ class CustomersTest extends ApiTestCase
     public function testRemove()
     {
         $expected = '';
-        /** @var Customers $api */
+
+        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
@@ -66,7 +67,7 @@ class CustomersTest extends ApiTestCase
             ],
         ];
 
-        /** @var Customers $api */
+        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -87,11 +88,11 @@ class CustomersTest extends ApiTestCase
 
         $packages = [['id' => 1]];
 
-        /** @var Customers $api */
+        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('postRaw')
-            ->with($this->equalTo('/customers/1/packages/'), json_encode($packages))
+            ->method('post')
+            ->with($this->equalTo('/customers/1/packages/'), $this->equalTo($packages))
             ->will($this->returnValue($expected));
 
         $this->assertSame($expected, $api->addPackages(1, $packages));
@@ -101,7 +102,7 @@ class CustomersTest extends ApiTestCase
     {
         $expected = '';
 
-        /** @var Customers $api */
+        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')

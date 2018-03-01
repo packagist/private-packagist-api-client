@@ -19,6 +19,7 @@ abstract class ApiTestCase extends TestCase
      */
     protected function getApiMock()
     {
+        /** @var HttpClient&\PHPUnit_Framework_MockObject_MockObject $httpClient */
         $httpClient = $this->getMockBuilder(HttpClient::class)
             ->setMethods(['sendRequest'])
             ->getMock();
@@ -30,7 +31,7 @@ abstract class ApiTestCase extends TestCase
         $client = new Client(new HttpPluginClientBuilder($httpClient));
 
         return $this->getMockBuilder($this->getApiClass())
-            ->setMethods(['get', 'post', 'postRaw', 'patch', 'delete', 'put', 'head'])
+            ->setMethods(['get', 'post', 'patch', 'delete', 'put', 'head'])
             ->setConstructorArgs([$client])
             ->getMock();
     }
