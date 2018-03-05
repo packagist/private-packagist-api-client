@@ -2,6 +2,8 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
+
 class Customers extends AbstractApi
 {
     public function all()
@@ -26,6 +28,12 @@ class Customers extends AbstractApi
 
     public function addPackages($customerId, array $packages)
     {
+        foreach ($packages as $package) {
+            if (!isset($package['name'])) {
+                throw new InvalidArgumentException('Parameter "name" is requried.');
+            }
+        }
+
         return $this->post(sprintf('/customers/%s/packages/', $customerId), $packages);
     }
 

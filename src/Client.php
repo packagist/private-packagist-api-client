@@ -5,6 +5,8 @@ namespace PrivatePackagist\ApiClient;
 use Http\Client\Common\Plugin;
 use Http\Discovery\UriFactoryDiscovery;
 use PrivatePackagist\ApiClient\HttpClient\HttpPluginClientBuilder;
+use PrivatePackagist\ApiClient\HttpClient\Message\ResponseMediator;
+use PrivatePackagist\ApiClient\HttpClient\Plugin\ExceptionThrower;
 use PrivatePackagist\ApiClient\HttpClient\Plugin\PathPrepend;
 use PrivatePackagist\ApiClient\HttpClient\Plugin\RequestSignature;
 
@@ -12,18 +14,22 @@ class Client
 {
     /** @var HttpPluginClientBuilder */
     private $httpClientBuilder;
+    /** @var ResponseMediator */
+    private $responseMediator;
 
     /** @param string $privatePackagistUrl */
-    public function __construct(HttpPluginClientBuilder $httpClientBuilder = null, $privatePackagistUrl = null)
+    public function __construct(HttpPluginClientBuilder $httpClientBuilder = null, $privatePackagistUrl = null, ResponseMediator $responseMediator = null)
     {
         $this->httpClientBuilder = $builder = $httpClientBuilder ?: new HttpPluginClientBuilder();
         $privatePackagistUrl = $privatePackagistUrl ? : 'https://packagist.com';
+        $this->responseMediator = $responseMediator ? $responseMediator : new ResponseMediator();
 
         $builder->addPlugin(new Plugin\AddHostPlugin(UriFactoryDiscovery::find()->createUri($privatePackagistUrl)));
         $builder->addPlugin(new PathPrepend('/api'));
         $builder->addPlugin(new Plugin\HeaderDefaultsPlugin([
-            'User-Agent' => 'php-private-packagist-api (http://github.com/packagist/private-packagist-api)', // @todo
+            'User-Agent' => 'php-private-packagist-api (https://github.com/packagist/private-packagist-api-client)',
         ]));
+        $builder->addPlugin(new ExceptionThrower($this->responseMediator));
     }
 
     /**
@@ -38,12 +44,12 @@ class Client
 
     public function customers()
     {
-        return new Api\Customers($this);
+        return new Api\Customers($this, $this->responseMediator);
     }
 
     public function packages()
     {
-        return new Api\Packages($this);
+        return new Api\Packages($this, $this->responseMediator);
     }
 
     public function getHttpClient()

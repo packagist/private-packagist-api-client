@@ -98,6 +98,18 @@ class CustomersTest extends ApiTestCase
         $this->assertSame($expected, $api->addPackages(1, $packages));
     }
 
+    /**
+     * @expectedException \PrivatePackagist\ApiClient\Exception\InvalidArgumentException
+     * @expectedExceptionMessage Parameter "name" is requried.
+     */
+    public function testAddPackagesMissingName()
+    {
+        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+
+        $api->addPackages(1, [[]]);
+    }
+
     public function testRemovePackage()
     {
         $expected = '';
