@@ -62,8 +62,8 @@ class CustomersTest extends ApiTestCase
     {
         $expected = [
             [
-                'id' => 1,
                 'name' => 'composer/composer',
+                'origin' => 'private',
             ],
         ];
 
@@ -81,12 +81,12 @@ class CustomersTest extends ApiTestCase
     {
         $expected = [
             [
-                'id' => 2,
                 'name' => 'composer/composer',
+                'origin' => 'private',
             ],
         ];
 
-        $packages = [['id' => 1]];
+        $packages = [['name' => 'composer/composer']];
 
         /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
@@ -101,15 +101,16 @@ class CustomersTest extends ApiTestCase
     public function testRemovePackage()
     {
         $expected = '';
+        $packageName = 'composer/composer';
 
         /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo('/customers/1/packages/2/'))
+            ->with($this->equalTo(sprintf('/customers/1/packages/%s/', $packageName)))
             ->will($this->returnValue($expected));
 
-        $this->assertSame($expected, $api->removePackage(1, 2));
+        $this->assertSame($expected, $api->removePackage(1, $packageName));
     }
 
     protected function getApiClass()

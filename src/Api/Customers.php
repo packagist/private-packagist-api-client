@@ -29,8 +29,8 @@ class Customers extends AbstractApi
         return $this->post(sprintf('/customers/%s/packages/', $customerId), $packages);
     }
 
-    public function removePackage($customerId, $packageId)
+    public function removePackage($customerId, $packageName)
     {
-        return $this->delete(sprintf('/customers/%s/packages/%s/', $customerId, $packageId));
+        return $this->delete(sprintf('/customers/%s/packages/%s/', $customerId, $packageName));
     }
 }

@@ -63,7 +63,7 @@ Returns an array of customer packages.
 ```php
 $customerId = 42;
 $packages = [
-    ['id' => 12],
+    ['name' => 'acme-website/package'],
 ];
 $packages = $client->customers()->addPackages($customerId, $packages);
 ```
@@ -72,8 +72,8 @@ Returns an array of added customer packages.
 ##### Revoke access to a package from a customer
 ```php
 $customerId = 42;
-$packageId = 12;
-$client->customers()->removePackage($customerId, $packageId);
+$packageName = 'acme-website/package';
+$client->customers()->removePackage($customerId, $packageName);
 ```
 
 #### Package
