@@ -32,6 +32,8 @@ From `$client` object, you can access the full Private Packagist API.
 
 ## Documentation
 
+Full documentation can be found in the [Private Packagist documentation](https://packagist.com/docs/api).
+
 #### Customer
 
 ##### List an organization's customers
