@@ -1,6 +1,6 @@
 {
     "name": "private-packagist/api-client",
-    "description": "Private Packagist Api Client",
+    "description": "Private Packagist API Client",
     "keywords": ["private packagist", "composer", "api"],
     "type": "library",
     "license": "MIT",
