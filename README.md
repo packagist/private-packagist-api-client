@@ -82,7 +82,10 @@ $client->customers()->removePackage($customerId, $packageName);
 
 ##### List an organization's packages
 ```php
-$packages = $client->packages()->all();
+$filters = [
+    'origin' => \PrivatePackagist\ApiClient\Api\Packages::ORIGIN_PRIVATE, // optional filter to only receive packages that can be added to customers 
+];
+$packages = $client->packages()->all($filters);
 ```
 Returns an array of packages.
 
