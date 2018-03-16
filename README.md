@@ -65,7 +65,11 @@ Returns an array of customer packages.
 ```php
 $customerId = 42;
 $packages = [
-    ['name' => 'acme-website/package'],
+    [
+        'name' => 'acme-website/package',
+        'versionConstraint' => '^1.0 | ^2.0', // optional version constraint to limit updades the customer receives
+        'expirationDate' => (new \DateTime())->add(new \DateInterval('P1Y'))->format('c'), // optional expiration date to limit updades the customer receives
+    ],
 ];
 $packages = $client->customers()->addPackages($customerId, $packages);
 ```

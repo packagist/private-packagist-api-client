@@ -64,6 +64,8 @@ class CustomersTest extends ApiTestCase
             [
                 'name' => 'composer/composer',
                 'origin' => 'private',
+                'versionConstraint' => null,
+                'expirationDate' => null,
             ],
         ];
 
@@ -83,6 +85,8 @@ class CustomersTest extends ApiTestCase
             [
                 'name' => 'composer/composer',
                 'origin' => 'private',
+                'versionConstraint' => null,
+                'expirationDate' => null,
             ],
         ];
 
