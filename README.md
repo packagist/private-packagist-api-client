@@ -65,7 +65,11 @@ Returns an array of customer packages.
 ```php
 $customerId = 42;
 $packages = [
-    ['name' => 'acme-website/package'],
+    [
+        'name' => 'acme-website/package',
+        'versionConstraint' => '^1.0 | ^2.0', // optional version constraint to limit updades the customer receives
+        'expirationDate' => (new \DateTime())->add(new \DateInterval('P1Y'))->format('c'), // optional expiration date to limit updades the customer receives
+    ],
 ];
 $packages = $client->customers()->addPackages($customerId, $packages);
 ```
@@ -78,11 +82,24 @@ $packageName = 'acme-website/package';
 $client->customers()->removePackage($customerId, $packageName);
 ```
 
+#### Regenerate a customer's Composer repository token
+```php
+$customerId = 42;
+$confirmation = [
+    'IConfirmOldTokenWillStopWorkingImmediately' => true,
+];
+$composerRepository = $client->customers()->regenerateToken($customerId, $confirmation);
+```
+Returns the updated Composer repository.
+
 #### Package
 
 ##### List an organization's packages
 ```php
-$packages = $client->packages()->all();
+$filters = [
+    'origin' => \PrivatePackagist\ApiClient\Api\Packages::ORIGIN_PRIVATE, // optional filter to only receive packages that can be added to customers 
+];
+$packages = $client->packages()->all($filters);
 ```
 Returns an array of packages.
 
