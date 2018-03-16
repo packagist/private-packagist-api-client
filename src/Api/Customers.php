@@ -26,7 +26,7 @@ class Customers extends AbstractApi
         return $this->get(sprintf('/customers/%s/packages/', $customerId));
     }
 
-    public function addPackages($customerId, array $packages)
+    public function addOrUpdatePackages($customerId, array $packages)
     {
         foreach ($packages as $package) {
             if (!isset($package['name'])) {
@@ -35,6 +35,14 @@ class Customers extends AbstractApi
         }
 
         return $this->post(sprintf('/customers/%s/packages/', $customerId), $packages);
+    }
+
+    /**
+     * @deprecated Use addOrUpdatePackages instead
+     */
+    public function addPackages($customerId, array $packages)
+    {
+        return $this->addOrUpdatePackages($customerId, $packages);
     }
 
     public function removePackage($customerId, $packageName)

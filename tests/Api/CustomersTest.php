@@ -79,7 +79,7 @@ class CustomersTest extends ApiTestCase
         $this->assertSame($expected, $api->listPackages(1));
     }
 
-    public function testAddPackages()
+    public function testAddOrUpdatePackages()
     {
         $expected = [
             [
@@ -99,19 +99,19 @@ class CustomersTest extends ApiTestCase
             ->with($this->equalTo('/customers/1/packages/'), $this->equalTo($packages))
             ->will($this->returnValue($expected));
 
-        $this->assertSame($expected, $api->addPackages(1, $packages));
+        $this->assertSame($expected, $api->addOrUpdatePackages(1, $packages));
     }
 
     /**
      * @expectedException \PrivatePackagist\ApiClient\Exception\InvalidArgumentException
      * @expectedExceptionMessage Parameter "name" is requried.
      */
-    public function testAddPackagesMissingName()
+    public function testAddOrUpdatePackagesMissingName()
     {
         /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
 
-        $api->addPackages(1, [[]]);
+        $api->addOrUpdatePackages(1, [[]]);
     }
 
     public function testRemovePackage()

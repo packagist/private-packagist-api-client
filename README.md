@@ -61,7 +61,7 @@ $packages = $client->customers()->listPackages();
 ```
 Returns an array of customer packages.
 
-##### Grant a customer access to a package
+##### Grant a customer access to a package or update the limitations
 ```php
 $customerId = 42;
 $packages = [
@@ -71,7 +71,7 @@ $packages = [
         'expirationDate' => (new \DateTime())->add(new \DateInterval('P1Y'))->format('c'), // optional expiration date to limit updades the customer receives
     ],
 ];
-$packages = $client->customers()->addPackages($customerId, $packages);
+$packages = $client->customers()->addOrUpdatePackages($customerId, $packages);
 ```
 Returns an array of added customer packages.
 
