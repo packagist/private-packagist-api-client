@@ -129,6 +129,42 @@ class CustomersTest extends ApiTestCase
         $this->assertSame($expected, $api->removePackage(1, $packageName));
     }
 
+    public function testRegenerateToken()
+    {
+        $expected = [
+            'url' => 'https://repo.packagist.com/acme-website/',
+            'user' => 'token',
+            'token' => 'regenerated-token',
+            'lastUsed' => null,
+        ];
+
+        $confirmation = [
+            'IConfirmOldTokenWillStopWorkingImmediately' => true,
+        ];
+
+        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('post')
+            ->with($this->equalTo('/customers/1/token/regenerate'), $this->equalTo($confirmation))
+            ->will($this->returnValue($expected));
+
+        $this->assertSame($expected, $api->regenerateToken(1, $confirmation));
+    }
+
+    /**
+     * @expectedException \PrivatePackagist\ApiClient\Exception\InvalidArgumentException
+     */
+    public function testRegenerateTokenMissingConfirmation()
+    {
+        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->never())
+            ->method('post');
+
+        $api->regenerateToken(1, []);
+    }
+
     protected function getApiClass()
     {
         return Customers::class;

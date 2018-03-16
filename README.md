@@ -82,6 +82,16 @@ $packageName = 'acme-website/package';
 $client->customers()->removePackage($customerId, $packageName);
 ```
 
+#### Regenerate a customer's Composer repository token
+```php
+$customerId = 42;
+$confirmation = [
+    'IConfirmOldTokenWillStopWorkingImmediately' => true,
+];
+$composerRepository = $client->customers()->regenerateToken($customerId, $confirmation);
+```
+Returns the updated Composer repository.
+
 #### Package
 
 ##### List an organization's packages

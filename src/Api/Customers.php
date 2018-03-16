@@ -41,4 +41,13 @@ class Customers extends AbstractApi
     {
         return $this->delete(sprintf('/customers/%s/packages/%s/', $customerId, $packageName));
     }
+
+    public function regenerateToken($customerId, array $confirmation)
+    {
+        if (!isset($confirmation['IConfirmOldTokenWillStopWorkingImmediately'])) {
+            throw new InvalidArgumentException('Confirmation is required to regenerate the Composer repository token.');
+        }
+
+        return $this->post(sprintf('/customers/%s/token/regenerate', $customerId), $confirmation);
+    }
 }
