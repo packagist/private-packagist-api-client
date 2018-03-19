@@ -26,6 +26,7 @@ class Client
 
         $builder->addPlugin(new Plugin\AddHostPlugin(UriFactoryDiscovery::find()->createUri($privatePackagistUrl)));
         $builder->addPlugin(new PathPrepend('/api'));
+        $builder->addPlugin(new Plugin\RedirectPlugin());
         $builder->addPlugin(new Plugin\HeaderDefaultsPlugin([
             'User-Agent' => 'php-private-packagist-api (https://github.com/packagist/private-packagist-api-client)',
         ]));

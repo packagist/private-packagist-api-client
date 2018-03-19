@@ -42,6 +42,12 @@ $customers = $client->customers()->all();
 ```
 Returns an array of customers.
 
+##### Show a customer
+```php
+$customerId = 42;
+$customer = $client->customers()->show($customerId);
+```
+Returns a single customer.
 
 ##### Create a customer
 ```php

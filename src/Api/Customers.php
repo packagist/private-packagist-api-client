@@ -11,6 +11,11 @@ class Customers extends AbstractApi
         return $this->get('/customers/');
     }
 
+    public function show($customerId)
+    {
+        return $this->get(sprintf('/customers/%s/', $customerId));
+    }
+
     public function create($name)
     {
         return $this->post('/customers/', ['name' => $name]);

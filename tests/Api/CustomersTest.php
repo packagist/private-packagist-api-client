@@ -24,6 +24,24 @@ class CustomersTest extends ApiTestCase
         $this->assertSame($expected, $api->all());
     }
 
+    public function testShow()
+    {
+        $expected = [
+            'id' => 1,
+            'type' => 'composer-repo',
+            'name' => $name = 'Customer',
+        ];
+
+        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo('/customers/1/'))
+            ->will($this->returnValue($expected));
+
+        $this->assertSame($expected, $api->show(1));
+    }
+
     public function testCreate()
     {
         $expected = [
