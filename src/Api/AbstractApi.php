@@ -31,7 +31,10 @@ abstract class AbstractApi
         }
         $response = $this->client->getHttpClient()->get(
             $path,
-            array_merge($headers, ['Accept' => 'application/json'])
+            array_merge($headers, [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ])
         );
 
         return $this->responseMediator->getContent($response);
@@ -47,7 +50,10 @@ abstract class AbstractApi
     {
         $response = $this->client->getHttpClient()->post(
             $path,
-            array_merge($headers, ['Accept' => 'application/json']),
+            array_merge($headers, [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ]),
             $this->createJsonBody($parameters)
         );
 
@@ -64,7 +70,10 @@ abstract class AbstractApi
     {
         $response = $this->client->getHttpClient()->delete(
             $path,
-            array_merge($headers, ['Accept' => 'application/json']),
+            array_merge($headers, [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ]),
             $this->createJsonBody($parameters)
         );
 
