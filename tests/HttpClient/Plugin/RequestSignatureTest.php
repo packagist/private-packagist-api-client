@@ -31,10 +31,7 @@ class RequestSignatureTest extends TestCase
             'POST',
             '/packages/?foo=bar',
             [
-                'PRIVATE-PACKAGIST-API-TOKEN' => $this->token,
-                'PRIVATE-PACKAGIST-API-TIMESTAMP' => $this->timestamp,
-                'PRIVATE-PACKAGIST-API-NONCE' => $this->nonce,
-                'PRIVATE-PACKAGIST-API-SIGNATURE' => 'a6wxBLYrmz4Mwmv/TKBZR5WHFcSCRbsny2frobJMt24=',
+                'Authorization' => ["PACKAGIST-HMAC-SHA256 Key={$this->token}, Timestamp={$this->timestamp}, Cnonce={$this->nonce}, Signature=a6wxBLYrmz4Mwmv/TKBZR5WHFcSCRbsny2frobJMt24="],
             ],
             json_encode(['foo' => 'bar'])
         );
@@ -48,19 +45,10 @@ class RequestSignatureTest extends TestCase
     public function testPrefixRequestPathSmoke()
     {
         $request = new Request('POST', '/packages/?foo=bar', [], json_encode(['foo' => 'bar']));
-        $expected = [
-            'PRIVATE-PACKAGIST-API-TOKEN',
-            'PRIVATE-PACKAGIST-API-TIMESTAMP',
-            'PRIVATE-PACKAGIST-API-NONCE',
-            'PRIVATE-PACKAGIST-API-SIGNATURE',
-        ];
 
         $plugin = new RequestSignature($this->token, $this->secret);
-        $plugin->handleRequest($request, function (Request $actual) use ($expected) {
-            $headers = $actual->getHeaders();
-            foreach ($expected as $header) {
-                $this->assertNotNull($headers[$header][0]);
-            }
+        $plugin->handleRequest($request, function (Request $actual) {
+            $this->assertNotNull($actual->getHeader('Authorization')[0]);
         }, function () {
         });
     }

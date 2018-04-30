@@ -27,23 +27,24 @@ class RequestSignature implements Plugin
      */
     public function handleRequest(RequestInterface $request, callable $next, callable $first)
     {
-        $params = [];
-        $headers = [
-            'PRIVATE-PACKAGIST-API-TOKEN' => $params['key'] = $this->token,
-            'PRIVATE-PACKAGIST-API-TIMESTAMP' => $params['timestamp'] = $this->getTimestamp(),
-            'PRIVATE-PACKAGIST-API-NONCE' => $params['cnonce'] = $this->getNonce(),
+        $params = [
+            'key' => $this->token,
+            'timestamp' => $this->getTimestamp(),
+            'cnonce' => $this->getNonce(),
         ];
-
-        foreach ($headers as $header => $value) {
-            $request = $request->withHeader($header, $value);
-        }
 
         $content = $request->getBody()->getContents();
         if ($content) {
             $params['body'] = $content;
         }
 
-        $request = $request->withHeader('PRIVATE-PACKAGIST-API-SIGNATURE', $this->generateSignature($request, $params));
+        $request = $request->withHeader('Authorization', sprintf(
+            'PACKAGIST-HMAC-SHA256 Key=%s, Timestamp=%s, Cnonce=%s, Signature=%s',
+            $params['key'],
+            $params['timestamp'],
+            $params['cnonce'],
+            $this->generateSignature($request, $params)
+        ));
 
         return $next($request);
     }
