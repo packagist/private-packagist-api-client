@@ -34,6 +34,13 @@ From `$client` object, you can access the full Private Packagist API.
 
 Full documentation can be found in the [Private Packagist documentation](https://packagist.com/docs/api).
 
+#### Organization
+
+##### Trigger a full synchronization
+```php
+$client->organization()->sync();
+```
+
 #### Customer
 
 ##### List an organization's customers
