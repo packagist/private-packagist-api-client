@@ -11,7 +11,7 @@ class OrganizationTest extends ApiTestCase
         /** @var Organization&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('put')
+            ->method('post')
             ->with($this->equalTo('/organization/sync'))
             ->will($this->returnValue($expected));
 

@@ -6,6 +6,6 @@ class Organization extends AbstractApi
 {
     public function sync()
     {
-        return $this->put('/organization/sync');
+        return $this->post('/organization/sync');
     }
 }
