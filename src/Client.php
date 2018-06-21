@@ -48,6 +48,11 @@ class Client
         return new Api\Customers($this, $this->responseMediator);
     }
 
+    public function organization()
+    {
+        return new Api\Organization($this, $this->responseMediator);
+    }
+
     public function packages()
     {
         return new Api\Packages($this, $this->responseMediator);
