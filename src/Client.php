@@ -58,6 +58,11 @@ class Client
         return new Api\Packages($this, $this->responseMediator);
     }
 
+    public function jobs()
+    {
+        return new Api\Jobs($this, $this->responseMediator);
+    }
+
     public function getHttpClient()
     {
         return $this->getHttpClientBuilder()->getHttpClient();

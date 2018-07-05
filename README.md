@@ -38,8 +38,9 @@ Full documentation can be found in the [Private Packagist documentation](https:/
 
 ##### Trigger a full synchronization
 ```php
-$client->organization()->sync();
+$jobs = $client->organization()->sync();
 ```
+Returns an array of created jobs. One for every synchronization.
 
 #### Customer
 
@@ -115,6 +116,14 @@ $filters = [
 $packages = $client->packages()->all($filters);
 ```
 Returns an array of packages.
+
+#### Job
+
+##### Show a job
+```php
+$job = $client->jobs()->show($jobId);
+```
+Returns the job.
 
 ## License
 
