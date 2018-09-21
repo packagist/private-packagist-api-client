@@ -66,6 +66,26 @@ abstract class AbstractApi
      * @param array $headers
      * @return array|string
      */
+    protected function put($path, array $parameters = [], array $headers = [])
+    {
+        $response = $this->client->getHttpClient()->put(
+            $path,
+            array_merge($headers, [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ]),
+            $this->createJsonBody($parameters)
+        );
+
+        return $this->responseMediator->getContent($response);
+    }
+
+    /**
+     * @param string $path
+     * @param array $parameters
+     * @param array $headers
+     * @return array|string
+     */
     protected function delete($path, array $parameters = [], array $headers = [])
     {
         $response = $this->client->getHttpClient()->delete(
