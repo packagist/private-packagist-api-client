@@ -4,6 +4,13 @@ namespace PrivatePackagist\ApiClient\Api;
 
 class Credentials extends AbstractApi
 {
+    const TYPE_BITBUCKET_APP_PW = 'bitbucket-app-pw';
+    const TYPE_GITHUB_OAUTH = 'github-oauth';
+    const TYPE_GITLAB_TOKEN = 'gitlab-token';
+    const TYPE_HTTP_BASIC = 'http-basic';
+    const TYPE_MAGENTO = 'magento';
+    const TYPE_HTTP_HEADER = 'http-header';
+
     public function all()
     {
         return $this->get('/credentials/');
