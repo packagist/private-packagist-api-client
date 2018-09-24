@@ -43,6 +43,11 @@ class Client
         $this->httpClientBuilder->addPlugin(new RequestSignature($token, $secret));
     }
 
+    public function credentials()
+    {
+        return new Api\Credentials($this, $this->responseMediator);
+    }
+
     public function customers()
     {
         return new Api\Customers($this, $this->responseMediator);

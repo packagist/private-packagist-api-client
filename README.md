@@ -117,6 +117,94 @@ $packages = $client->packages()->all($filters);
 ```
 Returns an array of packages.
 
+##### Show a package
+```php
+$package = $client->packages()->show('acme-website/package');
+```
+Returns the package.
+
+##### Create a vcs package
+```php
+$job = $client->packages()->createVcsPackage('https://github.com/acme-website/package');
+```
+Returns a new job.
+
+##### Create a vcs package with credentials
+```php
+$credentialId = 42;
+$job = $client->packages()->createVcsPackage('https://github.com/acme-website/package', $credentialId);
+```
+Returns a new job.
+
+##### Create a custom package
+```php
+$packageDefinition = '{...}'
+$job = $client->packages()->createCustomPackage($packageDefinition);
+```
+Returns a new job.
+
+##### Create a custom package with credentials
+```php
+$packageDefinition = '{...}'
+$credentialId = 42;
+$job = $client->packages()->createCustomPackage($packageDefinition, $credentialId);
+```
+Returns a new job.
+
+##### Update a vcs package
+```php
+$job = $client->packages()->updateVcsPackage('acme-website/package', 'https://github.com/acme-website/package');
+```
+Returns a new job.
+
+##### Update a custom package
+```php
+$packageDefinition = '{...}'
+$job = $client->packages()->updateCustomPackage('acme-website/package', $packageDefinition);
+```
+Returns a new job.
+
+##### Delete a package
+```php
+$client->packages()->remove('acme-website/package');
+```
+
+#### Credential
+
+##### List an organization's credentials
+```php
+$packages = $client->credentials()->all();
+```
+Returns an array of credentials.
+
+##### Show a credential
+```php
+$credentialId = 42;
+$credential = $client->credentials()->show($credentialId);
+```
+Returns the credential.
+
+##### Create a credential
+```php
+$type = \PrivatePackagist\ApiClient\Api\Credentials::TYPE_HTTP_BASIC;
+$credential = $client->credentials()->create('ACME http auth', $type, 'acme-website.com', 'username', 'password');
+```
+Returns the new credential.
+
+##### Update a credential
+```php
+$credentialId = 42;
+$type = \PrivatePackagist\ApiClient\Api\Credentials::TYPE_HTTP_BASIC;
+$credential = $client->credentials()->create($credentialId, $type, 'username', 'password');
+```
+Returns the updated credential.
+
+##### Delete a credential
+```php
+$credentialId = 42;
+$client->credentials()->remove($credentialId);
+```
+
 #### Job
 
 ##### Show a job

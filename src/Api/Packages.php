@@ -30,4 +30,34 @@ class Packages extends AbstractApi
 
         return $this->get('/packages/', $filters);
     }
+
+    public function show($packageName)
+    {
+        return $this->get(sprintf('/packages/%s/', $packageName));
+    }
+
+    public function createVcsPackage($url, $credentials = null)
+    {
+        return $this->post('/packages/', ['repoType' => 'vcs', 'repoUrl' => $url, 'credentials' => $credentials]);
+    }
+
+    public function createCustomPackage($customJson, $credentials = null)
+    {
+        return $this->post('/packages/', ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentials]);
+    }
+
+    public function updateVcsPackage($packageName, $url, $credentials = null)
+    {
+        return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => 'vcs', 'repoUrl' => $url, 'credentials' => $credentials]);
+    }
+
+    public function updateCustomPackage($packageName, $customJson, $credentials = null)
+    {
+        return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentials]);
+    }
+
+    public function remove($packageName)
+    {
+        return $this->delete(sprintf('/packages/%s/', $packageName));
+    }
 }
