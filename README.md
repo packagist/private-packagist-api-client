@@ -129,10 +129,25 @@ $job = $client->packages()->createVcsPackage('https://github.com/acme-website/pa
 ```
 Returns a new job.
 
+##### Create a vcs package with credentials
+```php
+$credentialId = 42;
+$job = $client->packages()->createVcsPackage('https://github.com/acme-website/package', $credentialId);
+```
+Returns a new job.
+
 ##### Create a custom package
 ```php
 $packageDefinition = '{...}'
 $job = $client->packages()->createCustomPackage($packageDefinition);
+```
+Returns a new job.
+
+##### Create a custom package with credentials
+```php
+$packageDefinition = '{...}'
+$credentialId = 42;
+$job = $client->packages()->createCustomPackage($packageDefinition, $credentialId);
 ```
 Returns a new job.
 
