@@ -195,7 +195,7 @@ Returns the new credential.
 ```php
 $credentialId = 42;
 $type = \PrivatePackagist\ApiClient\Api\Credentials::TYPE_HTTP_BASIC;
-$credential = $client->credentials()->create($credentialId, $type, 'username', 'password');
+$credential = $client->credentials()->update($credentialId, $type, 'username', 'password');
 ```
 Returns the updated credential.
 
