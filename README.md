@@ -71,7 +71,8 @@ $client->customers()->remove($customerId);
 
 ##### List a customer's packages
 ```php
-$packages = $client->customers()->listPackages();
+$customerId = 42;
+$packages = $client->customers()->listPackages($customerId);
 ```
 Returns an array of customer packages.
 
