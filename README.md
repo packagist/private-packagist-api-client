@@ -170,6 +170,12 @@ Returns a new job.
 $client->packages()->remove('acme-website/package');
 ```
 
+##### List all customers with access to a package
+```php
+$client->packages()->listCustomers('acme-website/package');
+```
+Returns a list of customers with access to the package.
+
 #### Credential
 
 ##### List an organization's credentials

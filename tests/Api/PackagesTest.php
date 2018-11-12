@@ -162,6 +162,33 @@ class PackagesTest extends ApiTestCase
         $this->assertSame($expected, $api->remove('acme-website/package'));
     }
 
+    public function testListPackages()
+    {
+        $expected = [
+            [
+                'package' => [
+                    'name' => 'composer/composer',
+                    'origin' => 'private',
+                    'versionConstraint' => null,
+                    'expirationDate' => null,
+                ],
+                'customer' => [
+                    'id' => 1,
+                    'name' => 'Customer',
+                ],
+            ]
+        ];
+
+        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo('/packages/composer/composer/customers/'))
+            ->will($this->returnValue($expected));
+
+        $this->assertSame($expected, $api->listCustomers('composer/composer'));
+    }
+
     protected function getApiClass()
     {
         return Packages::class;
