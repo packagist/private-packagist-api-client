@@ -60,4 +60,9 @@ class Packages extends AbstractApi
     {
         return $this->delete(sprintf('/packages/%s/', $packageName));
     }
+
+    public function listCustomers($packageName)
+    {
+        return $this->get(sprintf('/packages/%s/customers/', $packageName));
+    }
 }
