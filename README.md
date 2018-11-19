@@ -42,6 +42,14 @@ $jobs = $client->organization()->sync();
 ```
 Returns an array of created jobs. One for every synchronization.
 
+#### Team
+
+##### List an organization's teams
+```php
+$teams = $client->teams()->all();
+```
+Returns an array of teams.
+
 #### Customer
 
 ##### List an organization's customers
@@ -106,6 +114,68 @@ $confirmation = [
 $composerRepository = $client->customers()->regenerateToken($customerId, $confirmation);
 ```
 Returns the updated Composer repository.
+
+#### Project
+
+##### List an organization's projects
+```php
+$projects = $client->projects()->all();
+```
+Returns an array of projects.
+
+##### Show a project
+```php
+$projectId = 42;
+$project = $client->projects()->show($projectId);
+```
+Returns a single project.
+
+##### Create a project
+```php
+$project = $client->projects()->create('New project name');
+```
+Returns the project.
+
+##### Delete a project
+```php
+$projectId = 42;
+$client->projects()->remove($projectId);
+```
+
+##### List a projects's teams
+```php
+$projectId = 42;
+$teams = $client->projects()->listTeams($projectId);
+```
+Returns an array of projects teams.
+
+##### Add a team to a project or update the permission
+```php
+$projectId = 42;
+$teams = [
+    [
+        'id' => 12,
+        'permission' => 'owner',
+    ],
+];
+$teams = $client->customers()->addOrUpdateTeams($projectId, $teams);
+```
+Returns an array of added project teams.
+
+
+##### Remove a team from a customer
+```php
+$projectId = 42;
+$teamId = 12;
+$client->customers()->removeTeam($projectId, $teamId);
+```
+
+##### List a projects's packages
+```php
+$projectId = 42;
+$packages = $client->projects()->listPackages($projectId);
+```
+Returns an array of projects packages.
 
 #### Package
 

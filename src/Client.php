@@ -48,9 +48,19 @@ class Client
         return new Api\Credentials($this, $this->responseMediator);
     }
 
+    public function teams()
+    {
+        return new Api\Teams($this, $this->responseMediator);
+    }
+
     public function customers()
     {
         return new Api\Customers($this, $this->responseMediator);
+    }
+
+    public function projects()
+    {
+        return new Api\Projects($this, $this->responseMediator);
     }
 
     public function organization()

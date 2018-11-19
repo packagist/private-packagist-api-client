@@ -122,7 +122,7 @@ class CustomersTest extends ApiTestCase
 
     /**
      * @expectedException \PrivatePackagist\ApiClient\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Parameter "name" is requried.
+     * @expectedExceptionMessage Parameter "name" is required.
      */
     public function testAddOrUpdatePackagesMissingName()
     {

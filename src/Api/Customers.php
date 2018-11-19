@@ -35,7 +35,7 @@ class Customers extends AbstractApi
     {
         foreach ($packages as $package) {
             if (!isset($package['name'])) {
-                throw new InvalidArgumentException('Parameter "name" is requried.');
+                throw new InvalidArgumentException('Parameter "name" is required.');
             }
         }
 
