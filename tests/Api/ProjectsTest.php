@@ -24,16 +24,16 @@ class ProjectsTest extends ApiTestCase
     {
         $expected = $this->getProjectDefinition();
 
-        $projectId = 1;
+        $projectName = 'project';
 
         /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/projects/1/'))
+            ->with($this->equalTo('/projects/project/'))
             ->will($this->returnValue($expected));
 
-        $this->assertSame($expected, $api->show($projectId));
+        $this->assertSame($expected, $api->show($projectName));
     }
 
     public function testCreate()
@@ -58,10 +58,10 @@ class ProjectsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo('/projects/1/'))
+            ->with($this->equalTo('/projects/project/'))
             ->will($this->returnValue($expected));
 
-        $this->assertSame($expected, $api->remove(1));
+        $this->assertSame($expected, $api->remove('project'));
     }
 
     public function testListTeams()
@@ -80,10 +80,10 @@ class ProjectsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/projects/1/teams/'))
+            ->with($this->equalTo('/projects/project/teams/'))
             ->will($this->returnValue($expected));
 
-        $this->assertSame($expected, $api->listTeams(1));
+        $this->assertSame($expected, $api->listTeams('project'));
     }
 
     public function testAddOrUpdateTeam()
@@ -104,10 +104,10 @@ class ProjectsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
-            ->with($this->equalTo('/projects/1/teams/'), $this->equalTo($teams))
+            ->with($this->equalTo('/projects/project/teams/'), $this->equalTo($teams))
             ->will($this->returnValue($expected));
 
-        $this->assertSame($expected, $api->addOrUpdateTeams(1, $teams));
+        $this->assertSame($expected, $api->addOrUpdateTeams('project', $teams));
     }
 
     public function testRemoveTeam()
@@ -118,10 +118,10 @@ class ProjectsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo('/projects/1/teams/42/'))
+            ->with($this->equalTo('/projects/project/teams/42/'))
             ->will($this->returnValue($expected));
 
-        $this->assertSame($expected, $api->removeTeam(1, 42));
+        $this->assertSame($expected, $api->removeTeam('project', 42));
     }
 
     public function testListPackages()
@@ -139,10 +139,88 @@ class ProjectsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/projects/1/packages/'))
+            ->with($this->equalTo('/projects/project/packages/'))
             ->will($this->returnValue($expected));
 
-        $this->assertSame($expected, $api->listPackages(1));
+        $this->assertSame($expected, $api->listPackages('project'));
+    }
+
+    public function testListTokens()
+    {
+        $expected = [
+            [
+                'description' => 'Generated Client Token',
+                'access' => 'read',
+                'url' => 'https://vendor-org.repo.packagist.com/acme-websites/',
+                'user' => 'token',
+                'token' => 'password',
+                'lastUsed' => '2018-03-14T11:36:00+00:00'
+            ],
+        ];
+
+        /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo('/projects/project/tokens/'))
+            ->will($this->returnValue($expected));
+
+        $this->assertSame($expected, $api->listTokens('project'));
+    }
+
+    public function testCreateToken()
+    {
+        $expected = [
+            'description' => 'Project Token',
+            'access' => 'read',
+            'url' => 'https://vendor-org.repo.packagist.com/acme-websites/',
+            'user' => 'token',
+            'token' => 'password',
+            'lastUsed' => '2018-03-14T11:36:00+00:00'
+        ];
+
+        /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('post')
+            ->with($this->equalTo('/projects/project/tokens/'), $this->equalTo([
+                'description' => 'Project Token',
+                'access' => 'read',
+            ]))
+            ->will($this->returnValue($expected));
+
+        $this->assertSame($expected, $api->createToken('project', [
+            'description' => 'Project Token',
+            'access' => 'read',
+        ]));
+    }
+
+    public function testRemoveToken()
+    {
+        $expected = [];
+
+        /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('delete')
+            ->with($this->equalTo('/projects/project/tokens/1/'))
+            ->will($this->returnValue($expected));
+
+        $this->assertSame($expected, $api->removeToken('project', 1));
+    }
+
+    public function testRegenerateToken()
+    {
+        $expected = [];
+
+        /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('post')
+            ->with($this->equalTo('/projects/project/tokens/1/regenerate'), $this->equalTo(['IConfirmOldTokenWillStopWorkingImmediately' => true]))
+            ->will($this->returnValue($expected));
+
+        $this->assertSame($expected, $api->regenerateToken('project', 1, ['IConfirmOldTokenWillStopWorkingImmediately' => true]));
     }
 
     private function getProjectDefinition()

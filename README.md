@@ -125,8 +125,8 @@ Returns an array of projects.
 
 ##### Show a project
 ```php
-$projectId = 42;
-$project = $client->projects()->show($projectId);
+$projectName = 'project';
+$project = $client->projects()->show($projectName);
 ```
 Returns a single project.
 
@@ -138,44 +138,80 @@ Returns the project.
 
 ##### Delete a project
 ```php
-$projectId = 42;
-$client->projects()->remove($projectId);
+$projectName = 'project';
+$client->projects()->remove($projectName);
 ```
 
 ##### List a projects's teams
 ```php
-$projectId = 42;
-$teams = $client->projects()->listTeams($projectId);
+$projectName = 'project';
+$teams = $client->projects()->listTeams($projectName);
 ```
 Returns an array of projects teams.
 
 ##### Add a team to a project or update the permission
 ```php
-$projectId = 42;
+$projectName = 'project';
 $teams = [
     [
         'id' => 12,
         'permission' => 'owner',
     ],
 ];
-$teams = $client->customers()->addOrUpdateTeams($projectId, $teams);
+$teams = $client->customers()->addOrUpdateTeams($projectName, $teams);
 ```
 Returns an array of added project teams.
 
 
 ##### Remove a team from a customer
 ```php
-$projectId = 42;
+$projectName = 'project';
 $teamId = 12;
-$client->customers()->removeTeam($projectId, $teamId);
+$client->customers()->removeTeam($projectName, $teamId);
 ```
 
 ##### List a projects's packages
 ```php
-$projectId = 42;
-$packages = $client->projects()->listPackages($projectId);
+$projectName = 'project';
+$packages = $client->projects()->listPackages($projectName);
 ```
 Returns an array of projects packages.
+
+##### List a projects's authentication tokens
+```php
+$projectName = 'project';
+$tokens = $client->projects()->listTokens($projectName);
+```
+Returns an array of authentication tokens.
+
+##### Create a project authentication token
+```php
+$projectName = 'project';
+$data = [
+  'description' => 'Project Token',
+  'access' => 'read',
+];
+$token = $client->projects()->createToken($projectName, $data);
+```
+Returns the authentication token.
+
+##### Delete a project authentication token
+```php
+$projectName = 'project';
+$tokenId = 33;
+$client->projects()->removeToken($projectName, $tokenId);
+```
+
+##### Regenerate a project authentication token
+```php
+$projectName = 'project';
+$tokenId = 33;
+$confirmation = [
+    'IConfirmOldTokenWillStopWorkingImmediately' => true,
+];
+$token = $client->projects()->regenerateToken($projectName, $confirmation);
+```
+Returns the authentication token.
 
 #### Package
 
