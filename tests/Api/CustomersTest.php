@@ -49,6 +49,7 @@ class CustomersTest extends ApiTestCase
                 'id' => 1,
                 'type' => 'composer-repo',
                 'name' => $name = 'Customer',
+                'accessToVersionControlSource' => false,
             ],
         ];
 
@@ -56,10 +57,38 @@ class CustomersTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
-            ->with($this->equalTo('/customers/'), $this->equalTo(['name' => $name]))
+            ->with($this->equalTo('/customers/'), $this->equalTo(['name' => $name, 'accessToVersionControlSource' => false]))
             ->will($this->returnValue($expected));
 
         $this->assertSame($expected, $api->create($name));
+    }
+
+    public function testUpdate()
+    {
+        $expected = [
+            [
+                'id' => 1,
+                'type' => 'composer-repo',
+                'name' => $name = 'Customer',
+                'urlName' => 'customer',
+                'accessToVersionControlSource' => false,
+            ],
+        ];
+
+        $customer = [
+            'name' => $name,
+            'urlName' => 'customer',
+            'accessToVersionControlSource' => false,
+        ];
+
+        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('put')
+            ->with($this->equalTo('/customers/1/'), $this->equalTo($customer))
+            ->will($this->returnValue($expected));
+
+        $this->assertSame($expected, $api->update(1, $customer));
     }
 
     public function testRemove()

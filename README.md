@@ -71,6 +71,18 @@ $customer = $client->customers()->create('New customer name');
 ```
 Returns the customer.
 
+##### Update a customer
+```php
+$customerId = 42;
+$customerData = [
+    'name' => $name,
+    'urlName' => 'customer',
+    'accessToVersionControlSource' => false,
+];
+$customer = $client->customers()->update($customerId, $customerData);
+```
+Returns the customer.
+
 ##### Delete a customer
 ```php
 $customerId = 42;

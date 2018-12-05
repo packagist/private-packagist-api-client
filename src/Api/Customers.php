@@ -16,9 +16,14 @@ class Customers extends AbstractApi
         return $this->get(sprintf('/customers/%s/', $customerId));
     }
 
-    public function create($name)
+    public function create($name, $accessToVersionControlSource = false)
     {
-        return $this->post('/customers/', ['name' => $name]);
+        return $this->post('/customers/', ['name' => $name, 'accessToVersionControlSource' => $accessToVersionControlSource]);
+    }
+
+    public function update($customerId, array $customer)
+    {
+        return $this->put(sprintf('/customers/%s/', $customerId), $customer);
     }
 
     public function remove($customerId)
