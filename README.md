@@ -102,13 +102,13 @@ $customerId = 42;
 $packages = [
     [
         'name' => 'acme-website/package',
-        'versionConstraint' => '^1.0 | ^2.0', // optional version constraint to limit updades the customer receives
-        'expirationDate' => (new \DateTime())->add(new \DateInterval('P1Y'))->format('c'), // optional expiration date to limit updades the customer receives
+        'versionConstraint' => '^1.0 | ^2.0', // optional version constraint to limit updates the customer receives
+        'expirationDate' => (new \DateTime())->add(new \DateInterval('P1Y'))->format('c'), // optional expiration date to limit updates the customer receives
     ],
 ];
 $packages = $client->customers()->addOrUpdatePackages($customerId, $packages);
 ```
-Returns an array of added customer packages.
+Returns an array of all added or updated customer packages.
 
 ##### Revoke access to a package from a customer
 ```php
