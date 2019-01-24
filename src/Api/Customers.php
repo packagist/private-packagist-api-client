@@ -11,9 +11,9 @@ class Customers extends AbstractApi
         return $this->get('/customers/');
     }
 
-    public function show($customerId)
+    public function show($customerIdOrUrlName)
     {
-        return $this->get(sprintf('/customers/%s/', $customerId));
+        return $this->get(sprintf('/customers/%s/', $customerIdOrUrlName));
     }
 
     public function create($name, $accessToVersionControlSource = false)
@@ -24,35 +24,35 @@ class Customers extends AbstractApi
     /**
      * @deprecated Use edit instead
      */
-    public function update($customerId, array $customer)
+    public function update($customerIdOrUrlName, array $customer)
     {
-        return $this->edit($customerId, $customer);
+        return $this->edit($customerIdOrUrlName, $customer);
     }
 
-    public function edit($customerId, array $customer)
+    public function edit($customerIdOrUrlName, array $customer)
     {
-        return $this->put(sprintf('/customers/%s/', $customerId), $customer);
+        return $this->put(sprintf('/customers/%s/', $customerIdOrUrlName), $customer);
     }
 
-    public function remove($customerId)
+    public function remove($customerIdOrUrlName)
     {
-        return $this->delete(sprintf('/customers/%s/', $customerId));
+        return $this->delete(sprintf('/customers/%s/', $customerIdOrUrlName));
     }
 
-    public function listPackages($customerId)
+    public function listPackages($customerIdOrUrlName)
     {
-        return $this->get(sprintf('/customers/%s/packages/', $customerId));
+        return $this->get(sprintf('/customers/%s/packages/', $customerIdOrUrlName));
     }
 
     /**
      * @deprecated Use addOrEditPackages instead
      */
-    public function addOrUpdatePackages($customerId, array $packages)
+    public function addOrUpdatePackages($customerIdOrUrlName, array $packages)
     {
-        return $this->addOrEditPackages($customerId, $packages);
+        return $this->addOrEditPackages($customerIdOrUrlName, $packages);
     }
 
-    public function addOrEditPackages($customerId, array $packages)
+    public function addOrEditPackages($customerIdOrUrlName, array $packages)
     {
         foreach ($packages as $package) {
             if (!isset($package['name'])) {
@@ -60,28 +60,28 @@ class Customers extends AbstractApi
             }
         }
 
-        return $this->post(sprintf('/customers/%s/packages/', $customerId), $packages);
+        return $this->post(sprintf('/customers/%s/packages/', $customerIdOrUrlName), $packages);
     }
 
     /**
      * @deprecated Use addOrEditPackages instead
      */
-    public function addPackages($customerId, array $packages)
+    public function addPackages($customerIdOrUrlName, array $packages)
     {
-        return $this->addOrEditPackages($customerId, $packages);
+        return $this->addOrEditPackages($customerIdOrUrlName, $packages);
     }
 
-    public function removePackage($customerId, $packageName)
+    public function removePackage($customerIdOrUrlName, $packageName)
     {
-        return $this->delete(sprintf('/customers/%s/packages/%s/', $customerId, $packageName));
+        return $this->delete(sprintf('/customers/%s/packages/%s/', $customerIdOrUrlName, $packageName));
     }
 
-    public function regenerateToken($customerId, array $confirmation)
+    public function regenerateToken($customerIdOrUrlName, array $confirmation)
     {
         if (!isset($confirmation['IConfirmOldTokenWillStopWorkingImmediately'])) {
             throw new InvalidArgumentException('Confirmation is required to regenerate the Composer repository token.');
         }
 
-        return $this->post(sprintf('/customers/%s/token/regenerate', $customerId), $confirmation);
+        return $this->post(sprintf('/customers/%s/token/regenerate', $customerIdOrUrlName), $confirmation);
     }
 }

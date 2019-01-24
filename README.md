@@ -62,6 +62,9 @@ Returns an array of customers.
 ```php
 $customerId = 42;
 $customer = $client->customers()->show($customerId);
+// or
+$customerUrlName = 'customer-url-name';
+$customer = $client->customers()->show($customerUrlName);
 ```
 Returns a single customer.
 
