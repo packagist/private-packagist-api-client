@@ -86,7 +86,7 @@ class ProjectsTest extends ApiTestCase
         $this->assertSame($expected, $api->listTeams('project'));
     }
 
-    public function testAddOrUpdateTeam()
+    public function testAddOrEditTeam()
     {
         $expected = [
             [
@@ -107,7 +107,7 @@ class ProjectsTest extends ApiTestCase
             ->with($this->equalTo('/projects/project/teams/'), $this->equalTo($teams))
             ->will($this->returnValue($expected));
 
-        $this->assertSame($expected, $api->addOrUpdateTeams('project', $teams));
+        $this->assertSame($expected, $api->addOrEditTeams('project', $teams));
     }
 
     public function testRemoveTeam()

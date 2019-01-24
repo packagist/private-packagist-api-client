@@ -69,7 +69,7 @@ class CredentialsTest extends ApiTestCase
         $this->assertSame($expected, $api->create('My secret credential', 'http-basic', 'localhost', 'username', 'password'));
     }
 
-    public function testUpdate()
+    public function testEdit()
     {
         $expected = [
             'id' => 1,
@@ -87,7 +87,7 @@ class CredentialsTest extends ApiTestCase
             ->with($this->equalTo('/credentials/1/'), $this->equalTo(['type' => 'http-basic', 'username' => 'username', 'credential' => 'password']))
             ->will($this->returnValue($expected));
 
-        $this->assertSame($expected, $api->update(1, 'http-basic', 'username', 'password'));
+        $this->assertSame($expected, $api->edit(1, 'http-basic', 'username', 'password'));
     }
 
     public function testRemove()

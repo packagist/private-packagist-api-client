@@ -31,7 +31,15 @@ class Projects extends AbstractApi
         return $this->get(sprintf('/projects/%s/teams/', $projectsName));
     }
 
+    /**
+     * @deprecated Use addOrEditTeams instead
+     */
     public function addOrUpdateTeams($projectName, array $teams)
+    {
+        return $this->addOrEditTeams($projectName, $teams);
+    }
+
+    public function addOrEditTeams($projectName, array $teams)
     {
         foreach ($teams as $team) {
             if (!isset($team['id'])) {

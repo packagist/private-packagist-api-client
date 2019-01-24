@@ -63,7 +63,7 @@ class CustomersTest extends ApiTestCase
         $this->assertSame($expected, $api->create($name));
     }
 
-    public function testUpdate()
+    public function tesEdit()
     {
         $expected = [
             [
@@ -88,7 +88,7 @@ class CustomersTest extends ApiTestCase
             ->with($this->equalTo('/customers/1/'), $this->equalTo($customer))
             ->will($this->returnValue($expected));
 
-        $this->assertSame($expected, $api->update(1, $customer));
+        $this->assertSame($expected, $api->edit(1, $customer));
     }
 
     public function testRemove()
@@ -126,7 +126,7 @@ class CustomersTest extends ApiTestCase
         $this->assertSame($expected, $api->listPackages(1));
     }
 
-    public function testAddOrUpdatePackages()
+    public function testAddOrEditPackages()
     {
         $expected = [
             [
@@ -146,19 +146,19 @@ class CustomersTest extends ApiTestCase
             ->with($this->equalTo('/customers/1/packages/'), $this->equalTo($packages))
             ->will($this->returnValue($expected));
 
-        $this->assertSame($expected, $api->addOrUpdatePackages(1, $packages));
+        $this->assertSame($expected, $api->addOrEditPackages(1, $packages));
     }
 
     /**
      * @expectedException \PrivatePackagist\ApiClient\Exception\InvalidArgumentException
      * @expectedExceptionMessage Parameter "name" is required.
      */
-    public function testAddOrUpdatePackagesMissingName()
+    public function testAddOrEditPackagesMissingName()
     {
         /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
 
-        $api->addOrUpdatePackages(1, [[]]);
+        $api->addOrEditPackages(1, [[]]);
     }
 
     public function testRemovePackage()

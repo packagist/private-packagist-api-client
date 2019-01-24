@@ -32,7 +32,15 @@ class Credentials extends AbstractApi
         ]);
     }
 
+    /**
+     * @deprecated Use edit instead
+     */
     public function update($credentialId, $type, $username, $credential)
+    {
+        return $this->edit($credentialId, $type, $username, $credential);
+    }
+
+    public function edit($credentialId, $type, $username, $credential)
     {
         return $this->put(sprintf('/credentials/%s/', $credentialId), [
             'username' => $username,
