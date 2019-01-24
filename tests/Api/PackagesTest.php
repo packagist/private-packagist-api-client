@@ -114,7 +114,7 @@ class PackagesTest extends ApiTestCase
         $this->assertSame($expected, $api->createCustomPackage('{}'));
     }
 
-    public function testUpdateVcsPackage()
+    public function testEditVcsPackage()
     {
         $expected = [
             'id' => 'job-id',
@@ -128,10 +128,10 @@ class PackagesTest extends ApiTestCase
             ->with($this->equalTo('/packages/acme-website/package/'), $this->equalTo(['repoType' => 'vcs', 'repoUrl' => 'localhost', 'credentials' => null]))
             ->will($this->returnValue($expected));
 
-        $this->assertSame($expected, $api->updateVcsPackage('acme-website/package', 'localhost'));
+        $this->assertSame($expected, $api->editVcsPackage('acme-website/package', 'localhost'));
     }
 
-    public function testUpdateCustomPackage()
+    public function testEditCustomPackage()
     {
         $expected = [
             'id' => 'job-id',
@@ -145,7 +145,7 @@ class PackagesTest extends ApiTestCase
             ->with($this->equalTo('/packages/acme-website/package/'), $this->equalTo(['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null]))
             ->will($this->returnValue($expected));
 
-        $this->assertSame($expected, $api->updateCustomPackage('acme-website/package', '{}'));
+        $this->assertSame($expected, $api->editCustomPackage('acme-website/package', '{}'));
     }
 
     public function testRemove()

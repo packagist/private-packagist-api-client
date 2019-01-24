@@ -79,7 +79,7 @@ $customerData = [
     'urlName' => 'customer',
     'accessToVersionControlSource' => false,
 ];
-$customer = $client->customers()->update($customerId, $customerData);
+$customer = $client->customers()->edit($customerId, $customerData);
 ```
 Returns the customer.
 
@@ -96,7 +96,7 @@ $packages = $client->customers()->listPackages($customerId);
 ```
 Returns an array of customer packages.
 
-##### Grant a customer access to a package or update the limitations
+##### Grant a customer access to a package or edit the limitations
 ```php
 $customerId = 42;
 $packages = [
@@ -108,7 +108,7 @@ $packages = [
 ];
 $packages = $client->customers()->addOrUpdatePackages($customerId, $packages);
 ```
-Returns an array of all added or updated customer packages.
+Returns an array of all added or edited customer packages.
 
 ##### Revoke access to a package from a customer
 ```php
@@ -125,7 +125,7 @@ $confirmation = [
 ];
 $composerRepository = $client->customers()->regenerateToken($customerId, $confirmation);
 ```
-Returns the updated Composer repository.
+Returns the edited Composer repository.
 
 #### Project
 
@@ -161,7 +161,7 @@ $teams = $client->projects()->listTeams($projectName);
 ```
 Returns an array of projects teams.
 
-##### Add a team to a project or update the permission
+##### Add a team to a project or edit the permission
 ```php
 $projectName = 'project';
 $teams = [
@@ -272,14 +272,14 @@ Returns a new job.
 
 ##### Update a vcs package
 ```php
-$job = $client->packages()->updateVcsPackage('acme-website/package', 'https://github.com/acme-website/package');
+$job = $client->packages()->editVcsPackage('acme-website/package', 'https://github.com/acme-website/package');
 ```
 Returns a new job.
 
 ##### Update a custom package
 ```php
 $packageDefinition = '{...}'
-$job = $client->packages()->updateCustomPackage('acme-website/package', $packageDefinition);
+$job = $client->packages()->editCustomPackage('acme-website/package', $packageDefinition);
 ```
 Returns a new job.
 
@@ -320,9 +320,9 @@ Returns the new credential.
 ```php
 $credentialId = 42;
 $type = \PrivatePackagist\ApiClient\Api\Credentials::TYPE_HTTP_BASIC;
-$credential = $client->credentials()->update($credentialId, $type, 'username', 'password');
+$credential = $client->credentials()->edit($credentialId, $type, 'username', 'password');
 ```
-Returns the updated credential.
+Returns the edited credential.
 
 ##### Delete a credential
 ```php

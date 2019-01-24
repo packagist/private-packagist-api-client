@@ -21,7 +21,15 @@ class Customers extends AbstractApi
         return $this->post('/customers/', ['name' => $name, 'accessToVersionControlSource' => $accessToVersionControlSource]);
     }
 
+    /**
+     * @deprecated Use edit instead
+     */
     public function update($customerId, array $customer)
+    {
+        return $this->edit($customerId, $customer);
+    }
+
+    public function edit($customerId, array $customer)
     {
         return $this->put(sprintf('/customers/%s/', $customerId), $customer);
     }
@@ -36,7 +44,15 @@ class Customers extends AbstractApi
         return $this->get(sprintf('/customers/%s/packages/', $customerId));
     }
 
+    /**
+     * @deprecated Use addOrEditPackages instead
+     */
     public function addOrUpdatePackages($customerId, array $packages)
+    {
+        return $this->addOrEditPackages($customerId, $packages);
+    }
+
+    public function addOrEditPackages($customerId, array $packages)
     {
         foreach ($packages as $package) {
             if (!isset($package['name'])) {
@@ -48,11 +64,11 @@ class Customers extends AbstractApi
     }
 
     /**
-     * @deprecated Use addOrUpdatePackages instead
+     * @deprecated Use addOrEditPackages instead
      */
     public function addPackages($customerId, array $packages)
     {
-        return $this->addOrUpdatePackages($customerId, $packages);
+        return $this->addOrEditPackages($customerId, $packages);
     }
 
     public function removePackage($customerId, $packageName)

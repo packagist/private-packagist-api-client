@@ -46,12 +46,28 @@ class Packages extends AbstractApi
         return $this->post('/packages/', ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentials]);
     }
 
+    /**
+     * @deprecated Use editVcsPackage instead
+     */
     public function updateVcsPackage($packageName, $url, $credentials = null)
+    {
+        return $this->editVcsPackage($packageName, $url, $credentials);
+    }
+
+    public function editVcsPackage($packageName, $url, $credentials = null)
     {
         return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => 'vcs', 'repoUrl' => $url, 'credentials' => $credentials]);
     }
 
+    /**
+     * @deprecated Use editCustomPackage instead
+     */
     public function updateCustomPackage($packageName, $customJson, $credentials = null)
+    {
+        return $this->editVcsPackage($packageName, $customJson, $credentials);
+    }
+
+    public function editCustomPackage($packageName, $customJson, $credentials = null)
     {
         return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentials]);
     }
