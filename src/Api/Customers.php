@@ -2,6 +2,7 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use PrivatePackagist\ApiClient\Api\Customers\MagentoLegacyKeys;
 use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
 
 class Customers extends AbstractApi
@@ -83,5 +84,10 @@ class Customers extends AbstractApi
         }
 
         return $this->post(sprintf('/customers/%s/token/regenerate', $customerIdOrUrlName), $confirmation);
+    }
+
+    public function magentoLegacyKeys()
+    {
+        return new MagentoLegacyKeys($this->client);
     }
 }
