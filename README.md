@@ -346,19 +346,19 @@ Returns the job.
 ##### List all legacy keys for a customer
 ```php
 $customerId = 42;
-$job = $client->customers()->magentoLegacyKeys()->all($customerId);
+$legacyKeys = $client->customers()->magentoLegacyKeys()->all($customerId);
 ```
 Returns a list of Magento legacy keys.
 
 ##### Create a new legacy keys for a customer
 ```php
-$job = $client->customers()->magentoLegacyKeys()->create($customerId, $publicKey, $privateKey);
+$legacyKey = $client->customers()->magentoLegacyKeys()->create($customerId, $publicKey, $privateKey);
 ```
 Returns the new Magento legacy key.
 
 ##### Delete a legacy keys from a customer
 ```php
-$job = $client->customers()->magentoLegacyKeys()->remove($customerId, $publicKey);
+$client->customers()->magentoLegacyKeys()->remove($customerId, $publicKey);
 ```
 
 ## License
