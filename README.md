@@ -74,7 +74,7 @@ $customer = $client->customers()->create('New customer name');
 ```
 Returns the customer.
 
-##### Update a customer
+##### Edit a customer
 ```php
 $customerId = 42;
 $customerData = [
@@ -109,7 +109,7 @@ $packages = [
         'expirationDate' => (new \DateTime())->add(new \DateInterval('P1Y'))->format('c'), // optional expiration date to limit updates the customer receives
     ],
 ];
-$packages = $client->customers()->addOrUpdatePackages($customerId, $packages);
+$packages = $client->customers()->addOrEditPackages($customerId, $packages);
 ```
 Returns an array of all added or edited customer packages.
 
@@ -173,7 +173,7 @@ $teams = [
         'permission' => 'owner',
     ],
 ];
-$teams = $client->customers()->addOrUpdateTeams($projectName, $teams);
+$teams = $client->customers()->addOrEditTeams($projectName, $teams);
 ```
 Returns an array of added project teams.
 
@@ -273,13 +273,13 @@ $job = $client->packages()->createCustomPackage($packageDefinition, $credentialI
 ```
 Returns a new job.
 
-##### Update a vcs package
+##### Edit a vcs package
 ```php
 $job = $client->packages()->editVcsPackage('acme-website/package', 'https://github.com/acme-website/package');
 ```
 Returns a new job.
 
-##### Update a custom package
+##### Edit a custom package
 ```php
 $packageDefinition = '{...}'
 $job = $client->packages()->editCustomPackage('acme-website/package', $packageDefinition);
@@ -319,7 +319,7 @@ $credential = $client->credentials()->create('ACME http auth', $type, 'acme-webs
 ```
 Returns the new credential.
 
-##### Update a credential
+##### Edit a credential
 ```php
 $credentialId = 42;
 $type = \PrivatePackagist\ApiClient\Api\Credentials::TYPE_HTTP_BASIC;
