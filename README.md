@@ -71,6 +71,8 @@ Returns a single customer.
 ##### Create a customer
 ```php
 $customer = $client->customers()->create('New customer name');
+// or
+$customer = $client->customers()->create('New customer name', false, 'customer-url-name');
 ```
 Returns the customer.
 
