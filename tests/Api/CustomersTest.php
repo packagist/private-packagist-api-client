@@ -63,6 +63,27 @@ class CustomersTest extends ApiTestCase
         $this->assertSame($expected, $api->create($name));
     }
 
+    public function testCreateAllParameters()
+    {
+        $expected = [
+            [
+                'id' => 1,
+                'type' => 'composer-repo',
+                'name' => $name = 'Customer',
+                'accessToVersionControlSource' => false,
+            ],
+        ];
+
+        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('post')
+            ->with($this->equalTo('/customers/'), $this->equalTo(['name' => $name, 'accessToVersionControlSource' => true, 'urlName' => 'url-name']))
+            ->will($this->returnValue($expected));
+
+        $this->assertSame($expected, $api->create($name, true, 'url-name'));
+    }
+
     public function tesEdit()
     {
         $expected = [
