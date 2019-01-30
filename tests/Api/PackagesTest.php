@@ -97,7 +97,10 @@ class PackagesTest extends ApiTestCase
         $this->assertSame($expected, $api->createVcsPackage('localhost'));
     }
 
-    public function testCreateCustomPackage()
+    /**
+     * @dataProvider customProvider
+     */
+    public function testCreateCustomPackage($customJson)
     {
         $expected = [
             'id' => 'job-id',
@@ -109,9 +112,17 @@ class PackagesTest extends ApiTestCase
         $api->expects($this->once())
             ->method('post')
             ->with($this->equalTo('/packages/'), $this->equalTo(['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null]))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
-        $this->assertSame($expected, $api->createCustomPackage('{}'));
+        $this->assertSame($expected, $api->createCustomPackage($customJson));
+    }
+
+    public function customProvider()
+    {
+        return [
+            ['{}'],
+            [new \stdClass()],
+        ];
     }
 
     public function testEditVcsPackage()

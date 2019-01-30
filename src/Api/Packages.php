@@ -43,6 +43,10 @@ class Packages extends AbstractApi
 
     public function createCustomPackage($customJson, $credentials = null)
     {
+        if (is_array($customJson) || is_object($customJson)) {
+            $customJson = json_encode($customJson);
+        }
+
         return $this->post('/packages/', ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentials]);
     }
 
