@@ -43,44 +43,44 @@ class Packages extends AbstractApi
         return $this->get(sprintf('/packages/%s/', $packageName));
     }
 
-    public function createVcsPackage($url, $credentials = null)
+    public function createVcsPackage($url, $credentialId = null)
     {
-        return $this->post('/packages/', ['repoType' => 'vcs', 'repoUrl' => $url, 'credentials' => $credentials]);
+        return $this->post('/packages/', ['repoType' => 'vcs', 'repoUrl' => $url, 'credentials' => $credentialId]);
     }
 
-    public function createCustomPackage($customJson, $credentials = null)
+    public function createCustomPackage($customJson, $credentialId = null)
     {
         if (is_array($customJson) || is_object($customJson)) {
             $customJson = json_encode($customJson);
         }
 
-        return $this->post('/packages/', ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentials]);
+        return $this->post('/packages/', ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentialId]);
     }
 
     /**
      * @deprecated Use editVcsPackage instead
      */
-    public function updateVcsPackage($packageName, $url, $credentials = null)
+    public function updateVcsPackage($packageName, $url, $credentialId = null)
     {
-        return $this->editVcsPackage($packageName, $url, $credentials);
+        return $this->editVcsPackage($packageName, $url, $credentialId);
     }
 
-    public function editVcsPackage($packageName, $url, $credentials = null)
+    public function editVcsPackage($packageName, $url, $credentialId = null)
     {
-        return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => 'vcs', 'repoUrl' => $url, 'credentials' => $credentials]);
+        return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => 'vcs', 'repoUrl' => $url, 'credentials' => $credentialId]);
     }
 
     /**
      * @deprecated Use editCustomPackage instead
      */
-    public function updateCustomPackage($packageName, $customJson, $credentials = null)
+    public function updateCustomPackage($packageName, $customJson, $credentialId = null)
     {
-        return $this->editVcsPackage($packageName, $customJson, $credentials);
+        return $this->editVcsPackage($packageName, $customJson, $credentialId);
     }
 
-    public function editCustomPackage($packageName, $customJson, $credentials = null)
+    public function editCustomPackage($packageName, $customJson, $credentialId = null)
     {
-        return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentials]);
+        return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentialId]);
     }
 
     public function remove($packageName)
