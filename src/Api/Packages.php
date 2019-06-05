@@ -14,23 +14,34 @@ use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
 class Packages extends AbstractApi
 {
     /**
-     * Packages that are mirrored from a public Composer repository like packagist.org.
+     * Packages that are mirrored from a public mirrored third party repository like packagist.org.
      */
-    const ORIGIN_PUBLIC_PROXY = 'public-proxy';
+    const ORIGIN_PUBLIC_MIRROR = 'public-mirror';
 
     /**
-     * Packages that are mirrored from a private Composer repository requiring authentication like repo.magento.com.
+     * Packages that are mirrored from a private mirrored third party repository requiring authentication like repo.magento.com.
      */
-    const ORIGIN_PRIVATE_PROXY = 'private-proxy';
+    const ORIGIN_PRIVATE_MIRROR = 'private-mirror';
 
     /**
      * All other packages from a VCS repository or a custom JSON definition.
      */
     const ORIGIN_PRIVATE = 'private';
 
+    /**
+     * @deprecated Use Packages::ORIGIN_PUBLIC_MIRROR instead
+     */
+    const ORIGIN_PUBLIC_PROXY = self::ORIGIN_PUBLIC_MIRROR;
+
+    /**
+     * @deprecated Use Packages::ORIGIN_PRIVATE_MIRROR instead
+     */
+    const ORIGIN_PRIVATE_PROXY = self::ORIGIN_PRIVATE_MIRROR;
+
+
     public function all(array $filters = [])
     {
-        $availableOrigins = [self::ORIGIN_PUBLIC_PROXY, self::ORIGIN_PRIVATE_PROXY, self::ORIGIN_PRIVATE];
+        $availableOrigins = [self::ORIGIN_PUBLIC_MIRROR, self::ORIGIN_PRIVATE_MIRROR, self::ORIGIN_PRIVATE, 'public-proxy', 'private-proxy'];
         if (isset($filters['origin']) && !in_array($filters['origin'], $availableOrigins, true)) {
             throw new InvalidArgumentException('Filter "origin" has to be one of: "' . implode('", "', $availableOrigins) . '".');
         }
