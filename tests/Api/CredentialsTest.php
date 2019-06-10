@@ -29,7 +29,7 @@ class CredentialsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('get')
             ->with($this->equalTo('/credentials/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->all());
     }
@@ -50,7 +50,7 @@ class CredentialsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('get')
             ->with($this->equalTo('/credentials/1/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->show(1));
     }
@@ -71,7 +71,7 @@ class CredentialsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('post')
             ->with($this->equalTo('/credentials/'), $this->equalTo(['domain' => 'localhost', 'description' => 'My secret credential', 'type' => 'http-basic', 'username' => 'username', 'credential' => 'password']))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->create('My secret credential', 'http-basic', 'localhost', 'username', 'password'));
     }
@@ -92,7 +92,7 @@ class CredentialsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('put')
             ->with($this->equalTo('/credentials/1/'), $this->equalTo(['type' => 'http-basic', 'username' => 'username', 'credential' => 'password']))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->edit(1, 'http-basic', 'username', 'password'));
     }
@@ -106,7 +106,7 @@ class CredentialsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('delete')
             ->with($this->equalTo('/credentials/1/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->remove(1));
     }

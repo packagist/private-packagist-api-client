@@ -20,7 +20,7 @@ class OrganizationTest extends ApiTestCase
         $api->expects($this->once())
             ->method('post')
             ->with($this->equalTo('/organization/sync'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->sync());
     }

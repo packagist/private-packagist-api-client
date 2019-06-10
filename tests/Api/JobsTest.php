@@ -21,7 +21,7 @@ class JobsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('get')
             ->with($this->equalTo('/jobs/' . $jobId))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->show($jobId));
     }

@@ -22,7 +22,7 @@ class ProjectsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('get')
             ->with($this->equalTo('/projects/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->all());
     }
@@ -38,7 +38,7 @@ class ProjectsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('get')
             ->with($this->equalTo('/projects/project/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->show($projectName));
     }
@@ -52,7 +52,7 @@ class ProjectsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('post')
             ->with($this->equalTo('/projects/'), $this->equalTo(['name' => 'ACME Websites']))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->create('ACME Websites'));
     }
@@ -66,7 +66,7 @@ class ProjectsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('delete')
             ->with($this->equalTo('/projects/project/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->remove('project'));
     }
@@ -88,7 +88,7 @@ class ProjectsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('get')
             ->with($this->equalTo('/projects/project/teams/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->listTeams('project'));
     }
@@ -112,7 +112,7 @@ class ProjectsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('post')
             ->with($this->equalTo('/projects/project/teams/'), $this->equalTo($teams))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->addOrEditTeams('project', $teams));
     }
@@ -126,7 +126,7 @@ class ProjectsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('delete')
             ->with($this->equalTo('/projects/project/teams/42/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->removeTeam('project', 42));
     }
@@ -147,7 +147,7 @@ class ProjectsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('get')
             ->with($this->equalTo('/projects/project/packages/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->listPackages('project'));
     }
@@ -170,7 +170,7 @@ class ProjectsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('get')
             ->with($this->equalTo('/projects/project/tokens/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->listTokens('project'));
     }
@@ -194,7 +194,7 @@ class ProjectsTest extends ApiTestCase
                 'description' => 'Project Token',
                 'access' => 'read',
             ]))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->createToken('project', [
             'description' => 'Project Token',
@@ -211,7 +211,7 @@ class ProjectsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('delete')
             ->with($this->equalTo('/projects/project/tokens/1/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->removeToken('project', 1));
     }
@@ -225,7 +225,7 @@ class ProjectsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('post')
             ->with($this->equalTo('/projects/project/tokens/1/regenerate'), $this->equalTo(['IConfirmOldTokenWillStopWorkingImmediately' => true]))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->regenerateToken('project', 1, ['IConfirmOldTokenWillStopWorkingImmediately' => true]));
     }

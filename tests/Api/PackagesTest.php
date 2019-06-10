@@ -25,7 +25,7 @@ class PackagesTest extends ApiTestCase
         $api->expects($this->once())
             ->method('get')
             ->with($this->equalTo('/packages/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->all());
     }
@@ -48,7 +48,7 @@ class PackagesTest extends ApiTestCase
         $api->expects($this->once())
             ->method('get')
             ->with($this->equalTo('/packages/'), $this->equalTo($filters))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->all($filters));
     }
@@ -82,7 +82,7 @@ class PackagesTest extends ApiTestCase
         $api->expects($this->once())
             ->method('get')
             ->with($this->equalTo('/packages/acme-website/package/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->show('acme-website/package'));
     }
@@ -99,7 +99,7 @@ class PackagesTest extends ApiTestCase
         $api->expects($this->once())
             ->method('post')
             ->with($this->equalTo('/packages/'), $this->equalTo(['repoType' => 'vcs', 'repoUrl' => 'localhost', 'credentials' => null]))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->createVcsPackage('localhost'));
     }
@@ -144,7 +144,7 @@ class PackagesTest extends ApiTestCase
         $api->expects($this->once())
             ->method('put')
             ->with($this->equalTo('/packages/acme-website/package/'), $this->equalTo(['repoType' => 'vcs', 'repoUrl' => 'localhost', 'credentials' => null]))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->editVcsPackage('acme-website/package', 'localhost'));
     }
@@ -161,7 +161,7 @@ class PackagesTest extends ApiTestCase
         $api->expects($this->once())
             ->method('put')
             ->with($this->equalTo('/packages/acme-website/package/'), $this->equalTo(['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null]))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->editCustomPackage('acme-website/package', '{}'));
     }
@@ -175,7 +175,7 @@ class PackagesTest extends ApiTestCase
         $api->expects($this->once())
             ->method('delete')
             ->with($this->equalTo('/packages/acme-website/package/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->remove('acme-website/package'));
     }
@@ -202,7 +202,7 @@ class PackagesTest extends ApiTestCase
         $api->expects($this->once())
             ->method('get')
             ->with($this->equalTo('/packages/composer/composer/customers/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->listCustomers('composer/composer'));
     }

@@ -34,7 +34,7 @@ class TeamsTest extends ApiTestCase
         $api->expects($this->once())
             ->method('get')
             ->with($this->equalTo('/teams/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->all());
     }

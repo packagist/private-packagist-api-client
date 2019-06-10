@@ -26,7 +26,7 @@ class CustomersTest extends ApiTestCase
         $api->expects($this->once())
             ->method('get')
             ->with($this->equalTo('/customers/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->all());
     }
@@ -44,7 +44,7 @@ class CustomersTest extends ApiTestCase
         $api->expects($this->once())
             ->method('get')
             ->with($this->equalTo('/customers/1/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->show(1));
     }
@@ -65,7 +65,7 @@ class CustomersTest extends ApiTestCase
         $api->expects($this->once())
             ->method('post')
             ->with($this->equalTo('/customers/'), $this->equalTo(['name' => $name, 'accessToVersionControlSource' => false]))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->create($name));
     }
@@ -86,7 +86,7 @@ class CustomersTest extends ApiTestCase
         $api->expects($this->once())
             ->method('post')
             ->with($this->equalTo('/customers/'), $this->equalTo(['name' => $name, 'accessToVersionControlSource' => true, 'urlName' => 'url-name']))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->create($name, true, 'url-name'));
     }
@@ -114,7 +114,7 @@ class CustomersTest extends ApiTestCase
         $api->expects($this->once())
             ->method('put')
             ->with($this->equalTo('/customers/1/'), $this->equalTo($customer))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->edit(1, $customer));
     }
@@ -128,7 +128,7 @@ class CustomersTest extends ApiTestCase
         $api->expects($this->once())
             ->method('delete')
             ->with($this->equalTo('/customers/1/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->remove(1));
     }
@@ -149,7 +149,7 @@ class CustomersTest extends ApiTestCase
         $api->expects($this->once())
             ->method('get')
             ->with($this->equalTo('/customers/1/packages/'))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->listPackages(1));
     }
@@ -172,7 +172,7 @@ class CustomersTest extends ApiTestCase
         $api->expects($this->once())
             ->method('post')
             ->with($this->equalTo('/customers/1/packages/'), $this->equalTo($packages))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->addOrEditPackages(1, $packages));
     }
@@ -199,7 +199,7 @@ class CustomersTest extends ApiTestCase
         $api->expects($this->once())
             ->method('delete')
             ->with($this->equalTo(sprintf('/customers/1/packages/%s/', $packageName)))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->removePackage(1, $packageName));
     }
@@ -222,7 +222,7 @@ class CustomersTest extends ApiTestCase
         $api->expects($this->once())
             ->method('post')
             ->with($this->equalTo('/customers/1/token/regenerate'), $this->equalTo($confirmation))
-            ->will($this->returnValue($expected));
+            ->willReturn($expected);
 
         $this->assertSame($expected, $api->regenerateToken(1, $confirmation));
     }
