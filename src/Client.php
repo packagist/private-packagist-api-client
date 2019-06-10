@@ -85,6 +85,11 @@ class Client
         return new Api\Jobs($this, $this->responseMediator);
     }
 
+    public function mirroredRepositories()
+    {
+        return new Api\MirroredRepositories($this, $this->responseMediator);
+    }
+
     public function getHttpClient()
     {
         return $this->getHttpClientBuilder()->getHttpClient();
