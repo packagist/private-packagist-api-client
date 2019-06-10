@@ -303,7 +303,7 @@ Returns a list of customers with access to the package.
 
 ##### List an organization's credentials
 ```php
-$packages = $client->credentials()->all();
+$credentials = $client->credentials()->all();
 ```
 Returns an array of credentials.
 
