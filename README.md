@@ -335,6 +335,63 @@ $credentialId = 42;
 $client->credentials()->remove($credentialId);
 ```
 
+#### Mirrored Repository
+
+##### List an organization's mirrored repositories
+```php
+$mirroredRepositories = $client->mirroredRepositories()->all();
+```
+Returns an array of mirrored repositories.
+
+##### Show a mirrored repository
+```php
+$mirroredRepositoryId = 42;
+$mirroredRepository = $client->mirroredRepositories()->show($mirroredRepositoryId);
+```
+Returns the credential.
+
+##### Create a mirrored repository
+```php
+$mirroredRepository = $client->mirroredRepositories()->create('Mirrored Repository', 'https://composer.example.com', 'add_on_use', 543);
+```
+Returns the new mirrored repository.
+
+##### Edit a mirrored repository
+```php
+$mirroredRepositoryId = 42;
+$mirroredRepository = $client->mirroredRepositories()->create($mirroredRepositoryId, 'Mirrored Repository', 'https://composer.example.com', 'add_on_use', 543);
+```
+Returns the edited mirrored repository.
+
+##### Delete a mirrored repository
+```php
+$mirroredRepositoryId = 42;
+$client->mirroredRepositories()->remove($mirroredRepositoryId);
+```
+
+##### List all mirrored packages from one repository
+```php
+$mirroredRepositoryId = 42;
+$packages = $client->mirroredRepositories()->listPackages($mirroredRepositoryId);
+```
+Returns an array of packages.
+
+##### Add mirrored packages from one repository
+```php
+$mirroredRepositoryId = 42;
+$packages = [
+    'acme/cool-lib
+];
+$jobs = $client->mirroredRepositories()->addPackages($mirroredRepositoryId, $packages);
+```
+Returns an array of jobs.
+
+##### Remove all mirrored packages from one repository
+```php
+$mirroredRepositoryId = 42;
+$client->mirroredRepositories()->removePackages($mirroredRepositoryId);
+```
+
 #### Job
 
 ##### Show a job
