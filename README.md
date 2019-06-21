@@ -175,16 +175,16 @@ $teams = [
         'permission' => 'owner',
     ],
 ];
-$teams = $client->customers()->addOrEditTeams($projectName, $teams);
+$teams = $client->projects()->addOrEditTeams($projectName, $teams);
 ```
 Returns an array of added project teams.
 
 
-##### Remove a team from a customer
+##### Remove a team from a project
 ```php
 $projectName = 'project';
 $teamId = 12;
-$client->customers()->removeTeam($projectName, $teamId);
+$client->projects()->removeTeam($projectName, $teamId);
 ```
 
 ##### List a projects's packages
