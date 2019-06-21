@@ -230,6 +230,72 @@ $token = $client->projects()->regenerateToken($projectName, $confirmation);
 ```
 Returns the authentication token.
 
+##### List a projects's mirrored repositories
+```php
+$projectName = 'project';
+$mirroredRepositories = $client->projects()->mirroredRepositories()->all($projectName);
+```
+Returns an array of mirrored repositories.
+
+##### Show a mirrored repository
+```php
+$projectName = 'project';
+$mirroredRepositoryId = 42;
+$mirroredRepository = $client->projects()->mirroredRepositories()->show($projectName, $mirroredRepositoryId);
+```
+Returns the mirrored repository.
+
+##### Add mirrored repositories to a project
+```php
+$projectName = 'project';
+$mirroredRepositoriesToAdd = [
+    ['id' => 12, 'mirroringBehavior' => 'add_on_use'],
+];
+$mirroredRepository = $client->projects()->mirroredRepositories()->add($projectName, $mirroredRepositoriesToAdd);
+```
+Returns a list of added mirrored repositories.
+
+##### Edit the mirroring behaviour of mirrored repository in a project 
+```php
+$projectName = 'project';
+$mirroredRepositoryId = 42;
+$mirroredRepository = $client->projects()->mirroredRepositories()->create($projectName, $mirroredRepositoryId, 'add_on_use');
+```
+Returns the edited mirrored repository.
+
+##### Delete a mirrored repository from a project
+```php
+$projectName = 'project';
+$mirroredRepositoryId = 42;
+$client->projects()->mirroredRepositories()->remove($projectName, $mirroredRepositoryId);
+```
+
+##### List all mirrored packages from a mirrored repository in a project
+```php
+$projectName = 'project';
+$mirroredRepositoryId = 42;
+$packages = $client->projects()->mirroredRepositories()->listPackages($projectName, $mirroredRepositoryId);
+```
+Returns an array of packages.
+
+##### Add mirrored packages from one mirrored repository to a project
+```php
+$projectName = 'project';
+$mirroredRepositoryId = 42;
+$packages = [
+    'acme/cool-lib
+];
+$jobs = $client->projects()->mirroredRepositories()->addPackages($projectName, $mirroredRepositoryId, $packages);
+```
+Returns an array of jobs.
+
+##### Remove all mirrored packages from one mirrored repository in a project
+```php
+$projectName = 'project';
+$mirroredRepositoryId = 42;
+$client->projects()->mirroredRepositories()->removePackages($projectName, $mirroredRepositoryId);
+```
+
 #### Package
 
 ##### List an organization's packages
@@ -348,7 +414,7 @@ Returns an array of mirrored repositories.
 $mirroredRepositoryId = 42;
 $mirroredRepository = $client->mirroredRepositories()->show($mirroredRepositoryId);
 ```
-Returns the credential.
+Returns the mirrored repository.
 
 ##### Create a mirrored repository
 ```php

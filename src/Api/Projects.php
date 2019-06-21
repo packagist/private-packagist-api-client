@@ -33,9 +33,9 @@ class Projects extends AbstractApi
         return $this->delete(sprintf('/projects/%s/', $projectName));
     }
 
-    public function listTeams($projectsName)
+    public function listTeams($projectName)
     {
-        return $this->get(sprintf('/projects/%s/teams/', $projectsName));
+        return $this->get(sprintf('/projects/%s/teams/', $projectName));
     }
 
     /**
@@ -93,5 +93,10 @@ class Projects extends AbstractApi
         }
 
         return $this->post(sprintf('/projects/%s/tokens/%s/regenerate', $projectName, $tokenId), $confirmation);
+    }
+
+    public function mirroredRepositories()
+    {
+        return new Projects\MirroredRepositories($this->client);
     }
 }
