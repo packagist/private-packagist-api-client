@@ -190,9 +190,69 @@ $client->projects()->removeTeam($projectName, $teamId);
 ##### List a projects's packages
 ```php
 $projectName = 'project';
-$packages = $client->projects()->listPackages($projectName);
+$packages = $client->projects()->packages()->all($projectName);
 ```
 Returns an array of projects packages.
+
+##### Show a project package
+```php
+$projectName = 'project';
+$package = $client->projects()->packages()->show($projectName, 'acme-website/package');
+```
+Returns the package.
+
+##### Create a vcs package in a project
+```php
+$projectName = 'project';
+$job = $client->projects()->packages()->createVcsPackage($projectName, 'https://github.com/acme-website/package');
+```
+Returns a new job.
+
+##### Create a vcs package with credentials in a project
+```php
+$projectName = 'project';
+$credentialId = 42;
+$job = $client->projects()->packages()->createVcsPackage($projectName,'https://github.com/acme-website/package', $credentialId);
+```
+Returns a new job.
+
+##### Create a custom package in a project
+```php
+$projectName = 'project';
+$packageDefinition = '{...}'
+$job = $client->projects()->packages()->createCustomPackage($projectName, $packageDefinition);
+```
+Returns a new job.
+
+##### Create a custom package with credentials in a project
+```php
+$projectName = 'project';
+$packageDefinition = '{...}'
+$credentialId = 42;
+$job = $client->projects()->packages()->createCustomPackage($projectName, $packageDefinition, $credentialId);
+```
+Returns a new job.
+
+##### Edit a vcs package in a project in a project
+```php
+$projectName = 'project';
+$job = $client->projects()->packages()->editVcsPackage($projectName, 'acme-website/package', 'https://github.com/acme-website/package');
+```
+Returns a new job.
+
+##### Edit a custom package in a project
+```php
+$projectName = 'project';
+$packageDefinition = '{...}'
+$job = $client->projects()->packages()->editCustomPackage($projectName, 'acme-website/package', $packageDefinition);
+```
+Returns a new job.
+
+##### Delete a package from a project
+```php
+$projectName = 'project';
+$client->projects()->packages()->remove($projectName, 'acme-website/package');
+```
 
 ##### List a projects's authentication tokens
 ```php

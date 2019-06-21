@@ -9,6 +9,7 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use PrivatePackagist\ApiClient\Api\Projects\MirroredRepositories;
 use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
 
 class Projects extends AbstractApi
@@ -66,9 +67,12 @@ class Projects extends AbstractApi
         return $this->delete(sprintf('/projects/%s/teams/%s/', $projectName, $teamId));
     }
 
+    /**
+     * @deprecated use packages()->all()
+     */
     public function listPackages($projectName)
     {
-        return $this->get(sprintf('/projects/%s/packages/', $projectName));
+        return $this->packages()->all($projectName);
     }
 
     public function listTokens($projectName)
@@ -93,6 +97,11 @@ class Projects extends AbstractApi
         }
 
         return $this->post(sprintf('/projects/%s/tokens/%s/regenerate', $projectName, $tokenId), $confirmation);
+    }
+
+    public function packages()
+    {
+        return new Projects\Packages($this->client);
     }
 
     public function mirroredRepositories()
