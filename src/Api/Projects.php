@@ -9,7 +9,6 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
-use PrivatePackagist\ApiClient\Api\Projects\MirroredRepositories;
 use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
 
 class Projects extends AbstractApi

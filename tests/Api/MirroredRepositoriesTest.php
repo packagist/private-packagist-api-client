@@ -44,7 +44,7 @@ class MirroredRepositoriesTest extends ApiTestCase
     public function testCreate()
     {
         $expected = $this->getMirroredRepositoryDefinition();
-        $data = json_decode( json_encode($expected), true);
+        $data = json_decode(json_encode($expected), true);
         unset($data['id']);
 
         /** @var MirroredRepositories&\PHPUnit_Framework_MockObject_MockObject $api */
@@ -60,7 +60,7 @@ class MirroredRepositoriesTest extends ApiTestCase
     public function testEdit()
     {
         $expected = $this->getMirroredRepositoryDefinition();
-        $data = json_decode( json_encode($expected), true);
+        $data = json_decode(json_encode($expected), true);
         unset($data['id']);
 
         /** @var MirroredRepositories&\PHPUnit_Framework_MockObject_MockObject $api */
