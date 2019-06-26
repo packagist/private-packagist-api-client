@@ -190,9 +190,69 @@ $client->projects()->removeTeam($projectName, $teamId);
 ##### List a projects's packages
 ```php
 $projectName = 'project';
-$packages = $client->projects()->listPackages($projectName);
+$packages = $client->projects()->packages()->all($projectName);
 ```
 Returns an array of projects packages.
+
+##### Show a project package
+```php
+$projectName = 'project';
+$package = $client->projects()->packages()->show($projectName, 'acme-website/package');
+```
+Returns the package.
+
+##### Create a vcs package in a project
+```php
+$projectName = 'project';
+$job = $client->projects()->packages()->createVcsPackage($projectName, 'https://github.com/acme-website/package');
+```
+Returns a new job.
+
+##### Create a vcs package with credentials in a project
+```php
+$projectName = 'project';
+$credentialId = 42;
+$job = $client->projects()->packages()->createVcsPackage($projectName,'https://github.com/acme-website/package', $credentialId);
+```
+Returns a new job.
+
+##### Create a custom package in a project
+```php
+$projectName = 'project';
+$packageDefinition = '{...}'
+$job = $client->projects()->packages()->createCustomPackage($projectName, $packageDefinition);
+```
+Returns a new job.
+
+##### Create a custom package with credentials in a project
+```php
+$projectName = 'project';
+$packageDefinition = '{...}'
+$credentialId = 42;
+$job = $client->projects()->packages()->createCustomPackage($projectName, $packageDefinition, $credentialId);
+```
+Returns a new job.
+
+##### Edit a vcs package in a project in a project
+```php
+$projectName = 'project';
+$job = $client->projects()->packages()->editVcsPackage($projectName, 'acme-website/package', 'https://github.com/acme-website/package');
+```
+Returns a new job.
+
+##### Edit a custom package in a project
+```php
+$projectName = 'project';
+$packageDefinition = '{...}'
+$job = $client->projects()->packages()->editCustomPackage($projectName, 'acme-website/package', $packageDefinition);
+```
+Returns a new job.
+
+##### Delete a package from a project
+```php
+$projectName = 'project';
+$client->projects()->packages()->remove($projectName, 'acme-website/package');
+```
 
 ##### List a projects's authentication tokens
 ```php
@@ -229,6 +289,72 @@ $confirmation = [
 $token = $client->projects()->regenerateToken($projectName, $confirmation);
 ```
 Returns the authentication token.
+
+##### List a projects's mirrored repositories
+```php
+$projectName = 'project';
+$mirroredRepositories = $client->projects()->mirroredRepositories()->all($projectName);
+```
+Returns an array of mirrored repositories.
+
+##### Show a mirrored repository
+```php
+$projectName = 'project';
+$mirroredRepositoryId = 42;
+$mirroredRepository = $client->projects()->mirroredRepositories()->show($projectName, $mirroredRepositoryId);
+```
+Returns the mirrored repository.
+
+##### Add mirrored repositories to a project
+```php
+$projectName = 'project';
+$mirroredRepositoriesToAdd = [
+    ['id' => 12, 'mirroringBehavior' => 'add_on_use'],
+];
+$mirroredRepository = $client->projects()->mirroredRepositories()->add($projectName, $mirroredRepositoriesToAdd);
+```
+Returns a list of added mirrored repositories.
+
+##### Edit the mirroring behaviour of mirrored repository in a project 
+```php
+$projectName = 'project';
+$mirroredRepositoryId = 42;
+$mirroredRepository = $client->projects()->mirroredRepositories()->create($projectName, $mirroredRepositoryId, 'add_on_use');
+```
+Returns the edited mirrored repository.
+
+##### Delete a mirrored repository from a project
+```php
+$projectName = 'project';
+$mirroredRepositoryId = 42;
+$client->projects()->mirroredRepositories()->remove($projectName, $mirroredRepositoryId);
+```
+
+##### List all mirrored packages from a mirrored repository in a project
+```php
+$projectName = 'project';
+$mirroredRepositoryId = 42;
+$packages = $client->projects()->mirroredRepositories()->listPackages($projectName, $mirroredRepositoryId);
+```
+Returns an array of packages.
+
+##### Add mirrored packages from one mirrored repository to a project
+```php
+$projectName = 'project';
+$mirroredRepositoryId = 42;
+$packages = [
+    'acme/cool-lib
+];
+$jobs = $client->projects()->mirroredRepositories()->addPackages($projectName, $mirroredRepositoryId, $packages);
+```
+Returns an array of jobs.
+
+##### Remove all mirrored packages from one mirrored repository in a project
+```php
+$projectName = 'project';
+$mirroredRepositoryId = 42;
+$client->projects()->mirroredRepositories()->removePackages($projectName, $mirroredRepositoryId);
+```
 
 #### Package
 
@@ -348,7 +474,7 @@ Returns an array of mirrored repositories.
 $mirroredRepositoryId = 42;
 $mirroredRepository = $client->mirroredRepositories()->show($mirroredRepositoryId);
 ```
-Returns the credential.
+Returns the mirrored repository.
 
 ##### Create a mirrored repository
 ```php

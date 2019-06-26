@@ -33,9 +33,9 @@ class Projects extends AbstractApi
         return $this->delete(sprintf('/projects/%s/', $projectName));
     }
 
-    public function listTeams($projectsName)
+    public function listTeams($projectName)
     {
-        return $this->get(sprintf('/projects/%s/teams/', $projectsName));
+        return $this->get(sprintf('/projects/%s/teams/', $projectName));
     }
 
     /**
@@ -66,9 +66,12 @@ class Projects extends AbstractApi
         return $this->delete(sprintf('/projects/%s/teams/%s/', $projectName, $teamId));
     }
 
+    /**
+     * @deprecated use packages()->all()
+     */
     public function listPackages($projectName)
     {
-        return $this->get(sprintf('/projects/%s/packages/', $projectName));
+        return $this->packages()->all($projectName);
     }
 
     public function listTokens($projectName)
@@ -93,5 +96,15 @@ class Projects extends AbstractApi
         }
 
         return $this->post(sprintf('/projects/%s/tokens/%s/regenerate', $projectName, $tokenId), $confirmation);
+    }
+
+    public function packages()
+    {
+        return new Projects\Packages($this->client);
+    }
+
+    public function mirroredRepositories()
+    {
+        return new Projects\MirroredRepositories($this->client);
     }
 }

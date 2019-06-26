@@ -7,85 +7,97 @@
  * file that was distributed with this source code.
  */
 
-namespace PrivatePackagist\ApiClient\Api;
+namespace PrivatePackagist\ApiClient\Api\Projects;
+
+use PrivatePackagist\ApiClient\Api\ApiTestCase;
 
 class MirroredRepositoriesTest extends ApiTestCase
 {
     public function testAll()
     {
+        $projectName = 'project';
         $expected = [
-            $this->getMirroredRepositoryDefinition(),
+            $this->getProjectMirroredRepositoryDefinition(),
         ];
 
         /** @var MirroredRepositories&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/mirrored-repositories/'))
+            ->with($this->equalTo('/projects/project/mirrored-repositories/'))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->all());
+        $this->assertSame($expected, $api->all($projectName));
     }
 
     public function testShow()
     {
-        $expected = $this->getMirroredRepositoryDefinition();
+        $projectName = 'project';
+        $expected = $this->getProjectMirroredRepositoryDefinition();
 
         /** @var MirroredRepositories&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/mirrored-repositories/1/'))
+            ->with($this->equalTo('/projects/project/mirrored-repositories/1/'))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->show(1));
+        $this->assertSame($expected, $api->show($projectName, 1));
     }
 
-    public function testCreate()
+    public function testAdd()
     {
-        $expected = $this->getMirroredRepositoryDefinition();
-        $data = json_decode(json_encode($expected), true);
-        unset($data['id']);
+        $projectName = 'project';
+        $expected = $this->getProjectMirroredRepositoryDefinition();
+        $data = [
+            'id' => $expected['mirroredRepository']['id'],
+            'mirroringBehavior' => $expected['mirroringBehavior'],
+        ];
 
         /** @var MirroredRepositories&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
-            ->with($this->equalTo('/mirrored-repositories/'), $this->equalTo($data))
-            ->willReturn($expected);
+            ->with($this->equalTo('/projects/project/mirrored-repositories/'), $this->equalTo([$data]))
+            ->willReturn([$expected]);
 
-        $this->assertSame($expected, $api->create($data['name'], $data['url'], $data['mirroringBehavior'], $data['credentials']));
+        $this->assertSame([$expected], $api->add($projectName, [$data]));
     }
 
     public function testEdit()
     {
-        $expected = $this->getMirroredRepositoryDefinition();
-        $data = json_decode(json_encode($expected), true);
-        unset($data['id']);
+        $projectName = 'project';
+        $expected = $this->getProjectMirroredRepositoryDefinition();
+        $mirroredRepositoryId = $expected['mirroredRepository']['id'];
+        $data = [
+            'mirroringBehavior' => $mirroringBehaviour = $expected['mirroringBehavior'],
+        ];
 
         /** @var MirroredRepositories&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
-            ->with($this->equalTo('/mirrored-repositories/1/'), $this->equalTo($data))
+            ->with($this->equalTo('/projects/project/mirrored-repositories/1/'), $this->equalTo($data))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->edit(1, $data['name'], $data['url'], $data['mirroringBehavior'], $data['credentials']));
+        $this->assertSame($expected, $api->edit($projectName, $mirroredRepositoryId, $mirroringBehaviour));
     }
     public function testRemove()
     {
+        $projectName = 'project';
         /** @var MirroredRepositories&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo('/mirrored-repositories/1/'))
+            ->with($this->equalTo('/projects/project/mirrored-repositories/1/'))
             ->willReturn([]);
 
-        $this->assertSame([], $api->remove(1));
+        $this->assertSame([], $api->remove($projectName, 1));
     }
 
     public function testListPackages()
     {
+        $projectName = 'project';
         $expected = [[
             'name' => 'acme/cool-lib',
             'origin' => 'public-mirror',
@@ -95,14 +107,15 @@ class MirroredRepositoriesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/mirrored-repositories/1/packages/'))
+            ->with($this->equalTo('/projects/project/mirrored-repositories/1/packages/'))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->listPackages(1));
+        $this->assertSame($expected, $api->listPackages($projectName, 1));
     }
 
     public function testAddPackages()
     {
+        $projectName = 'project';
         $expected = [[
             'id' => 'job-id',
             'status' => 'queued',
@@ -116,22 +129,23 @@ class MirroredRepositoriesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
-            ->with($this->equalTo('/mirrored-repositories/1/packages/'), $this->equalTo($packages))
+            ->with($this->equalTo('/projects/project/mirrored-repositories/1/packages/'), $this->equalTo($packages))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->addPackages(1, $packages));
+        $this->assertSame($expected, $api->addPackages($projectName, 1, $packages));
     }
 
     public function testRemovePackages()
     {
+        $projectName = 'project';
         /** @var MirroredRepositories&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo('/mirrored-repositories/1/packages/'))
+            ->with($this->equalTo('/projects/project/mirrored-repositories/1/packages/'))
             ->willReturn([]);
 
-        $this->assertSame([], $api->removePackages(1));
+        $this->assertSame([], $api->removePackages($projectName, 1));
     }
 
     protected function getApiClass()
@@ -139,14 +153,17 @@ class MirroredRepositoriesTest extends ApiTestCase
         return MirroredRepositories::class;
     }
 
-    private function getMirroredRepositoryDefinition()
+    private function getProjectMirroredRepositoryDefinition()
     {
         return [
-            'id' => 1,
-            'name' => 'Packagist.org',
-            'url' => 'https://packagist.org',
             'mirroringBehavior' => 'add_on_use',
-            'credentials' => null,
+            'mirroredRepository' => [
+                'id' => 1,
+                'name' => 'Packagist.org',
+                'url' => 'https://packagist.org',
+                'mirroringBehavior' => 'add_on_use',
+                'credentials' => null,
+            ]
         ];
     }
 }

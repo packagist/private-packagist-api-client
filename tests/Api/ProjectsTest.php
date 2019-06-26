@@ -131,27 +131,6 @@ class ProjectsTest extends ApiTestCase
         $this->assertSame($expected, $api->removeTeam('project', 42));
     }
 
-    public function testListPackages()
-    {
-        $expected = [
-            [
-                'name' => 'composer/composer',
-                'origin' => 'private',
-                'versionConstraint' => null,
-                'expirationDate' => null,
-            ],
-        ];
-
-        /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
-        $api = $this->getApiMock();
-        $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/projects/project/packages/'))
-            ->willReturn($expected);
-
-        $this->assertSame($expected, $api->listPackages('project'));
-    }
-
     public function testListTokens()
     {
         $expected = [
