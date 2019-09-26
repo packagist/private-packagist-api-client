@@ -38,12 +38,12 @@ class Packages extends AbstractApi
      */
     const ORIGIN_PRIVATE_PROXY = self::ORIGIN_PRIVATE_MIRROR;
 
-    const AVAILABLE_ORIGINS = [self::ORIGIN_PUBLIC_MIRROR, self::ORIGIN_PRIVATE_MIRROR, self::ORIGIN_PRIVATE, 'public-proxy', 'private-proxy'];
 
     public function all(array $filters = [])
     {
-        if (isset($filters['origin']) && !in_array($filters['origin'], self::AVAILABLE_ORIGINS, true)) {
-            throw new InvalidArgumentException('Filter "origin" has to be one of: "' . implode('", "', self::AVAILABLE_ORIGINS) . '".');
+        $availableOrigins = [self::ORIGIN_PUBLIC_MIRROR, self::ORIGIN_PRIVATE_MIRROR, self::ORIGIN_PRIVATE, 'public-proxy', 'private-proxy'];
+        if (isset($filters['origin']) && !in_array($filters['origin'], $availableOrigins, true)) {
+            throw new InvalidArgumentException('Filter "origin" has to be one of: "' . implode('", "', $availableOrigins) . '".');
         }
 
         return $this->get('/packages/', $filters);
