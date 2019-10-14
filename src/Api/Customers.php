@@ -55,6 +55,16 @@ class Customers extends AbstractApi
         return $this->delete(sprintf('/customers/%s/', $customerIdOrUrlName));
     }
 
+    public function enable($customerIdOrUrlName)
+    {
+        return $this->put(sprintf('/customers/%s/enable', $customerIdOrUrlName));
+    }
+
+    public function disable($customerIdOrUrlName)
+    {
+        return $this->put(sprintf('/customers/%s/disable', $customerIdOrUrlName));
+    }
+
     public function listPackages($customerIdOrUrlName)
     {
         return $this->get(sprintf('/customers/%s/packages/', $customerIdOrUrlName));

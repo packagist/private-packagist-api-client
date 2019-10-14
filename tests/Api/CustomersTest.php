@@ -133,6 +133,48 @@ class CustomersTest extends ApiTestCase
         $this->assertSame($expected, $api->remove(1));
     }
 
+    public function testEnable()
+    {
+        $expected = [
+            'id' => 1,
+            'type' => 'composer-repo',
+            'name' => $name = 'Customer',
+            'urlName' => 'customer',
+            'accessToVersionControlSource' => false,
+            'enabled' => true,
+        ];
+
+        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('put')
+            ->with($this->equalTo('/customers/1/enable'))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->enable(1));
+    }
+
+    public function testDisable()
+    {
+        $expected = [
+            'id' => 1,
+            'type' => 'composer-repo',
+            'name' => $name = 'Customer',
+            'urlName' => 'customer',
+            'accessToVersionControlSource' => false,
+            'enabled' => false,
+        ];
+
+        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('put')
+            ->with($this->equalTo('/customers/1/disable'))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->disable(1));
+    }
+
     public function testListPackages()
     {
         $expected = [

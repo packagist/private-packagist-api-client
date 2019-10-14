@@ -94,6 +94,18 @@ $customerId = 42;
 $client->customers()->remove($customerId);
 ```
 
+##### Enable a customer
+```php
+$customerId = 42;
+$customer = $client->customers()->enable($customerId);
+```
+
+##### Disable a customer
+```php
+$customerId = 42;
+$customer = $client->customers()->disable($customerId);
+```
+
 ##### List a customer's packages
 ```php
 $customerId = 42;
@@ -409,7 +421,7 @@ Returns a new job.
 
 ##### Edit a custom package
 ```php
-$packageDefinition = '{...}'
+$packageDefinition = '{...}';
 $job = $client->packages()->editCustomPackage('acme-website/package', $packageDefinition);
 ```
 Returns a new job.
