@@ -9,6 +9,6 @@
 
 namespace PrivatePackagist\ApiClient\Exception;
 
-class ResourceNotFoundException extends RuntimeException
+class ResourceNotFoundException extends HttpTransportException
 {
 }

@@ -11,6 +11,7 @@ namespace PrivatePackagist\ApiClient\HttpClient\Plugin;
 
 use Http\Client\Common\Plugin;
 use PrivatePackagist\ApiClient\Exception\ErrorException;
+use PrivatePackagist\ApiClient\Exception\HttpTransportException;
 use PrivatePackagist\ApiClient\Exception\ResourceNotFoundException;
 use PrivatePackagist\ApiClient\Exception\RuntimeException;
 use PrivatePackagist\ApiClient\HttpClient\Message\ResponseMediator;
@@ -29,7 +30,7 @@ class ExceptionThrower implements Plugin
 
     public function handleRequest(RequestInterface $request, callable $next, callable $first)
     {
-        return $next($request)->then(function (ResponseInterface $response) {
+        return $next($request)->then(function (ResponseInterface $response) use ($request) {
             if ($response->getStatusCode() < 400 || $response->getStatusCode() > 600) {
                 return $response;
             }
@@ -41,11 +42,11 @@ class ExceptionThrower implements Plugin
                 }
 
                 if ($response->getStatusCode() === 404) {
-                    throw new ResourceNotFoundException($content['message'], $response->getStatusCode());
+                    throw new ResourceNotFoundException($content['message'], $response->getStatusCode(), $request->getUri());
                 }
             }
 
-            throw new RuntimeException(isset($content['message']) ? $content['message'] : $content, $response->getStatusCode());
+            throw new HttpTransportException(isset($content['message']) ? $content['message'] : $content, $response->getStatusCode(), $request->getUri());
         });
     }
 }
