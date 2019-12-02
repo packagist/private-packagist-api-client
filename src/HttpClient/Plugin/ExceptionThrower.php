@@ -11,6 +11,7 @@ namespace PrivatePackagist\ApiClient\HttpClient\Plugin;
 
 use Http\Client\Common\Plugin;
 use PrivatePackagist\ApiClient\Exception\ErrorException;
+use PrivatePackagist\ApiClient\Exception\HttpTransportException;
 use PrivatePackagist\ApiClient\Exception\ResourceNotFoundException;
 use PrivatePackagist\ApiClient\Exception\RuntimeException;
 use PrivatePackagist\ApiClient\HttpClient\Message\ResponseMediator;
@@ -45,7 +46,7 @@ class ExceptionThrower implements Plugin
                 }
             }
 
-            throw new RuntimeException(isset($content['message']) ? $content['message'] : $content, $response->getStatusCode());
+            throw new HttpTransportException(isset($content['message']) ? $content['message'] : $content, $response->getStatusCode(), $request->getUri());
         });
     }
 }
