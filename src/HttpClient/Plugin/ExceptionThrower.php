@@ -29,7 +29,7 @@ class ExceptionThrower implements Plugin
 
     public function handleRequest(RequestInterface $request, callable $next, callable $first)
     {
-        return $next($request)->then(function (ResponseInterface $response) {
+        return $next($request)->then(function (ResponseInterface $response) use ($request) {
             if ($response->getStatusCode() < 400 || $response->getStatusCode() > 600) {
                 return $response;
             }
@@ -41,7 +41,7 @@ class ExceptionThrower implements Plugin
                 }
 
                 if ($response->getStatusCode() === 404) {
-                    throw new ResourceNotFoundException($content['message'], $response->getStatusCode());
+                    throw new ResourceNotFoundException($content['message'], $response->getStatusCode(), $request->getUri());
                 }
             }
 
