@@ -17,6 +17,7 @@ class Credentials extends AbstractApi
     const TYPE_HTTP_BASIC = 'http-basic';
     const TYPE_MAGENTO = 'magento';
     const TYPE_HTTP_HEADER = 'http-header';
+    const TYPE_SSH_KEY = 'ssh-key';
 
     public function all()
     {
