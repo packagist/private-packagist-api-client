@@ -10,12 +10,15 @@
 namespace PrivatePackagist\ApiClient\HttpClient\Plugin;
 
 use GuzzleHttp\Psr7\Request;
+use Http\Promise\FulfilledPromise;
 use PHPUnit\Framework\TestCase;
 
 class RequestSignatureTest extends TestCase
 {
     /** @var RequestSignature */
     private $plugin;
+    private $next;
+    private $first;
     private $token;
     private $secret;
     private $timestamp;
@@ -29,6 +32,12 @@ class RequestSignatureTest extends TestCase
         $this->nonce = '78b9869e96cf58b5902154e0228f8576f042e5ac';
         $this->plugin = new RequestSignatureMock($this->token, $this->secret);
         $this->plugin->init($this->timestamp, $this->nonce);
+        $this->next = function (Request $request) {
+            return new FulfilledPromise($request);
+        };
+        $this->first = function () {
+            throw new \RuntimeException('Did not expect plugin to call first');
+        };
     }
 
     public function testPrefixRequestPath()
@@ -43,20 +52,17 @@ class RequestSignatureTest extends TestCase
             json_encode(['foo' => 'bar'])
         );
 
-        $this->plugin->handleRequest($request, function (Request $actual) use ($expected) {
-            $this->assertEquals($expected->getHeaders(), $actual->getHeaders());
-        }, function () {
-        });
+        $promise = $this->plugin->handleRequest($request, $this->next, $this->first);
+
+        $this->assertEquals($expected->getHeaders(), $promise->wait(true)->getHeaders());
     }
 
     public function testPrefixRequestPathSmoke()
     {
         $request = new Request('POST', '/packages/?foo=bar', [], json_encode(['foo' => 'bar']));
 
-        $plugin = new RequestSignature($this->token, $this->secret);
-        $plugin->handleRequest($request, function (Request $actual) {
-            $this->assertNotNull($actual->getHeader('Authorization')[0]);
-        }, function () {
-        });
+        $promise = $this->plugin->handleRequest($request, $this->next, $this->first);
+
+        $this->assertNotNull($promise->wait(true)->getHeader('Authorization')[0]);
     }
 }

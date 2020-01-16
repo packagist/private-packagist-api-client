@@ -13,13 +13,14 @@ use Http\Client\Common\Plugin;
 use PrivatePackagist\ApiClient\Exception\ErrorException;
 use PrivatePackagist\ApiClient\Exception\HttpTransportException;
 use PrivatePackagist\ApiClient\Exception\ResourceNotFoundException;
-use PrivatePackagist\ApiClient\Exception\RuntimeException;
 use PrivatePackagist\ApiClient\HttpClient\Message\ResponseMediator;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class ExceptionThrower implements Plugin
 {
+    use Plugin\VersionBridgePlugin;
+
     /** @var ResponseMediator */
     private $responseMediator;
 
@@ -28,7 +29,7 @@ class ExceptionThrower implements Plugin
         $this->responseMediator = $responseMediator ? $responseMediator : new ResponseMediator();
     }
 
-    public function handleRequest(RequestInterface $request, callable $next, callable $first)
+    protected function doHandleRequest(RequestInterface $request, callable $next, callable $first)
     {
         return $next($request)->then(function (ResponseInterface $response) use ($request) {
             if ($response->getStatusCode() < 400 || $response->getStatusCode() > 600) {

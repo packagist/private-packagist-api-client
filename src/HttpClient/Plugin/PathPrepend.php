@@ -14,6 +14,8 @@ use Psr\Http\Message\RequestInterface;
 
 class PathPrepend implements Plugin
 {
+    use Plugin\VersionBridgePlugin;
+
     /** @var string */
     private $path;
 
@@ -28,7 +30,7 @@ class PathPrepend implements Plugin
     /**
      * {@inheritdoc}
      */
-    public function handleRequest(RequestInterface $request, callable $next, callable $first)
+    protected function doHandleRequest(RequestInterface $request, callable $next, callable $first)
     {
         $uri = $request->getUri();
 
