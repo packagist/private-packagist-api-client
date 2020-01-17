@@ -10,43 +10,47 @@
 namespace PrivatePackagist\ApiClient\HttpClient\Plugin;
 
 use GuzzleHttp\Psr7\Request;
+use Http\Promise\FulfilledPromise;
 use PHPUnit\Framework\TestCase;
 
 class PathPrependTest extends TestCase
 {
-    public function testPrefixRequestPath()
-    {
-        $request = new Request('GET', '/packages/');
-        $expected = new Request('GET', '/api/packages/');
-        $plugin = new PathPrepend('/api');
-        $callback = $this->getMockBuilder(\stdClass::class)
-            ->setMethods(['next'])
-            ->getMock()
-        ;
-        $callback->expects($this->once())
-            ->method('next')
-            ->with($expected)
-        ;
+    /** @var PathPrepend */
+    private $plugin;
+    private $next;
+    private $first;
 
-        $plugin->handleRequest($request, [$callback, 'next'], function () {
-        });
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->plugin = new PathPrepend('/api');
+        $this->next = function (Request $request) {
+            return new FulfilledPromise($request);
+        };
+        $this->first = function () {
+            throw new \RuntimeException('Did not expect plugin to call first');
+        };
     }
 
-    public function testDontPrefixApiRequestPath()
+    /**
+     * @dataProvider pathProvider
+     */
+    public function testPrefixApiRequestPath($path, $expectedPath)
     {
-        $request = new Request('GET', '/api/packages/');
-        $expected = new Request('GET', '/api/packages/');
-        $plugin = new PathPrepend('/api');
-        $callback = $this->getMockBuilder(\stdClass::class)
-            ->setMethods(['next'])
-            ->getMock()
-        ;
-        $callback->expects($this->once())
-            ->method('next')
-            ->with($expected)
-        ;
+        $request = new Request('GET', $path);
+        $expected = new Request('GET', $expectedPath);
 
-        $plugin->handleRequest($request, [$callback, 'next'], function () {
-        });
+        $promise = $this->plugin->handleRequest($request, $this->next, $this->first);
+
+        $this->assertEquals($expected, $promise->wait(true));
+    }
+
+    public function pathProvider()
+    {
+        return [
+            ['/api/packages/', '/api/packages/'],
+            ['/packages/', '/api/packages/'],
+        ];
     }
 }

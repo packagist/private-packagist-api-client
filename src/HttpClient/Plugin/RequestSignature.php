@@ -14,6 +14,8 @@ use Psr\Http\Message\RequestInterface;
 
 class RequestSignature implements Plugin
 {
+    use Plugin\VersionBridgePlugin;
+
     /** @var string */
     private $token;
     /** @var string */
@@ -32,7 +34,7 @@ class RequestSignature implements Plugin
     /**
      * {@inheritdoc}
      */
-    public function handleRequest(RequestInterface $request, callable $next, callable $first)
+    protected function doHandleRequest(RequestInterface $request, callable $next, callable $first)
     {
         $params = [
             'key' => $this->token,
