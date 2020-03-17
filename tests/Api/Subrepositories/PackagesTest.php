@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PrivatePackagist\ApiClient\Api\Projects;
+namespace PrivatePackagist\ApiClient\Api\Subrepositories;
 
 use PrivatePackagist\ApiClient\Api\ApiTestCase;
 
@@ -15,7 +15,7 @@ class PackagesTest extends ApiTestCase
 {
     public function testAll()
     {
-        $projectName = 'project';
+        $subrepositoryName = 'subrepository';
         $expected = [
             [
                 'id' => 1,
@@ -27,15 +27,15 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/subrepositories/project/packages/'))
+            ->with($this->equalTo('/subrepositories/subrepository/packages/'))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->all($projectName));
+        $this->assertSame($expected, $api->all($subrepositoryName));
     }
 
     public function testAllWithFilters()
     {
-        $projectName = 'project';
+        $subrepositoryName = 'subrepository';
         $expected = [
             [
                 'id' => 1,
@@ -51,10 +51,10 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/subrepositories/project/packages/'), $this->equalTo($filters))
+            ->with($this->equalTo('/subrepositories/subrepository/packages/'), $this->equalTo($filters))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->all($projectName, $filters));
+        $this->assertSame($expected, $api->all($subrepositoryName, $filters));
     }
 
     /**
@@ -62,7 +62,7 @@ class PackagesTest extends ApiTestCase
      */
     public function testAllWithInvalidFilters()
     {
-        $projectName = 'project';
+        $subrepositoryName = 'subrepository';
         $filters = [
             'origin' => 'invalid'
         ];
@@ -72,12 +72,12 @@ class PackagesTest extends ApiTestCase
         $api->expects($this->never())
             ->method('get');
 
-        $api->all($projectName, $filters);
+        $api->all($subrepositoryName, $filters);
     }
 
     public function testShow()
     {
-        $projectName = 'project';
+        $subrepositoryName = 'subrepository';
         $expected = [
             'id' => 1,
             'name' => 'acme-website/package',
@@ -87,15 +87,15 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/subrepositories/project/packages/acme-website/package'))
+            ->with($this->equalTo('/subrepositories/subrepository/packages/acme-website/package'))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->show($projectName, 'acme-website/package'));
+        $this->assertSame($expected, $api->show($subrepositoryName, 'acme-website/package'));
     }
 
     public function testCreateVcsPackage()
     {
-        $projectName = 'project';
+        $subrepositoryName = 'subrepository';
         $expected = [
             'id' => 'job-id',
             'status' => 'queued',
@@ -105,10 +105,10 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
-            ->with($this->equalTo('/subrepositories/project/packages/'), $this->equalTo(['repoType' => 'vcs', 'repoUrl' => 'localhost', 'credentials' => null]))
+            ->with($this->equalTo('/subrepositories/subrepository/packages/'), $this->equalTo(['repoType' => 'vcs', 'repoUrl' => 'localhost', 'credentials' => null]))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->createVcsPackage($projectName, 'localhost'));
+        $this->assertSame($expected, $api->createVcsPackage($subrepositoryName, 'localhost'));
     }
 
     /**
@@ -116,7 +116,7 @@ class PackagesTest extends ApiTestCase
      */
     public function testCreateCustomPackage($customJson)
     {
-        $projectName = 'project';
+        $subrepositoryName = 'subrepository';
         $expected = [
             'id' => 'job-id',
             'status' => 'queued',
@@ -126,10 +126,10 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
-            ->with($this->equalTo('/subrepositories/project/packages/'), $this->equalTo(['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null]))
+            ->with($this->equalTo('/subrepositories/subrepository/packages/'), $this->equalTo(['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null]))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->createCustomPackage($projectName, $customJson));
+        $this->assertSame($expected, $api->createCustomPackage($subrepositoryName, $customJson));
     }
 
     public function customProvider()
@@ -142,7 +142,7 @@ class PackagesTest extends ApiTestCase
 
     public function testEditVcsPackage()
     {
-        $projectName = 'project';
+        $subrepositoryName = 'subrepository';
         $expected = [
             'id' => 'job-id',
             'status' => 'queued',
@@ -152,15 +152,15 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
-            ->with($this->equalTo('/subrepositories/project/packages/acme-website/package/'), $this->equalTo(['repoType' => 'vcs', 'repoUrl' => 'localhost', 'credentials' => null]))
+            ->with($this->equalTo('/subrepositories/subrepository/packages/acme-website/package/'), $this->equalTo(['repoType' => 'vcs', 'repoUrl' => 'localhost', 'credentials' => null]))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->editVcsPackage($projectName, 'acme-website/package', 'localhost'));
+        $this->assertSame($expected, $api->editVcsPackage($subrepositoryName, 'acme-website/package', 'localhost'));
     }
 
     public function testEditCustomPackage()
     {
-        $projectName = 'project';
+        $subrepositoryName = 'subrepository';
         $expected = [
             'id' => 'job-id',
             'status' => 'queued',
@@ -170,25 +170,25 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
-            ->with($this->equalTo('/subrepositories/project/packages/acme-website/package/'), $this->equalTo(['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null]))
+            ->with($this->equalTo('/subrepositories/subrepository/packages/acme-website/package/'), $this->equalTo(['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null]))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->editCustomPackage($projectName, 'acme-website/package', '{}'));
+        $this->assertSame($expected, $api->editCustomPackage($subrepositoryName, 'acme-website/package', '{}'));
     }
 
     public function testRemove()
     {
-        $projectName = 'project';
+        $subrepositoryName = 'subrepository';
         $expected = [];
 
         /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo('/subrepositories/project/packages/acme-website/package/'))
+            ->with($this->equalTo('/subrepositories/subrepository/packages/acme-website/package/'))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->remove($projectName, 'acme-website/package'));
+        $this->assertSame($expected, $api->remove($subrepositoryName, 'acme-website/package'));
     }
 
     protected function getApiClass()

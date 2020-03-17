@@ -144,228 +144,228 @@ $composerRepository = $client->customers()->regenerateToken($customerId, $confir
 ```
 Returns the edited Composer repository.
 
-#### Project
+#### Subrepository
 
-##### List an organization's projects
+##### List an organization's subrepositories
 ```php
-$projects = $client->projects()->all();
+$subrepositories = $client->subrepositories()->all();
 ```
-Returns an array of projects.
+Returns an array of subrepositories.
 
-##### Show a project
+##### Show a subrepository
 ```php
-$projectName = 'project';
-$project = $client->projects()->show($projectName);
+$subrepositoryName = 'subrepository';
+$subrepository = $client->subrepositories()->show($subrepositoryName);
 ```
-Returns a single project.
+Returns a single subrepository.
 
-##### Create a project
+##### Create a subrepository
 ```php
-$project = $client->projects()->create('New project name');
+$subrepository = $client->subrepositories()->create('New subrepository name');
 ```
-Returns the project.
+Returns the subrepository.
 
-##### Delete a project
+##### Delete a subrepository
 ```php
-$projectName = 'project';
-$client->projects()->remove($projectName);
+$subrepositoryName = 'subrepository';
+$client->subrepositories()->remove($subrepositoryName);
 ```
 
-##### List a projects's teams
+##### List a subrepositories's teams
 ```php
-$projectName = 'project';
-$teams = $client->projects()->listTeams($projectName);
+$subrepositoryName = 'subrepository';
+$teams = $client->subrepositories()->listTeams($subrepositoryName);
 ```
-Returns an array of projects teams.
+Returns an array of subrepositories teams.
 
-##### Add a team to a project or edit the permission
+##### Add a team to a subrepository or edit the permission
 ```php
-$projectName = 'project';
+$subrepositoryName = 'subrepository';
 $teams = [
     [
         'id' => 12,
         'permission' => 'owner',
     ],
 ];
-$teams = $client->projects()->addOrEditTeams($projectName, $teams);
+$teams = $client->subrepositories()->addOrEditTeams($subrepositoryName, $teams);
 ```
-Returns an array of added project teams.
+Returns an array of added subrepository teams.
 
 
-##### Remove a team from a project
+##### Remove a team from a subrepository
 ```php
-$projectName = 'project';
+$subrepositoryName = 'subrepository';
 $teamId = 12;
-$client->projects()->removeTeam($projectName, $teamId);
+$client->subrepositories()->removeTeam($subrepositoryName, $teamId);
 ```
 
-##### List a projects's packages
+##### List a subrepositories's packages
 ```php
-$projectName = 'project';
-$packages = $client->projects()->packages()->all($projectName);
+$subrepositoryName = 'subrepository';
+$packages = $client->subrepositories()->packages()->all($subrepositoryName);
 ```
-Returns an array of projects packages.
+Returns an array of subrepositories packages.
 
-##### Show a project package
+##### Show a subrepository package
 ```php
-$projectName = 'project';
-$package = $client->projects()->packages()->show($projectName, 'acme-website/package');
+$subrepositoryName = 'subrepository';
+$package = $client->subrepositories()->packages()->show($subrepositoryName, 'acme-website/package');
 ```
 Returns the package.
 
-##### Create a vcs package in a project
+##### Create a vcs package in a subrepository
 ```php
-$projectName = 'project';
-$job = $client->projects()->packages()->createVcsPackage($projectName, 'https://github.com/acme-website/package');
+$subrepositoryName = 'subrepository';
+$job = $client->subrepositories()->packages()->createVcsPackage($subrepositoryName, 'https://github.com/acme-website/package');
 ```
 Returns a new job.
 
-##### Create a vcs package with credentials in a project
+##### Create a vcs package with credentials in a subrepository
 ```php
-$projectName = 'project';
+$subrepositoryName = 'subrepository';
 $credentialId = 42;
-$job = $client->projects()->packages()->createVcsPackage($projectName,'https://github.com/acme-website/package', $credentialId);
+$job = $client->subrepositories()->packages()->createVcsPackage($subrepositoryName,'https://github.com/acme-website/package', $credentialId);
 ```
 Returns a new job.
 
-##### Create a custom package in a project
+##### Create a custom package in a subrepository
 ```php
-$projectName = 'project';
-$packageDefinition = '{...}'
-$job = $client->projects()->packages()->createCustomPackage($projectName, $packageDefinition);
+$subrepositoryName = 'subrepository';
+$packageDefinition = '{...}';
+$job = $client->subrepositories()->packages()->createCustomPackage($subrepositoryName, $packageDefinition);
 ```
 Returns a new job.
 
-##### Create a custom package with credentials in a project
+##### Create a custom package with credentials in a subrepository
 ```php
-$projectName = 'project';
-$packageDefinition = '{...}'
+$subrepositoryName = 'subrepository';
+$packageDefinition = '{...}';
 $credentialId = 42;
-$job = $client->projects()->packages()->createCustomPackage($projectName, $packageDefinition, $credentialId);
+$job = $client->subrepositories()->packages()->createCustomPackage($subrepositoryName, $packageDefinition, $credentialId);
 ```
 Returns a new job.
 
-##### Edit a vcs package in a project in a project
+##### Edit a vcs package in a subrepository in a subrepository
 ```php
-$projectName = 'project';
-$job = $client->projects()->packages()->editVcsPackage($projectName, 'acme-website/package', 'https://github.com/acme-website/package');
+$subrepositoryName = 'subrepository';
+$job = $client->subrepositories()->packages()->editVcsPackage($subrepositoryName, 'acme-website/package', 'https://github.com/acme-website/package');
 ```
 Returns a new job.
 
-##### Edit a custom package in a project
+##### Edit a custom package in a subrepository
 ```php
-$projectName = 'project';
-$packageDefinition = '{...}'
-$job = $client->projects()->packages()->editCustomPackage($projectName, 'acme-website/package', $packageDefinition);
+$subrepositoryName = 'subrepository';
+$packageDefinition = '{...}';
+$job = $client->subrepositories()->packages()->editCustomPackage($subrepositoryName, 'acme-website/package', $packageDefinition);
 ```
 Returns a new job.
 
-##### Delete a package from a project
+##### Delete a package from a subrepository
 ```php
-$projectName = 'project';
-$client->projects()->packages()->remove($projectName, 'acme-website/package');
+$subrepositoryName = 'subrepository';
+$client->subrepositories()->packages()->remove($subrepositoryName, 'acme-website/package');
 ```
 
-##### List a projects's authentication tokens
+##### List a subrepositories's authentication tokens
 ```php
-$projectName = 'project';
-$tokens = $client->projects()->listTokens($projectName);
+$subrepositoryName = 'subrepository';
+$tokens = $client->subrepositories()->listTokens($subrepositoryName);
 ```
 Returns an array of authentication tokens.
 
-##### Create a project authentication token
+##### Create a subrepository authentication token
 ```php
-$projectName = 'project';
+$subrepositoryName = 'subrepository';
 $data = [
-  'description' => 'Project Token',
+  'description' => 'Subrepository Token',
   'access' => 'read',
 ];
-$token = $client->projects()->createToken($projectName, $data);
+$token = $client->subrepositories()->createToken($subrepositoryName, $data);
 ```
 Returns the authentication token.
 
-##### Delete a project authentication token
+##### Delete a subrepository authentication token
 ```php
-$projectName = 'project';
+$subrepositoryName = 'subrepository';
 $tokenId = 33;
-$client->projects()->removeToken($projectName, $tokenId);
+$client->subrepositories()->removeToken($subrepositoryName, $tokenId);
 ```
 
-##### Regenerate a project authentication token
+##### Regenerate a subrepository authentication token
 ```php
-$projectName = 'project';
+$subrepositoryName = 'subrepository';
 $tokenId = 33;
 $confirmation = [
     'IConfirmOldTokenWillStopWorkingImmediately' => true,
 ];
-$token = $client->projects()->regenerateToken($projectName, $confirmation);
+$token = $client->subrepositories()->regenerateToken($subrepositoryName, $confirmation);
 ```
 Returns the authentication token.
 
-##### List a projects's mirrored repositories
+##### List a subrepositories's mirrored repositories
 ```php
-$projectName = 'project';
-$mirroredRepositories = $client->projects()->mirroredRepositories()->all($projectName);
+$subrepositoryName = 'subrepository';
+$mirroredRepositories = $client->subrepositories()->mirroredRepositories()->all($subrepositoryName);
 ```
 Returns an array of mirrored repositories.
 
 ##### Show a mirrored repository
 ```php
-$projectName = 'project';
+$subrepositoryName = 'subrepository';
 $mirroredRepositoryId = 42;
-$mirroredRepository = $client->projects()->mirroredRepositories()->show($projectName, $mirroredRepositoryId);
+$mirroredRepository = $client->subrepositories()->mirroredRepositories()->show($subrepositoryName, $mirroredRepositoryId);
 ```
 Returns the mirrored repository.
 
-##### Add mirrored repositories to a project
+##### Add mirrored repositories to a subrepository
 ```php
-$projectName = 'project';
+$subrepositoryName = 'subrepository';
 $mirroredRepositoriesToAdd = [
     ['id' => 12, 'mirroringBehavior' => 'add_on_use'],
 ];
-$mirroredRepository = $client->projects()->mirroredRepositories()->add($projectName, $mirroredRepositoriesToAdd);
+$mirroredRepository = $client->subrepositories()->mirroredRepositories()->add($subrepositoryName, $mirroredRepositoriesToAdd);
 ```
 Returns a list of added mirrored repositories.
 
-##### Edit the mirroring behaviour of mirrored repository in a project 
+##### Edit the mirroring behaviour of mirrored repository in a subrepository 
 ```php
-$projectName = 'project';
+$subrepositoryName = 'subrepository';
 $mirroredRepositoryId = 42;
-$mirroredRepository = $client->projects()->mirroredRepositories()->create($projectName, $mirroredRepositoryId, 'add_on_use');
+$mirroredRepository = $client->subrepositories()->mirroredRepositories()->create($subrepositoryName, $mirroredRepositoryId, 'add_on_use');
 ```
 Returns the edited mirrored repository.
 
-##### Delete a mirrored repository from a project
+##### Delete a mirrored repository from a subrepository
 ```php
-$projectName = 'project';
+$subrepositoryName = 'subrepository';
 $mirroredRepositoryId = 42;
-$client->projects()->mirroredRepositories()->remove($projectName, $mirroredRepositoryId);
+$client->subrepositories()->mirroredRepositories()->remove($subrepositoryName, $mirroredRepositoryId);
 ```
 
-##### List all mirrored packages from a mirrored repository in a project
+##### List all mirrored packages from a mirrored repository in a subrepository
 ```php
-$projectName = 'project';
+$subrepositoryName = 'subrepository';
 $mirroredRepositoryId = 42;
-$packages = $client->projects()->mirroredRepositories()->listPackages($projectName, $mirroredRepositoryId);
+$packages = $client->subrepositories()->mirroredRepositories()->listPackages($subrepositoryName, $mirroredRepositoryId);
 ```
 Returns an array of packages.
 
-##### Add mirrored packages from one mirrored repository to a project
+##### Add mirrored packages from one mirrored repository to a subrepository
 ```php
-$projectName = 'project';
+$subrepositoryName = 'subrepository';
 $mirroredRepositoryId = 42;
 $packages = [
     'acme/cool-lib
 ];
-$jobs = $client->projects()->mirroredRepositories()->addPackages($projectName, $mirroredRepositoryId, $packages);
+$jobs = $client->subrepositories()->mirroredRepositories()->addPackages($subrepositoryName, $mirroredRepositoryId, $packages);
 ```
 Returns an array of jobs.
 
-##### Remove all mirrored packages from one mirrored repository in a project
+##### Remove all mirrored packages from one mirrored repository in a subrepository
 ```php
-$projectName = 'project';
+$subrepositoryName = 'subrepository';
 $mirroredRepositoryId = 42;
-$client->projects()->mirroredRepositories()->removePackages($projectName, $mirroredRepositoryId);
+$client->subrepositories()->mirroredRepositories()->removePackages($subrepositoryName, $mirroredRepositoryId);
 ```
 
 #### Package
@@ -400,14 +400,14 @@ Returns a new job.
 
 ##### Create a custom package
 ```php
-$packageDefinition = '{...}'
+$packageDefinition = '{...}';
 $job = $client->packages()->createCustomPackage($packageDefinition);
 ```
 Returns a new job.
 
 ##### Create a custom package with credentials
 ```php
-$packageDefinition = '{...}'
+$packageDefinition = '{...}';
 $credentialId = 42;
 $job = $client->packages()->createCustomPackage($packageDefinition, $credentialId);
 ```

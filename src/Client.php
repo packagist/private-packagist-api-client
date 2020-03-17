@@ -65,9 +65,17 @@ class Client
         return new Api\Customers($this, $this->responseMediator);
     }
 
+    /**
+     * @deprecated Use Client::subrepositories instead
+     */
     public function projects()
     {
-        return new Api\Projects($this, $this->responseMediator);
+        return new Api\Subrepositories($this, $this->responseMediator);
+    }
+
+    public function subrepositories()
+    {
+        return new Api\Subrepositories($this, $this->responseMediator);
     }
 
     public function organization()
