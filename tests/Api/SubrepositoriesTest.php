@@ -9,7 +9,7 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
-class ProjectsTest extends ApiTestCase
+class SubrepositoriesTest extends ApiTestCase
 {
     public function testAll()
     {
@@ -31,16 +31,16 @@ class ProjectsTest extends ApiTestCase
     {
         $expected = $this->getProjectDefinition();
 
-        $projectName = 'project';
+        $subrepositoryName = 'subrepository';
 
         /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/subrepositories/project/'))
+            ->with($this->equalTo('/subrepositories/subrepository/'))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->show($projectName));
+        $this->assertSame($expected, $api->show($subrepositoryName));
     }
 
     public function testCreate()
@@ -65,10 +65,10 @@ class ProjectsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo('/subrepositories/project/'))
+            ->with($this->equalTo('/subrepositories/subrepository/'))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->remove('project'));
+        $this->assertSame($expected, $api->remove('subrepository'));
     }
 
     public function testListTeams()
@@ -79,7 +79,7 @@ class ProjectsTest extends ApiTestCase
                 'name' => 'Owners',
                 'permission' => 'owner',
                 'members' => [],
-                'projects' => [],
+                'subrepositories' => [],
             ],
         ];
 
@@ -87,10 +87,10 @@ class ProjectsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/subrepositories/project/teams/'))
+            ->with($this->equalTo('/subrepositories/subrepository/teams/'))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->listTeams('project'));
+        $this->assertSame($expected, $api->listTeams('subrepository'));
     }
 
     public function testAddOrEditTeam()
@@ -101,7 +101,7 @@ class ProjectsTest extends ApiTestCase
                 'name' => 'Owners',
                 'permission' => 'owner',
                 'members' => [],
-                'projects' => [],
+                'subrepositories' => [],
             ],
         ];
 
@@ -111,10 +111,10 @@ class ProjectsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
-            ->with($this->equalTo('/subrepositories/project/teams/'), $this->equalTo($teams))
+            ->with($this->equalTo('/subrepositories/subrepository/teams/'), $this->equalTo($teams))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->addOrEditTeams('project', $teams));
+        $this->assertSame($expected, $api->addOrEditTeams('subrepository', $teams));
     }
 
     public function testRemoveTeam()
@@ -125,10 +125,10 @@ class ProjectsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo('/subrepositories/project/teams/42/'))
+            ->with($this->equalTo('/subrepositories/subrepository/teams/42/'))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->removeTeam('project', 42));
+        $this->assertSame($expected, $api->removeTeam('subrepository', 42));
     }
 
     public function testListTokens()
@@ -148,10 +148,10 @@ class ProjectsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/subrepositories/project/tokens/'))
+            ->with($this->equalTo('/subrepositories/subrepository/tokens/'))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->listTokens('project'));
+        $this->assertSame($expected, $api->listTokens('subrepository'));
     }
 
     public function testCreateToken()
@@ -169,13 +169,13 @@ class ProjectsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
-            ->with($this->equalTo('/subrepositories/project/tokens/'), $this->equalTo([
+            ->with($this->equalTo('/subrepositories/subrepository/tokens/'), $this->equalTo([
                 'description' => 'Project Token',
                 'access' => 'read',
             ]))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->createToken('project', [
+        $this->assertSame($expected, $api->createToken('subrepository', [
             'description' => 'Project Token',
             'access' => 'read',
         ]));
@@ -189,10 +189,10 @@ class ProjectsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo('/subrepositories/project/tokens/1/'))
+            ->with($this->equalTo('/subrepositories/subrepository/tokens/1/'))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->removeToken('project', 1));
+        $this->assertSame($expected, $api->removeToken('subrepository', 1));
     }
 
     public function testRegenerateToken()
@@ -203,10 +203,10 @@ class ProjectsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
-            ->with($this->equalTo('/subrepositories/project/tokens/1/regenerate'), $this->equalTo(['IConfirmOldTokenWillStopWorkingImmediately' => true]))
+            ->with($this->equalTo('/subrepositories/subrepository/tokens/1/regenerate'), $this->equalTo(['IConfirmOldTokenWillStopWorkingImmediately' => true]))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->regenerateToken('project', 1, ['IConfirmOldTokenWillStopWorkingImmediately' => true]));
+        $this->assertSame($expected, $api->regenerateToken('subrepository', 1, ['IConfirmOldTokenWillStopWorkingImmediately' => true]));
     }
 
     private function getProjectDefinition()
@@ -236,6 +236,6 @@ class ProjectsTest extends ApiTestCase
      */
     protected function getApiClass()
     {
-        return Projects::class;
+        return Subrepositories::class;
     }
 }
