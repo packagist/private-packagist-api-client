@@ -42,7 +42,7 @@ class RequestSignature implements Plugin
             'cnonce' => $this->getNonce(),
         ];
 
-        $content = $request->getBody()->getContents();
+        $content = (string) $request->getBody();
         if ($content) {
             $params['body'] = $content;
         }
