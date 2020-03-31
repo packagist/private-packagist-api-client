@@ -56,4 +56,9 @@ class Packages extends AbstractApi
     {
         return $this->delete(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageName));
     }
+
+    public function listDependents($subrepositoryName, $packageName)
+    {
+        return $this->get(sprintf('/subrepositories/%s/packages/%s/dependents/', $subrepositoryName, $packageName));
+    }
 }

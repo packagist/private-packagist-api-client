@@ -103,4 +103,9 @@ class Packages extends AbstractApi
     {
         return $this->get(sprintf('/packages/%s/customers/', $packageName));
     }
+
+    public function listDependents($packageName)
+    {
+        return $this->get(sprintf('/packages/%s/dependents/', $packageName));
+    }
 }

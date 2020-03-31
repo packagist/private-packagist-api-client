@@ -266,6 +266,13 @@ $subrepositoryName = 'subrepository';
 $client->subrepositories()->packages()->remove($subrepositoryName, 'acme-website/package');
 ```
 
+##### List all dependents of a subrepository package
+```php
+$subrepositoryName = 'subrepository';
+$client->subrepositories()->packages()->listDependents($subrepositoryName, 'acme-website/package');
+```
+Returns a list of packages.
+
 ##### List a subrepositories's authentication tokens
 ```php
 $subrepositoryName = 'subrepository';
@@ -430,6 +437,12 @@ Returns a new job.
 ```php
 $client->packages()->remove('acme-website/package');
 ```
+
+##### List all dependents of a package
+```php
+$client->packages()->listDependents('acme-website/package');
+```
+Returns a list of packages.
 
 ##### List all customers with access to a package
 ```php
