@@ -191,6 +191,27 @@ class PackagesTest extends ApiTestCase
         $this->assertSame($expected, $api->remove($subrepositoryName, 'acme-website/package'));
     }
 
+    public function testListDependents()
+    {
+        $subrepositoryName = 'subrepository';
+        $packageName = 'acme-website/core-package';
+        $expected = [
+            [
+                'id' => 1,
+                'name' => 'acme-website/package',
+            ],
+        ];
+
+        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo('/subrepositories/subrepository/packages/acme-website/core-package/dependents/'))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->listDependents($subrepositoryName, $packageName));
+    }
+
     protected function getApiClass()
     {
         return Packages::class;
