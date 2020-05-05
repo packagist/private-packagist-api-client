@@ -558,6 +558,15 @@ Returns the new Magento legacy key.
 $client->customers()->magentoLegacyKeys()->remove($customerId, $publicKey);
 ```
 
+### Validate incoming webhook payloads
+```php
+$request = /** any Psr7 request */;
+$secret = 'webhook-secret';
+$webhookSignature = new \PrivatePackagist\ApiClient\WebhookSignature($secret);
+$requestSignature = $request->hasHeader('Packagist-Signature') ? $request->getHeader('Packagist-Signature')[0] : null; 
+$webhookSignature->validate($requestSignature, (string) $request->getBody());
+```
+
 ## License
 
 `private-packagist/api-client` is licensed under the MIT License
