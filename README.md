@@ -560,7 +560,7 @@ $client->customers()->magentoLegacyKeys()->remove($customerId, $publicKey);
 
 ### Validate incoming webhook payloads
 
-When you create or update a webhook in Private Packagist an optional secret can be set. This secret gets used to create a hash signature which is sent with each request in the headers as `Packagist-Signature`. The secret and signature can then be used on your server to validate that the reuqest was made by Private Packagist.
+When you create or update a webhook in Private Packagist an optional secret can be set. This secret gets used to create a signature which is sent with each request in the headers as `Packagist-Signature`. The secret and signature can then be used on your server to validate that the request was made by Private Packagist. If no secret is set then no signature is sent.
 
 ```php
 $request = /** any Psr7 request */;
