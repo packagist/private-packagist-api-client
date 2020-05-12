@@ -571,6 +571,18 @@ Returns the new Magento legacy key.
 $client->customers()->magentoLegacyKeys()->remove($customerId, $publicKey);
 ```
 
+### Validate incoming webhook payloads
+
+When you create or update a webhook in Private Packagist an optional secret can be set. This secret gets used to create a signature which is sent with each request in the headers as `Packagist-Signature`. The secret and signature can then be used on your server to validate that the request was made by Private Packagist. If no secret is set then no signature is sent.
+
+```php
+$request = /** any Psr7 request */;
+$secret = 'webhook-secret';
+$webhookSignature = new \PrivatePackagist\ApiClient\WebhookSignature($secret);
+$requestSignature = $request->hasHeader('Packagist-Signature') ? $request->getHeader('Packagist-Signature')[0] : null; 
+$webhookSignature->validate($requestSignature, (string) $request->getBody());
+```
+
 ## License
 
 `private-packagist/api-client` is licensed under the MIT License
