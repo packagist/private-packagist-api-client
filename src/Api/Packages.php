@@ -54,9 +54,9 @@ class Packages extends AbstractApi
         return $this->get(sprintf('/packages/%s/', $packageName));
     }
 
-    public function createVcsPackage($url, $credentialId = null)
+    public function createVcsPackage($url, $credentialId = null, $type = 'vcs')
     {
-        return $this->post('/packages/', ['repoType' => 'vcs', 'repoUrl' => $url, 'credentials' => $credentialId]);
+        return $this->post('/packages/', ['repoType' => $type, 'repoUrl' => $url, 'credentials' => $credentialId]);
     }
 
     public function createCustomPackage($customJson, $credentialId = null)
@@ -76,9 +76,9 @@ class Packages extends AbstractApi
         return $this->editVcsPackage($packageName, $url, $credentialId);
     }
 
-    public function editVcsPackage($packageName, $url, $credentialId = null)
+    public function editVcsPackage($packageName, $url, $credentialId = null, $type = 'vcs')
     {
-        return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => 'vcs', 'repoUrl' => $url, 'credentials' => $credentialId]);
+        return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => $type, 'repoUrl' => $url, 'credentials' => $credentialId]);
     }
 
     /**

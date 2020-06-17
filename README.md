@@ -405,6 +405,12 @@ $job = $client->packages()->createVcsPackage('https://github.com/acme-website/pa
 ```
 Returns a new job.
 
+##### Create a vcs package with a specific type
+```php
+$job = $client->packages()->createVcsPackage('https://github.com/acme-website/package', null, 'git');
+```
+Returns a new job.
+
 ##### Create a custom package
 ```php
 $packageDefinition = '{...}';
