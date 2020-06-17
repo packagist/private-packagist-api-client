@@ -28,9 +28,9 @@ class Packages extends AbstractApi
         return $this->get(sprintf('/subrepositories/%s/packages/%s', $subrepositoryName, $packageName));
     }
 
-    public function createVcsPackage($subrepositoryName, $url, $credentialId = null)
+    public function createVcsPackage($subrepositoryName, $url, $credentialId = null, $type = 'vcs')
     {
-        return $this->post(sprintf('/subrepositories/%s/packages/', $subrepositoryName), ['repoType' => 'vcs', 'repoUrl' => $url, 'credentials' => $credentialId]);
+        return $this->post(sprintf('/subrepositories/%s/packages/', $subrepositoryName), ['repoType' => $type, 'repoUrl' => $url, 'credentials' => $credentialId]);
     }
 
     public function createCustomPackage($subrepositoryName, $customJson, $credentialId = null)
@@ -42,9 +42,9 @@ class Packages extends AbstractApi
         return $this->post(sprintf('/subrepositories/%s/packages/', $subrepositoryName), ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentialId]);
     }
 
-    public function editVcsPackage($subrepositoryName, $packageName, $url, $credentialId = null)
+    public function editVcsPackage($subrepositoryName, $packageName, $url, $credentialId = null, $type = 'vcs')
     {
-        return $this->put(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageName), ['repoType' => 'vcs', 'repoUrl' => $url, 'credentials' => $credentialId]);
+        return $this->put(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageName), ['repoType' => $type, 'repoUrl' => $url, 'credentials' => $credentialId]);
     }
 
     public function editCustomPackage($subrepositoryName, $packageName, $customJson, $credentialId = null)
