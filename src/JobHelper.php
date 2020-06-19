@@ -3,6 +3,7 @@
 namespace PrivatePackagist\ApiClient;
 
 use PrivatePackagist\ApiClient\Exception\JobErrorException;
+use PrivatePackagist\ApiClient\Exception\JobTimeoutException;
 
 class JobHelper
 {
@@ -14,9 +15,15 @@ class JobHelper
         $this->packagistClient = $packagistClient;
     }
 
-    public function waitForJob($jobId, $maxWaitMinutes = 3)
+    /**
+     * @param string $jobId
+     * @param int $maxWaitSeconds
+     * @param int $waitInterval
+     * @return array
+     */
+    public function waitForJob($jobId, $maxWaitSeconds = 30, $waitInterval = 5)
     {
-        $maxWaitTime = new \DateTimeImmutable(sprintf('+%s minutes', $maxWaitMinutes));
+        $maxWaitTime = new \DateTimeImmutable(sprintf('+%s seconds', $maxWaitSeconds));
         while ($maxWaitTime> new \DateTimeImmutable()) {
             $job = $this->packagistClient->jobs()->show($jobId);
 
@@ -28,9 +35,9 @@ class JobHelper
                 throw new JobErrorException($job);
             }
 
-            sleep(1);
+            sleep($waitInterval);
         }
 
-        throw new \Exception(sprintf('Job has not finish after %s minutes', $maxWaitMinutes));
+        throw new JobTimeoutException(sprintf('Job has not finish after %s seconds', $maxWaitSeconds));
     }
 }

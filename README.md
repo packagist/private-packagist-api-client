@@ -558,10 +558,21 @@ $job = $client->jobs()->show($jobId);
 Returns the job.
 
 ##### Wait for a job to finish
+This will periodically poll the job status until the job either finished or the maximum wait time was reached
 ```php
-$numberOfMinutesToWait = 3;
+$numberOfSecondsToWait = 30;
 $jobHelper = new \PrivatePackagist\ApiClient\JobHelper($client);
-$job = $jobHelper->waitForJob($jobId, $numberOfMinutesToWait);
+try {
+    $job = $jobHelper->waitForJob($jobId, $numberOfSecondsToWait);
+} catch (\PrivatePackagist\ApiClient\Exception\JobTimeoutException $e) {
+    // Job didn't finish within the specified time
+} catch (\PrivatePackagist\ApiClient\Exception\JobErrorException $e) {
+    // Job finished with an error. See the message for more information
+    echo $e->getMessage();
+}
+
+
+
 ```
 Returns the job.
 
