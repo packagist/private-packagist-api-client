@@ -557,6 +557,14 @@ $job = $client->jobs()->show($jobId);
 ```
 Returns the job.
 
+##### Wait for a job to finish
+```php
+$numberOfMinutesToWait = 3;
+$jobHelper = new \PrivatePackagist\ApiClient\JobHelper($client);
+$job = $jobHelper->waitForJob($jobId, $numberOfMinutesToWait);
+```
+Returns the job.
+
 #### Magento legacy keys
 
 ##### List all legacy keys for a customer
