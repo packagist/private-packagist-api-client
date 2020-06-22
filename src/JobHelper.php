@@ -21,7 +21,7 @@ class JobHelper
      * @param int $waitInterval
      * @return array
      */
-    public function waitForJob($jobId, $maxWaitSeconds = 30, $waitInterval = 5)
+    public function waitForJob($jobId, $maxWaitSeconds = 180, $waitInterval = 5)
     {
         $maxWaitTime = new \DateTimeImmutable(sprintf('+%s seconds', $maxWaitSeconds));
         while ($maxWaitTime> new \DateTimeImmutable()) {

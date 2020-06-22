@@ -560,7 +560,7 @@ Returns the job.
 ##### Wait for a job to finish
 This will periodically poll the job status until the job either finished or the maximum wait time was reached
 ```php
-$numberOfSecondsToWait = 30;
+$numberOfSecondsToWait = 180;
 $jobHelper = new \PrivatePackagist\ApiClient\JobHelper($client);
 try {
     $job = $jobHelper->waitForJob($jobId, $numberOfSecondsToWait);
