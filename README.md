@@ -50,6 +50,26 @@ $teams = $client->teams()->all();
 ```
 Returns an array of teams.
 
+##### List all private packages a team has access to
+```php
+$teamId = 1;
+$packages = $client->teams()->packages($teamId);
+```
+Returns an array of packages.
+
+##### Grant a team access to a list of private packages
+```php
+$teamId = 1;
+$packages = $client->teams()->addPackages($teamId, ['acme-website/package']);
+```
+Returns an array of packages.
+
+##### Remove access for a package from a team
+```php
+$teamId = 1;
+$packages = $client->teams()->removePackage($teamId, 'acme-website/package');
+```
+
 #### Customer
 
 ##### List an organization's customers

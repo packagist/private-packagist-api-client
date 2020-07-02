@@ -15,4 +15,19 @@ class Teams extends AbstractApi
     {
         return $this->get('/teams/');
     }
+
+    public function packages($teamId)
+    {
+        return $this->get(sprintf('/teams/%s/packages/', $teamId));
+    }
+
+    public function addPackages($teamId, array $packages)
+    {
+        return $this->post(sprintf('/teams/%s/packages/', $teamId), $packages);
+    }
+
+    public function removePackage($teamId, $packageName)
+    {
+        return $this->delete(sprintf('/teams/%s/packages/%s/', $teamId, $packageName));
+    }
 }
