@@ -67,6 +67,11 @@ class Packages extends AbstractApi
 
         return $this->post('/packages/', ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentialId]);
     }
+    
+    public function createArtifactPackage(array $artifactPackageFileIds, $credentialId = null)
+    {
+        return $this->post('/packages/', ['repoType' => 'artifact', 'artifactPackageFileIds' => implode(',', $artifactPackageFileIds), 'credentials' => $credentialId]);
+    }
 
     /**
      * @deprecated Use editVcsPackage instead
@@ -79,6 +84,11 @@ class Packages extends AbstractApi
     public function editVcsPackage($packageName, $url, $credentialId = null, $type = 'vcs')
     {
         return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => $type, 'repoUrl' => $url, 'credentials' => $credentialId]);
+    }
+
+    public function editArtifactPackage($packageName, array $artifactPackageFileIds, $credentialId = null)
+    {
+        return $this->put(sprintf('/packages/%s/', $packageName), ['artifactPackageFileIds' => implode(',', $artifactPackageFileIds), 'repoType' => 'artifact', 'credentials' => $credentialId]);
     }
 
     /**

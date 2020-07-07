@@ -28,7 +28,7 @@ class Client
     public function __construct(HttpPluginClientBuilder $httpClientBuilder = null, $privatePackagistUrl = null, ResponseMediator $responseMediator = null)
     {
         $this->httpClientBuilder = $builder = $httpClientBuilder ?: new HttpPluginClientBuilder();
-        $privatePackagistUrl = $privatePackagistUrl ? : 'https://packagist.com';
+        $privatePackagistUrl = $privatePackagistUrl ? : 'http://packagist.com.lo';
         $this->responseMediator = $responseMediator ? $responseMediator : new ResponseMediator();
 
         $builder->addPlugin(new Plugin\AddHostPlugin(UriFactoryDiscovery::find()->createUri($privatePackagistUrl)));
@@ -96,6 +96,11 @@ class Client
     public function mirroredRepositories()
     {
         return new Api\MirroredRepositories($this, $this->responseMediator);
+    }
+
+    public function packageUploadedFiles()
+    {
+        return new Api\PackageUploadedFiles($this, $this->responseMediator);
     }
 
     public function getHttpClient()

@@ -382,7 +382,7 @@ Returns an array of packages.
 $subrepositoryName = 'subrepository';
 $mirroredRepositoryId = 42;
 $packages = [
-    'acme/cool-lib
+    'acme/cool-lib'
 ];
 $jobs = $client->subrepositories()->mirroredRepositories()->addPackages($subrepositoryName, $mirroredRepositoryId, $packages);
 ```
@@ -475,6 +475,33 @@ Returns a list of packages.
 $client->packages()->listCustomers('acme-website/package');
 ```
 Returns a list of customers with access to the package.
+
+
+### PackageUploadedFile
+
+##### Create a package uploaded file
+
+```php
+$fileName = 'package1.zip';
+$file = file_get_contents($fileName);
+$client->packageUploadedFiles()->create($file, 'application/zip', strlen($file), $fileName);
+```
+
+##### Create an artifact package
+
+```php
+$fileName = 'package1.zip'; // an existing filename for your package
+$file = file_get_contents($fileName);
+$response = $client->packageUploadedFiles()->create($file, 'application/zip', strlen($file), $fileName);
+$artifactId = $response['id'];
+$result = $client->packages()->createArtifactPackage([$artifactId]);
+```
+##### Update an artifact package files
+
+```php
+$packageUploadedFileIds = [42, 43];
+$client->packages()->editArtifactPackage('acme-website/package', $packageUploadedFileIds);
+```
 
 #### Credential
 

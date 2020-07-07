@@ -67,6 +67,19 @@ abstract class AbstractApi
         return $this->responseMediator->getContent($response);
     }
 
+    protected function postFile($path, $rawFileContent, array $headers = [])
+    {
+        $response = $this->client->getHttpClient()->post(
+            $path,
+            array_merge($headers, [
+                'Accept' => 'application/json',
+            ]),
+            $rawFileContent
+        );
+
+        return $this->responseMediator->getContent($response);
+    }
+
     /**
      * @param string $path
      * @param array $parameters
