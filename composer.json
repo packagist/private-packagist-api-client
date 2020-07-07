@@ -31,5 +31,8 @@
     },
     "autoload-dev": {
         "psr-4": { "PrivatePackagist\\ApiClient\\": "tests/"}
+    },
+    "scripts": {
+        "toc": "./gh-md-toc --insert README.md"
     }
 }
