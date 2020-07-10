@@ -11,11 +11,10 @@ namespace PrivatePackagist\ApiClient\Api;
 
 class PackageUploadedFiles extends AbstractApi
 {
-    public function create($file, $contentType, $contentLength, $fileName)
+    public function create($file, $contentType, $fileName)
     {
         return $this->postFile('/packageuploadedfiles/', $file, array_filter([
             'Content-Type' => $contentType,
-            'Content-Length' => $contentLength,
             'X-FILENAME' => $fileName
         ]));
     }

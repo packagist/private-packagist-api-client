@@ -482,19 +482,19 @@ Returns a list of customers with access to the package.
 ##### Create a package uploaded file
 
 ```php
-$fileName = 'package1.zip';
+$fileName = 'package1.zip'; // your package archive artifact containing a valid composer.json in root directory
 $file = file_get_contents($fileName);
-$client->packageUploadedFiles()->create($file, 'application/zip', strlen($file), $fileName);
+$client->packageUploadedFiles()->create($file, 'application/zip', $fileName);
 ```
 
 ##### Create an artifact package
 
 ```php
-$fileName = 'package1.zip'; // an existing filename for your package
+$fileName = 'package1.zip';
 $file = file_get_contents($fileName);
-$response = $client->packageUploadedFiles()->create($file, 'application/zip', strlen($file), $fileName);
+$response = $client->packageUploadedFiles()->create($file, 'application/zip', $fileName);
 $artifactId = $response['id'];
-$result = $client->packages()->createArtifactPackage([$artifactId]);
+$client->packages()->createArtifactPackage([$artifactId]);
 ```
 ##### Update an artifact package files
 
