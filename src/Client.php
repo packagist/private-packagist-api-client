@@ -98,9 +98,9 @@ class Client
         return new Api\MirroredRepositories($this, $this->responseMediator);
     }
 
-    public function packageUploadedFiles()
+    public function packageArtifact()
     {
-        return new Api\PackageUploadedFiles($this, $this->responseMediator);
+        return new Api\PackageArtifacts($this, $this->responseMediator);
     }
 
     public function getHttpClient()

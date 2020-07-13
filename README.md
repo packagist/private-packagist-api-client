@@ -484,7 +484,7 @@ Returns a list of customers with access to the package.
 ```php
 $fileName = 'package1.zip'; // your package archive artifact containing a valid composer.json in root directory
 $file = file_get_contents($fileName);
-$client->packageUploadedFiles()->create($file, 'application/zip', $fileName);
+$client->packageArtifact()->create($file, 'application/zip', $fileName);
 ```
 
 ##### Create an artifact package
@@ -492,7 +492,7 @@ $client->packageUploadedFiles()->create($file, 'application/zip', $fileName);
 ```php
 $fileName = 'package1.zip';
 $file = file_get_contents($fileName);
-$response = $client->packageUploadedFiles()->create($file, 'application/zip', $fileName);
+$response = $client->packageArtifact()->create($file, 'application/zip', $fileName);
 $artifactId = $response['id'];
 $client->packages()->createArtifactPackage([$artifactId]);
 ```

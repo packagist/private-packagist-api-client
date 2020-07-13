@@ -9,7 +9,7 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
-class PackageUploadedFilesTest extends ApiTestCase
+class PackagArtifactsTest extends ApiTestCase
 {
     public function testCreate()
     {
@@ -23,15 +23,15 @@ class PackageUploadedFilesTest extends ApiTestCase
             'X-FILENAME' => 'file.zip'
         ];
 
-        /** @var PackageUploadedFiles&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var PackageArtifact&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('postFile')
-            ->with($this->equalTo('/packageuploadedfiles/'), $rawFileContent, $headers)
+            ->with($this->equalTo('/packages/artifact/'), $rawFileContent, $headers)
             ->willReturn($expected);
 
 
-        $this->assertSame($expected, $api->create($rawFileContent, $headers['Content-Type'], $headers['Content-Length'], $headers['X-FILENAME']));
+        $this->assertSame($expected, $api->create($rawFileContent, $headers['Content-Type'], $headers['X-FILENAME']));
     }
 
     /**
@@ -39,6 +39,6 @@ class PackageUploadedFilesTest extends ApiTestCase
      */
     protected function getApiClass()
     {
-        return PackageUploadedFiles::class;
+        return PackageArtifact::class;
     }
 }

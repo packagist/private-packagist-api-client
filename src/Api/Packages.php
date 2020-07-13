@@ -68,9 +68,9 @@ class Packages extends AbstractApi
         return $this->post('/packages/', ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentialId]);
     }
     
-    public function createArtifactPackage(array $artifactPackageFileIds, $credentialId = null)
+    public function createArtifactPackage(array $artifactPackageFileIds)
     {
-        return $this->post('/packages/', ['repoType' => 'artifact', 'artifactPackageFileIds' => implode(',', $artifactPackageFileIds), 'credentials' => $credentialId]);
+        return $this->post('/packages/', ['repoType' => 'artifact', 'artifactFileIds' => $artifactPackageFileIds]);
     }
 
     /**
@@ -86,9 +86,9 @@ class Packages extends AbstractApi
         return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => $type, 'repoUrl' => $url, 'credentials' => $credentialId]);
     }
 
-    public function editArtifactPackage($packageName, array $artifactPackageFileIds, $credentialId = null)
+    public function editArtifactPackage($packageName, array $artifactPackageFileIds)
     {
-        return $this->put(sprintf('/packages/%s/', $packageName), ['artifactPackageFileIds' => implode(',', $artifactPackageFileIds), 'repoType' => 'artifact', 'credentials' => $credentialId]);
+        return $this->put(sprintf('/packages/%s/', $packageName), ['artifactFileIds' => $artifactPackageFileIds, 'repoType' => 'artifact']);
     }
 
     /**
