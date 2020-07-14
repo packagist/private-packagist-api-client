@@ -578,7 +578,7 @@ $client->packages()->listCustomers('acme-website/package');
 ```
 Returns a list of customers with access to the package.
 
-#### Create a package uploaded file
+#### Create an artifact package file
 
 ```php
 $fileName = 'package1.zip'; // your package archive artifact containing a valid composer.json in root directory
@@ -598,8 +598,9 @@ $client->packages()->createArtifactPackage([$artifactId]);
 #### Update an artifact package files
 
 ```php
-$packageUploadedFileIds = [42, 43];
-$client->packages()->editArtifactPackage('acme-website/package', $packageUploadedFileIds);
+$result = $client->packages()->showArtifacts('acme-website/package'); // get artifact files details for a package
+$artifactFileIds = [42, 43];
+$client->packages()->editArtifactPackage('acme-website/package', $artifactFileIds);
 ```
 ### Credential
 
