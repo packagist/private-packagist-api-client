@@ -1,3 +1,5 @@
 .php_cs.cache
 vendor
 composer.lock
+
+README.md.*
