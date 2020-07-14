@@ -19,11 +19,10 @@ class PackagArtifactsTest extends ApiTestCase
         $rawFileContent = 'foobar';
         $headers = [
             'Content-Type' => 'application/zip',
-            'Content-Length' => '6',
             'X-FILENAME' => 'file.zip'
         ];
 
-        /** @var PackageArtifact&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var PackageArtifacts&\PHPUnit_Framework_MockObject_MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('postFile')
@@ -34,11 +33,28 @@ class PackagArtifactsTest extends ApiTestCase
         $this->assertSame($expected, $api->create($rawFileContent, $headers['Content-Type'], $headers['X-FILENAME']));
     }
 
+    public function testShow()
+    {
+        $expected = [
+            'repoType' => 'artifact',
+            'artifactPackageFileIds' =>[1, 2],
+        ];
+
+        /** @var PackageArtifacts&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo('/packages/artifact/1/'))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->show('1'));
+    }
+
     /**
      * @return string
      */
     protected function getApiClass()
     {
-        return PackageArtifact::class;
+        return PackageArtifacts::class;
     }
 }
