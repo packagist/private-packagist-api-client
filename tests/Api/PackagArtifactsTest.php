@@ -26,7 +26,7 @@ class PackagArtifactsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('postFile')
-            ->with($this->equalTo('/packages/artifact/'), $rawFileContent, $headers)
+            ->with($this->equalTo('/packages/artifacts/'), $rawFileContent, $headers)
             ->willReturn($expected);
 
 
@@ -44,7 +44,7 @@ class PackagArtifactsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/packages/artifact/1/'))
+            ->with($this->equalTo('/packages/artifacts/1/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->show('1'));
