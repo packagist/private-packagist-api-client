@@ -92,7 +92,7 @@ class PackagesTest extends ApiTestCase
         $expected = [
             'name' => 'acme-website/package',
             'repoType' => 'artifact',
-            'artifactFiles' => 'artifact',
+            'artifactIds' => 'artifact',
         ];
 
         /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
