@@ -191,7 +191,7 @@ Returns a single customer.
 ```php
 $customer = $client->customers()->create('New customer name');
 // or
-$customer = $client->customers()->create('New customer name', false, 'customer-url-name');
+$customer = $client->customers()->create('New customer name', false, 'customer-url-name', 'beta');
 ```
 Returns the customer.
 
@@ -202,6 +202,7 @@ $customerData = [
     'name' => $name,
     'urlName' => 'customer',
     'accessToVersionControlSource' => false,
+    'minimumAccessibleStability' => 'beta',
 ];
 $customer = $client->customers()->edit($customerId, $customerData);
 ```
@@ -240,6 +241,7 @@ $packages = [
         'name' => 'acme-website/package',
         'versionConstraint' => '^1.0 | ^2.0', // optional version constraint to limit updates the customer receives
         'expirationDate' => (new \DateTime())->add(new \DateInterval('P1Y'))->format('c'), // optional expiration date to limit updates the customer receives
+        'minimumAccessibleStability' => 'beta', // optional stability to restrict customers to specific package version stabilities like alpha, beta, or RC
     ],
 ];
 $packages = $client->customers()->addOrEditPackages($customerId, $packages);
