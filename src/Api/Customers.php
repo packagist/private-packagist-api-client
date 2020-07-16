@@ -24,11 +24,12 @@ class Customers extends AbstractApi
         return $this->get(sprintf('/customers/%s/', $customerIdOrUrlName));
     }
 
-    public function create($name, $accessToVersionControlSource = false, $urlName = null)
+    public function create($name, $accessToVersionControlSource = false, $urlName = null, $minimumAccessibleStability = null)
     {
         $parameters = [
             'name' => $name,
             'accessToVersionControlSource' => $accessToVersionControlSource,
+            'minimumAccessibleStability' => $minimumAccessibleStability,
         ];
         if ($urlName) {
             $parameters['urlName'] = $urlName;
