@@ -28,7 +28,7 @@ class Client
     public function __construct(HttpPluginClientBuilder $httpClientBuilder = null, $privatePackagistUrl = null, ResponseMediator $responseMediator = null)
     {
         $this->httpClientBuilder = $builder = $httpClientBuilder ?: new HttpPluginClientBuilder();
-        $privatePackagistUrl = $privatePackagistUrl ? : 'http://packagist.com.lo';
+        $privatePackagistUrl = $privatePackagistUrl ? : 'https://packagist.com';
         $this->responseMediator = $responseMediator ? $responseMediator : new ResponseMediator();
 
         $builder->addPlugin(new Plugin\AddHostPlugin(UriFactoryDiscovery::find()->createUri($privatePackagistUrl)));
