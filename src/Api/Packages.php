@@ -93,7 +93,7 @@ class Packages extends AbstractApi
 
     public function editArtifactPackage($packageName, array $artifactPackageFileIds)
     {
-        return $this->put(sprintf('/packages/%s/', $packageName), ['artifactIds' => $artifactPackageFileIds, 'repoType' => 'artifact']);
+        return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => 'artifact', 'artifactIds' => $artifactPackageFileIds]);
     }
 
     /**
