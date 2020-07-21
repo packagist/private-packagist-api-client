@@ -9,6 +9,7 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use PrivatePackagist\ApiClient\Api\Packages\Artifacts;
 use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
 
 class Packages extends AbstractApi
@@ -121,6 +122,6 @@ class Packages extends AbstractApi
 
     public function artifacts()
     {
-        return new PackageArtifacts($this->client, $this->client->getResponseMediator());
+        return new Artifacts($this->client, $this->client->getResponseMediator());
     }
 }

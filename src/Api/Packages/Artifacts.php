@@ -7,9 +7,11 @@
  * file that was distributed with this source code.
  */
 
-namespace PrivatePackagist\ApiClient\Api;
+namespace PrivatePackagist\ApiClient\Api\Packages;
 
-class PackageArtifacts extends AbstractApi
+use PrivatePackagist\ApiClient\Api\AbstractApi;
+
+class Artifacts extends AbstractApi
 {
     public function create($file, $contentType, $fileName)
     {
