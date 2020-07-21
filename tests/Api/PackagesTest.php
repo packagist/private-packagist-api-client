@@ -124,6 +124,23 @@ class PackagesTest extends ApiTestCase
         $this->assertSame($expected, $api->createCustomPackage($customJson));
     }
 
+    public function testCreateArtifactPackage()
+    {
+        $expected = [
+            'id' => 'job-id',
+            'status' => 'queued',
+        ];
+
+        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('post')
+            ->with($this->equalTo('/packages/'), $this->equalTo(['repoType' => 'artifact', 'artifactIds' => [42]]))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->createArtifactPackage([42]));
+    }
+
     public function customProvider()
     {
         return [
@@ -164,6 +181,23 @@ class PackagesTest extends ApiTestCase
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->editCustomPackage('acme-website/package', '{}'));
+    }
+
+    public function testEditArtifactPackage()
+    {
+        $expected = [
+            'id' => 'job-id',
+            'status' => 'queued',
+        ];
+
+        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('put')
+            ->with($this->equalTo('/packages/acme-website/package/'), $this->equalTo(['repoType' => 'artifact', 'artifactIds' => [1, 3]]))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->editArtifactPackage('acme-website/package', [1, 3]));
     }
 
     public function testRemove()

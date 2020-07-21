@@ -103,6 +103,11 @@ class Client
         return $this->getHttpClientBuilder()->getHttpClient();
     }
 
+    public function getResponseMediator()
+    {
+        return $this->responseMediator;
+    }
+
     protected function getHttpClientBuilder()
     {
         return $this->httpClientBuilder;

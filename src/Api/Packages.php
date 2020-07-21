@@ -9,6 +9,7 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use PrivatePackagist\ApiClient\Api\Packages\Artifacts;
 use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
 
 class Packages extends AbstractApi
@@ -67,6 +68,11 @@ class Packages extends AbstractApi
 
         return $this->post('/packages/', ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentialId]);
     }
+    
+    public function createArtifactPackage(array $artifactPackageFileIds)
+    {
+        return $this->post('/packages/', ['repoType' => 'artifact', 'artifactIds' => $artifactPackageFileIds]);
+    }
 
     /**
      * @deprecated Use editVcsPackage instead
@@ -79,6 +85,11 @@ class Packages extends AbstractApi
     public function editVcsPackage($packageName, $url, $credentialId = null, $type = 'vcs')
     {
         return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => $type, 'repoUrl' => $url, 'credentials' => $credentialId]);
+    }
+
+    public function editArtifactPackage($packageName, array $artifactPackageFileIds)
+    {
+        return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => 'artifact', 'artifactIds' => $artifactPackageFileIds]);
     }
 
     /**
@@ -107,5 +118,10 @@ class Packages extends AbstractApi
     public function listDependents($packageName)
     {
         return $this->get(sprintf('/packages/%s/dependents/', $packageName));
+    }
+
+    public function artifacts()
+    {
+        return new Artifacts($this->client, $this->client->getResponseMediator());
     }
 }
