@@ -98,14 +98,14 @@ class Client
         return new Api\MirroredRepositories($this, $this->responseMediator);
     }
 
-    public function packageArtifact()
-    {
-        return new Api\PackageArtifacts($this, $this->responseMediator);
-    }
-
     public function getHttpClient()
     {
         return $this->getHttpClientBuilder()->getHttpClient();
+    }
+
+    public function getResponseMediator()
+    {
+        return $this->responseMediator;
     }
 
     protected function getHttpClientBuilder()

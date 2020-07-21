@@ -54,11 +54,6 @@ class Packages extends AbstractApi
         return $this->get(sprintf('/packages/%s/', $packageName));
     }
 
-    public function showArtifacts($packageName)
-    {
-        return $this->get(sprintf('/packages/%s/artifacts/', $packageName));
-    }
-
     public function createVcsPackage($url, $credentialId = null, $type = 'vcs')
     {
         return $this->post('/packages/', ['repoType' => $type, 'repoUrl' => $url, 'credentials' => $credentialId]);
@@ -122,5 +117,10 @@ class Packages extends AbstractApi
     public function listDependents($packageName)
     {
         return $this->get(sprintf('/packages/%s/dependents/', $packageName));
+    }
+
+    public function artifacts()
+    {
+        return new PackageArtifacts($this->client, $this->client->getResponseMediator());
     }
 }

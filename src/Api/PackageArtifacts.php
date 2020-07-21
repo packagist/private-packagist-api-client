@@ -23,4 +23,9 @@ class PackageArtifacts extends AbstractApi
     {
         return $this->get(sprintf('/packages/artifacts/%s/', $artifactId));
     }
+
+    public function showPackageArtifacts($packageName)
+    {
+        return $this->get(sprintf('/packages/%s/artifacts/', $packageName));
+    }
 }

@@ -9,7 +9,7 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
-class PackagArtifactsTest extends ApiTestCase
+class PackageArtifactsTest extends ApiTestCase
 {
     public function testCreate()
     {
@@ -48,6 +48,24 @@ class PackagArtifactsTest extends ApiTestCase
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->show('1'));
+    }
+
+    public function testShowPackageArtifacts()
+    {
+        $expected = [
+            'name' => 'acme-website/package',
+            'repoType' => 'artifact',
+            'artifactFiles' => 'artifact',
+        ];
+
+        /** @var PackageArtifacts&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo('/packages/acme-website/package/artifacts/'))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->showPackageArtifacts('acme-website/package'));
     }
 
     /**

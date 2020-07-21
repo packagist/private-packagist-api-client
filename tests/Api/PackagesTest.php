@@ -87,24 +87,6 @@ class PackagesTest extends ApiTestCase
         $this->assertSame($expected, $api->show('acme-website/package'));
     }
 
-    public function testShowArtifacts()
-    {
-        $expected = [
-            'name' => 'acme-website/package',
-            'repoType' => 'artifact',
-            'artifactIds' => 'artifact',
-        ];
-
-        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
-        $api = $this->getApiMock();
-        $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/packages/acme-website/package/artifacts/'))
-            ->willReturn($expected);
-
-        $this->assertSame($expected, $api->showArtifacts('acme-website/package'));
-    }
-
     public function testCreateVcsPackage()
     {
         $expected = [
