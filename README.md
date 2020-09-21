@@ -600,7 +600,7 @@ $client->packages()->createArtifactPackage([$artifactId]);
 #### Update artifact files of a package
 
 ```php
-$result = $client->packages()->packages()->artifacts()->showPackageArtifacts('acme-website/package'); // get artifact files details for a package
+$result = $client->packages()->artifacts()->showPackageArtifacts('acme-website/package'); // get artifact files details for a package
 $artifactFileIds = [42, 43];
 $client->packages()->editArtifactPackage('acme-website/package', $artifactFileIds);
 ```
