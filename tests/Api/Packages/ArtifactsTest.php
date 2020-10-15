@@ -35,6 +35,29 @@ class ArtifactsTest extends ApiTestCase
         $this->assertSame($expected, $api->create($rawFileContent, $headers['Content-Type'], $headers['X-FILENAME']));
     }
 
+    public function testAdd()
+    {
+        $packageId = 10;
+        $expected = [
+            'id' => 1,
+        ];
+        $rawFileContent = 'foobar';
+        $headers = [
+            'Content-Type' => 'application/zip',
+            'X-FILENAME' => 'file.zip'
+        ];
+
+        /** @var Artifacts&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('postFile')
+            ->with($this->equalTo('/packages/'.$packageId.'/artifacts/'), $rawFileContent, $headers)
+            ->willReturn($expected);
+
+
+        $this->assertSame($expected, $api->add($packageId,$rawFileContent, $headers['Content-Type'], $headers['X-FILENAME']));
+    }
+
     public function testShow()
     {
         $expected = [

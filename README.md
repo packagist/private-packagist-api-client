@@ -73,6 +73,7 @@
             * [Create an artifact package file](#create-an-artifact-package-file)
             * [Create an artifact package](#create-an-artifact-package)
             * [Update artifact files of a package](#update-artifact-files-of-a-package)
+            * [Add an artifact file to an existing package](#add-an-artifact-file-to-an-existing-package)
          * [Credential](#credential)
             * [List an organization's credentials](#list-an-organizations-credentials)
             * [Show a credential](#show-a-credential)
@@ -98,7 +99,7 @@
          * [Validate incoming webhook payloads](#validate-incoming-webhook-payloads)
       * [License](#license)
 
-<!-- Added by: wissem, at: Tue Jul 21 10:32:47 CEST 2020 -->
+<!-- Added by: wissem, at: Thu Oct 15 10:37:57 CEST 2020 -->
 
 <!--te-->
 
@@ -603,6 +604,15 @@ $client->packages()->createArtifactPackage([$artifactId]);
 $result = $client->packages()->artifacts()->showPackageArtifacts('acme-website/package'); // get artifact files details for a package
 $artifactFileIds = [42, 43];
 $client->packages()->editArtifactPackage('acme-website/package', $artifactFileIds);
+```
+
+#### Add an artifact file to an existing package
+
+```php
+$packageId = 1;
+$fileName = 'package1.zip';
+$file = file_get_contents($fileName);
+$client->packages()->artifacts()->add($packageId, $file, 'application/zip', $fileName);
 ```
 ### Credential
 

@@ -21,6 +21,14 @@ class Artifacts extends AbstractApi
         ]));
     }
 
+    public function add($packageId, $file, $contentType, $fileName)
+    {
+        return $this->postFile('/packages/'.$packageId.'/artifacts/', $file, array_filter([
+            'Content-Type' => $contentType,
+            'X-FILENAME' => $fileName
+        ]));
+    }
+
     public function show($artifactId)
     {
         return $this->get(sprintf('/packages/artifacts/%s/', $artifactId));
