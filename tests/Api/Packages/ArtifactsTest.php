@@ -37,7 +37,7 @@ class ArtifactsTest extends ApiTestCase
 
     public function testAdd()
     {
-        $packageId = 10;
+        $packageName = 'acme/artifact';
         $expected = [
             'id' => 1,
         ];
@@ -51,11 +51,11 @@ class ArtifactsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('postFile')
-            ->with($this->equalTo('/packages/'.$packageId.'/artifacts/'), $rawFileContent, $headers)
+            ->with($this->equalTo('/packages/'.$packageName.'/artifacts/'), $rawFileContent, $headers)
             ->willReturn($expected);
 
 
-        $this->assertSame($expected, $api->add($packageId,$rawFileContent, $headers['Content-Type'], $headers['X-FILENAME']));
+        $this->assertSame($expected, $api->add($packageName,$rawFileContent, $headers['Content-Type'], $headers['X-FILENAME']));
     }
 
     public function testShow()

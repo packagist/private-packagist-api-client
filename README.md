@@ -609,10 +609,10 @@ $client->packages()->editArtifactPackage('acme-website/package', $artifactFileId
 #### Add an artifact file to an existing package
 
 ```php
-$packageId = 1;
+$packageName = 'acme/artifact';
 $fileName = 'package1.zip';
 $file = file_get_contents($fileName);
-$client->packages()->artifacts()->add($packageId, $file, 'application/zip', $fileName);
+$client->packages()->artifacts()->add($packageName, $file, 'application/zip', $fileName);
 ```
 ### Credential
 
