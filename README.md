@@ -610,13 +610,20 @@ $client->packages()->artifacts()->add($packageName, $file, 'application/zip', $f
 
 ```php
 // in case you want to replace the artifact file with a newly uploaded one
-// 1. upload the new artifact file
+// 1. get current artifact ids
+$result = $client->packages()->artifacts()->showPackageArtifacts('acme-website/package');
+$artifactIds = array_column($result, 'id'); // [41, 42]
+
+// 2. upload the new artifact file
 $fileName = 'package1.zip';
 $file = file_get_contents($fileName);
 $response = $client->packages()->artifacts()->create($file, 'application/zip', $fileName);
-$artifactId = $response['id'];
-// 2. send the artifact file ids you want to use for the package
-$client->packages()->editArtifactPackage('acme-website/package', [$artifactId, 42]);
+$newArtifactId = $response['id'];
+
+// 3. let's say we don't want to have the artifact file id = 41 and use the newly uploaded file instead
+$artifactIds = array_shift($artifactIds);
+$artifactIds[] = $newArtifactId;
+$client->packages()->editArtifactPackage('acme-website/package', $artifactIds);
 ```
 
 ### Credential
