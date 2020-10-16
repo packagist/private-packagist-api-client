@@ -72,8 +72,8 @@
             * [List all customers with access to a package](#list-all-customers-with-access-to-a-package)
             * [Create an artifact package file](#create-an-artifact-package-file)
             * [Create an artifact package](#create-an-artifact-package)
-            * [Update artifact files of a package](#update-artifact-files-of-a-package)
             * [Add an artifact file to an existing package](#add-an-artifact-file-to-an-existing-package)
+            * [Update or replace artifact files of a package](#update-or-replace-artifact-files-of-a-package)
          * [Credential](#credential)
             * [List an organization's credentials](#list-an-organizations-credentials)
             * [Show a credential](#show-a-credential)
@@ -99,7 +99,7 @@
          * [Validate incoming webhook payloads](#validate-incoming-webhook-payloads)
       * [License](#license)
 
-<!-- Added by: wissem, at: Thu Oct 15 10:37:57 CEST 2020 -->
+<!-- Added by: wissem, at: Fri Oct 16 14:23:54 CEST 2020 -->
 
 <!--te-->
 
@@ -598,14 +598,6 @@ $response = $client->packages()->artifacts()->create($file, 'application/zip', $
 $artifactId = $response['id'];
 $client->packages()->createArtifactPackage([$artifactId]);
 ```
-#### Update artifact files of a package
-
-```php
-$result = $client->packages()->artifacts()->showPackageArtifacts('acme-website/package'); // get artifact files details for a package
-$artifactFileIds = [42, 43];
-$client->packages()->editArtifactPackage('acme-website/package', $artifactFileIds);
-```
-
 #### Add an artifact file to an existing package
 
 ```php
@@ -614,6 +606,19 @@ $fileName = 'package1.zip';
 $file = file_get_contents($fileName);
 $client->packages()->artifacts()->add($packageName, $file, 'application/zip', $fileName);
 ```
+#### Update or replace artifact files of a package
+
+```php
+// in case you want to replace the artifact file with a newly uploaded one
+// 1. upload the new artifact file
+$fileName = 'package1.zip';
+$file = file_get_contents($fileName);
+$response = $client->packages()->artifacts()->create($file, 'application/zip', $fileName);
+$artifactId = $response['id'];
+// 2. send the artifact file ids you want to use for the package
+$client->packages()->editArtifactPackage('acme-website/package', [$artifactId, 42]);
+```
+
 ### Credential
 
 #### List an organization's credentials
