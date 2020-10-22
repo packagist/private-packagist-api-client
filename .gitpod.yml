@@ -1,8 +1,19 @@
+image:
+  file: .gitpod.Dockerfile
+
 ports:
 - port: 8000
   onOpen: open-preview
+
+vscode:
+  extensions:
+    - felixfbecker.php-debug@1.13.0:WX8Y3EpQk3zgahy41yJtNQ==
+
+# List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/44_config_start_tasks/
 tasks:
-- init: >
-    composer update
-  command: >
-    php bin/console server:run 0.0.0.0:8000
+  - name: koel
+    init: >
+        composer install
+    command: >
+        service nginx start &
+        /usr/sbin/php-fpm7.3 --fpm-config php-fpm.conf
