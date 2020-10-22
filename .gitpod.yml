@@ -1,6 +1,8 @@
-image:
-  file: .gitpod.Dockerfile
-
+ports:
+- port: 8000
+  onOpen: open-preview
 tasks:
-  - init: 'echo "TODO: Replace with init/build command"'
-    command: 'echo "TODO: Replace with command to start project"'
+- init: >
+    composer update
+  command: >
+    php bin/console server:run 0.0.0.0:8000
