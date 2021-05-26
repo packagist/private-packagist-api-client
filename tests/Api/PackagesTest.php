@@ -261,6 +261,35 @@ class PackagesTest extends ApiTestCase
         $this->assertSame($expected, $api->listDependents($packageName));
     }
 
+    public function testListSecurityIssues()
+    {
+        $packageName = 'acme-website/core-package';
+        $expected = [
+            [
+                'packageName' => 'acme-website/package',
+                'state' => 'open',
+                'branch' => 'dev-master',
+                'installedPackage' => 'acme/library',
+                'installedVersion' => '1.0.0',
+                'advisory' => [
+                    'title' => 'CVE-1999: Remote code execution',
+                    'link' =>'https://acme.website/security-advisories',
+                    'cve' => 'CVE-1999',
+                    'affectedVersions' => '>=1.0',
+                ],
+            ],
+        ];
+
+        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo('/packages/acme-website/core-package/security-issues/'))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->listSecurityIssues($packageName));
+    }
+
     protected function getApiClass()
     {
         return Packages::class;

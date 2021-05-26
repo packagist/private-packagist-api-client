@@ -88,6 +88,12 @@ class Client
         return new Api\Packages($this, $this->responseMediator);
     }
 
+    public function securityIssues()
+    {
+        return new Api\SecurityIssues($this, $this->responseMediator);
+    }
+
+
     public function jobs()
     {
         return new Api\Jobs($this, $this->responseMediator);
