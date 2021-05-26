@@ -70,6 +70,7 @@
             * [Delete a package](#delete-a-package)
             * [List all dependents of a package](#list-all-dependents-of-a-package)
             * [List all customers with access to a package](#list-all-customers-with-access-to-a-package)
+            * [List all security issues of a package](#list-all-security-issues-of-a-package)
             * [Create an artifact package file](#create-an-artifact-package-file)
             * [Create an artifact package](#create-an-artifact-package)
             * [Add an artifact file to an existing package](#add-an-artifact-file-to-an-existing-package)
@@ -92,6 +93,8 @@
          * [Job](#job)
             * [Show a job](#show-a-job)
             * [Wait for a job to finish](#wait-for-a-job-to-finish)
+         * [Security Issue](#security-issue)
+            * [List an organization's security issues](#list-an-organizations-security-issues)
          * [Magento legacy keys](#magento-legacy-keys)
             * [List all legacy keys for a customer](#list-all-legacy-keys-for-a-customer)
             * [Create a new legacy keys for a customer](#create-a-new-legacy-keys-for-a-customer)
@@ -99,7 +102,7 @@
          * [Validate incoming webhook payloads](#validate-incoming-webhook-payloads)
       * [License](#license)
 
-<!-- Added by: wissem, at: Fri Oct 16 14:23:54 CEST 2020 -->
+<!-- Added by: wissem, at: Wed May 26 12:28:19 CEST 2021 -->
 
 <!--te-->
 
@@ -505,7 +508,8 @@ $client->subrepositories()->mirroredRepositories()->removePackages($subrepositor
 #### List an organization's packages
 ```php
 $filters = [
-    'origin' => \PrivatePackagist\ApiClient\Api\Packages::ORIGIN_PRIVATE, // optional filter to only receive packages that can be added to customers 
+    'origin' => \PrivatePackagist\ApiClient\Api\Packages::ORIGIN_PRIVATE, // optional filter to only receive packages that can be added to customers,
+    'security-issue-state' => \PrivatePackagist\ApiClient\Api\SecurityIssues::STATE_OPEN, // optional filter to filter packages with open security issues,
 ];
 $packages = $client->packages()->all($filters);
 ```
@@ -580,6 +584,15 @@ Returns a list of packages.
 $client->packages()->listCustomers('acme-website/package');
 ```
 Returns a list of customers with access to the package.
+
+#### List all security issues of a package
+```php
+$filters = [
+    'security-issue-state' => \PrivatePackagist\ApiClient\Api\SecurityIssues::STATE_OPEN,
+];
+$client->packages()->listSecurityIssues('acme-website/package', $filters);
+```
+Returns a list of security issues.
 
 #### Create an artifact package file
 
@@ -745,6 +758,18 @@ try {
 
 ```
 Returns the job.
+
+### Security Issue
+
+#### List an organization's security issues
+
+```php
+$filters = [
+    'security-issue-state' => \PrivatePackagist\ApiClient\Api\SecurityIssues::STATE_OPEN, // optional filter to filter packages with open security issues,
+];
+$packages = $client->securityIssues()->all($filters);
+```
+Returns an array of security issues.
 
 ### Magento legacy keys
 

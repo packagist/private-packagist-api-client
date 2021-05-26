@@ -120,6 +120,11 @@ class Packages extends AbstractApi
         return $this->get(sprintf('/packages/%s/dependents/', $packageName));
     }
 
+    public function listSecurityIssues($packageName, array $filters = [])
+    {
+        return $this->get(sprintf('/packages/%s/security-issues/', $packageName), $filters);
+    }
+
     public function artifacts()
     {
         return new Artifacts($this->client, $this->client->getResponseMediator());
