@@ -19,6 +19,8 @@ use PrivatePackagist\ApiClient\HttpClient\Plugin\RequestSignature;
 
 class Client
 {
+    const API_CLIENT_VERSION = '1.21.0';
+
     /** @var HttpPluginClientBuilder */
     private $httpClientBuilder;
     /** @var ResponseMediator */
@@ -36,6 +38,7 @@ class Client
         $builder->addPlugin(new Plugin\RedirectPlugin());
         $builder->addPlugin(new Plugin\HeaderDefaultsPlugin([
             'User-Agent' => 'php-private-packagist-api (https://github.com/packagist/private-packagist-api-client)',
+            'X-API-CLIENT-VERSION' => self::API_CLIENT_VERSION,
         ]));
         $builder->addPlugin(new ExceptionThrower($this->responseMediator));
     }
