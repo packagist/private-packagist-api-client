@@ -19,8 +19,6 @@ use PrivatePackagist\ApiClient\HttpClient\Plugin\RequestSignature;
 
 class Client
 {
-    const API_CLIENT_VERSION = '1.21.0';
-
     /** @var HttpPluginClientBuilder */
     private $httpClientBuilder;
     /** @var ResponseMediator */
@@ -31,15 +29,18 @@ class Client
     {
         $this->httpClientBuilder = $builder = $httpClientBuilder ?: new HttpPluginClientBuilder();
         $privatePackagistUrl = $privatePackagistUrl ? : 'https://packagist.com';
-        $this->responseMediator = $responseMediator ? $responseMediator : new ResponseMediator();
+        $this->responseMediator = $responseMediator ? : new ResponseMediator();
 
         $builder->addPlugin(new Plugin\AddHostPlugin(UriFactoryDiscovery::find()->createUri($privatePackagistUrl)));
         $builder->addPlugin(new PathPrepend('/api'));
         $builder->addPlugin(new Plugin\RedirectPlugin());
-        $builder->addPlugin(new Plugin\HeaderDefaultsPlugin([
+        $headers = [
             'User-Agent' => 'php-private-packagist-api (https://github.com/packagist/private-packagist-api-client)',
-            'X-API-CLIENT-VERSION' => self::API_CLIENT_VERSION,
-        ]));
+        ];
+        if ($apiClientVersion = $this->getApiClientVersion()) {
+            $headers['API-CLIENT-VERSION'] = $apiClientVersion;
+        }
+        $builder->addPlugin(new Plugin\HeaderDefaultsPlugin($headers));
         $builder->addPlugin(new ExceptionThrower($this->responseMediator));
     }
 
@@ -120,5 +121,18 @@ class Client
     protected function getHttpClientBuilder()
     {
         return $this->httpClientBuilder;
+    }
+
+    private function getApiClientVersion()
+    {
+        try {
+            if ($version = \Composer\InstalledVersions::getVersion('private-packagist/api-client')) {
+                return $version;
+            }
+        } catch (\OutOfBoundsException $exception) {
+            return null;
+        }
+
+        return null;
     }
 }
