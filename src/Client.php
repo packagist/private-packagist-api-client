@@ -126,13 +126,9 @@ class Client
     private function getApiClientVersion()
     {
         try {
-            if ($version = \Composer\InstalledVersions::getVersion('private-packagist/api-client')) {
-                return $version;
-            }
+            return \Composer\InstalledVersions::getVersion('private-packagist/api-client');
         } catch (\OutOfBoundsException $exception) {
             return null;
         }
-
-        return null;
     }
 }
