@@ -29,14 +29,18 @@ class Client
     {
         $this->httpClientBuilder = $builder = $httpClientBuilder ?: new HttpPluginClientBuilder();
         $privatePackagistUrl = $privatePackagistUrl ? : 'https://packagist.com';
-        $this->responseMediator = $responseMediator ? $responseMediator : new ResponseMediator();
+        $this->responseMediator = $responseMediator ? : new ResponseMediator();
 
         $builder->addPlugin(new Plugin\AddHostPlugin(UriFactoryDiscovery::find()->createUri($privatePackagistUrl)));
         $builder->addPlugin(new PathPrepend('/api'));
         $builder->addPlugin(new Plugin\RedirectPlugin());
-        $builder->addPlugin(new Plugin\HeaderDefaultsPlugin([
+        $headers = [
             'User-Agent' => 'php-private-packagist-api (https://github.com/packagist/private-packagist-api-client)',
-        ]));
+        ];
+        if ($apiClientVersion = $this->getApiClientVersion()) {
+            $headers['API-CLIENT-VERSION'] = $apiClientVersion;
+        }
+        $builder->addPlugin(new Plugin\HeaderDefaultsPlugin($headers));
         $builder->addPlugin(new ExceptionThrower($this->responseMediator));
     }
 
@@ -117,5 +121,14 @@ class Client
     protected function getHttpClientBuilder()
     {
         return $this->httpClientBuilder;
+    }
+
+    private function getApiClientVersion()
+    {
+        try {
+            return \Composer\InstalledVersions::getVersion('private-packagist/api-client');
+        } catch (\OutOfBoundsException $exception) {
+            return null;
+        }
     }
 }
