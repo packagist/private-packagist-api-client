@@ -9,6 +9,7 @@
 
 namespace PrivatePackagist\ApiClient\Api\Packages;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PrivatePackagist\ApiClient\Api\ApiTestCase;
 
 class ArtifactsTest extends ApiTestCase
@@ -24,7 +25,7 @@ class ArtifactsTest extends ApiTestCase
             'X-FILENAME' => 'file.zip'
         ];
 
-        /** @var Artifacts&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Artifacts&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('postFile')
@@ -47,7 +48,7 @@ class ArtifactsTest extends ApiTestCase
             'X-FILENAME' => 'file.zip'
         ];
 
-        /** @var Artifacts&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Artifacts&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('postFile')
@@ -65,7 +66,7 @@ class ArtifactsTest extends ApiTestCase
             'artifactPackageFileIds' =>[1, 2],
         ];
 
-        /** @var Artifacts&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Artifacts&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -83,7 +84,7 @@ class ArtifactsTest extends ApiTestCase
             'artifactFiles' => 'artifact',
         ];
 
-        /** @var Artifacts&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Artifacts&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')

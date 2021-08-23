@@ -9,6 +9,9 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use PHPUnit\Framework\MockObject\MockObject;
+use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
+
 class PackagesTest extends ApiTestCase
 {
     public function testAll()
@@ -20,7 +23,7 @@ class PackagesTest extends ApiTestCase
             ],
         ];
 
-        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -43,7 +46,7 @@ class PackagesTest extends ApiTestCase
             'origin' => Packages::ORIGIN_PRIVATE,
         ];
 
-        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -53,16 +56,15 @@ class PackagesTest extends ApiTestCase
         $this->assertSame($expected, $api->all($filters));
     }
 
-    /**
-     * @expectedException \PrivatePackagist\ApiClient\Exception\InvalidArgumentException
-     */
     public function testAllWithInvalidFilters()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $filters = [
             'origin' => 'invalid'
         ];
 
-        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->never())
             ->method('get');
@@ -77,7 +79,7 @@ class PackagesTest extends ApiTestCase
             'name' => 'acme-website/package',
         ];
 
-        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -94,7 +96,7 @@ class PackagesTest extends ApiTestCase
             'status' => 'queued',
         ];
 
-        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -114,7 +116,7 @@ class PackagesTest extends ApiTestCase
             'status' => 'queued',
         ];
 
-        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -131,7 +133,7 @@ class PackagesTest extends ApiTestCase
             'status' => 'queued',
         ];
 
-        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -156,7 +158,7 @@ class PackagesTest extends ApiTestCase
             'status' => 'queued',
         ];
 
-        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
@@ -173,7 +175,7 @@ class PackagesTest extends ApiTestCase
             'status' => 'queued',
         ];
 
-        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
@@ -190,7 +192,7 @@ class PackagesTest extends ApiTestCase
             'status' => 'queued',
         ];
 
-        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
@@ -204,7 +206,7 @@ class PackagesTest extends ApiTestCase
     {
         $expected = [];
 
-        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
@@ -231,7 +233,7 @@ class PackagesTest extends ApiTestCase
             ]
         ];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -251,7 +253,7 @@ class PackagesTest extends ApiTestCase
             ],
         ];
 
-        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -280,7 +282,7 @@ class PackagesTest extends ApiTestCase
             ],
         ];
 
-        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')

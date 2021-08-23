@@ -9,6 +9,8 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use PHPUnit\Framework\MockObject\MockObject;
+
 class CredentialsTest extends ApiTestCase
 {
     public function testAll()
@@ -24,7 +26,7 @@ class CredentialsTest extends ApiTestCase
             ],
         ];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -45,7 +47,7 @@ class CredentialsTest extends ApiTestCase
             'type' => 'http-basic',
         ];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -66,7 +68,7 @@ class CredentialsTest extends ApiTestCase
             'type' => 'http-basic',
         ];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -87,7 +89,7 @@ class CredentialsTest extends ApiTestCase
             'type' => 'http-basic',
         ];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Credentials&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
@@ -101,7 +103,7 @@ class CredentialsTest extends ApiTestCase
     {
         $expected = [];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')

@@ -9,6 +9,8 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use PHPUnit\Framework\MockObject\MockObject;
+
 class SecurityIssuesTest extends ApiTestCase
 {
     public function testAll()
@@ -29,7 +31,7 @@ class SecurityIssuesTest extends ApiTestCase
             ],
         ];
 
-        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -61,7 +63,7 @@ class SecurityIssuesTest extends ApiTestCase
             'security-issue-state' => SecurityIssues::STATE_OPEN,
         ];
 
-        /** @var Packages&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')

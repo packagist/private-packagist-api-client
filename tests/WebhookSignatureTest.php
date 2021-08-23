@@ -9,7 +9,7 @@ class WebhookSignatureTest extends TestCase
     /** @var WebhookSignature */
     private $webhookSignature;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->webhookSignature = new WebhookSignature('test');
     }

@@ -9,6 +9,8 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use PHPUnit\Framework\MockObject\MockObject;
+
 class MirroredRepositoriesTest extends ApiTestCase
 {
     public function testAll()
@@ -17,7 +19,7 @@ class MirroredRepositoriesTest extends ApiTestCase
             $this->getMirroredRepositoryDefinition(),
         ];
 
-        /** @var MirroredRepositories&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var MirroredRepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -31,7 +33,7 @@ class MirroredRepositoriesTest extends ApiTestCase
     {
         $expected = $this->getMirroredRepositoryDefinition();
 
-        /** @var MirroredRepositories&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var MirroredRepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -47,7 +49,7 @@ class MirroredRepositoriesTest extends ApiTestCase
         $data = json_decode(json_encode($expected), true);
         unset($data['id']);
 
-        /** @var MirroredRepositories&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var MirroredRepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -63,7 +65,7 @@ class MirroredRepositoriesTest extends ApiTestCase
         $data = json_decode(json_encode($expected), true);
         unset($data['id']);
 
-        /** @var MirroredRepositories&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var MirroredRepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
@@ -74,7 +76,7 @@ class MirroredRepositoriesTest extends ApiTestCase
     }
     public function testRemove()
     {
-        /** @var MirroredRepositories&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var MirroredRepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
@@ -91,7 +93,7 @@ class MirroredRepositoriesTest extends ApiTestCase
             'origin' => 'public-mirror',
             'credentials' => null,
         ]];
-        /** @var MirroredRepositories&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var MirroredRepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -112,7 +114,7 @@ class MirroredRepositoriesTest extends ApiTestCase
             'acme/cool-lib',
         ];
 
-        /** @var MirroredRepositories&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var MirroredRepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -124,7 +126,7 @@ class MirroredRepositoriesTest extends ApiTestCase
 
     public function testRemovePackages()
     {
-        /** @var MirroredRepositories&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var MirroredRepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')

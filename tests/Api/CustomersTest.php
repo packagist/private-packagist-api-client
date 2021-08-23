@@ -9,6 +9,9 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use PHPUnit\Framework\MockObject\MockObject;
+use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
+
 class CustomersTest extends ApiTestCase
 {
     public function testAll()
@@ -21,7 +24,7 @@ class CustomersTest extends ApiTestCase
             ],
         ];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -39,7 +42,7 @@ class CustomersTest extends ApiTestCase
             'name' => $name = 'Customer',
         ];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -61,7 +64,7 @@ class CustomersTest extends ApiTestCase
             ],
         ];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -83,7 +86,7 @@ class CustomersTest extends ApiTestCase
             ],
         ];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -113,7 +116,7 @@ class CustomersTest extends ApiTestCase
             'minimumAccessibleStability' => null,
         ];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
@@ -127,7 +130,7 @@ class CustomersTest extends ApiTestCase
     {
         $expected = '';
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
@@ -148,7 +151,7 @@ class CustomersTest extends ApiTestCase
             'enabled' => true,
         ];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
@@ -169,7 +172,7 @@ class CustomersTest extends ApiTestCase
             'enabled' => false,
         ];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
@@ -190,7 +193,7 @@ class CustomersTest extends ApiTestCase
             ],
         ];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -213,7 +216,7 @@ class CustomersTest extends ApiTestCase
 
         $packages = [['name' => 'composer/composer']];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -223,13 +226,12 @@ class CustomersTest extends ApiTestCase
         $this->assertSame($expected, $api->addOrEditPackages(1, $packages));
     }
 
-    /**
-     * @expectedException \PrivatePackagist\ApiClient\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Parameter "name" is required.
-     */
     public function testAddOrEditPackagesMissingName()
     {
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Parameter "name" is required.');
+
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
 
         $api->addOrEditPackages(1, [[]]);
@@ -240,7 +242,7 @@ class CustomersTest extends ApiTestCase
         $expected = '';
         $packageName = 'composer/composer';
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
@@ -263,7 +265,7 @@ class CustomersTest extends ApiTestCase
             'IConfirmOldTokenWillStopWorkingImmediately' => true,
         ];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -273,12 +275,11 @@ class CustomersTest extends ApiTestCase
         $this->assertSame($expected, $api->regenerateToken(1, $confirmation));
     }
 
-    /**
-     * @expectedException \PrivatePackagist\ApiClient\Exception\InvalidArgumentException
-     */
     public function testRegenerateTokenMissingConfirmation()
     {
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        $this->expectException(\InvalidArgumentException::class);
+
+        /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->never())
             ->method('post');

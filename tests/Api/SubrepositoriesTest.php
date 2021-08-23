@@ -9,6 +9,8 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use PHPUnit\Framework\MockObject\MockObject;
+
 class SubrepositoriesTest extends ApiTestCase
 {
     public function testAll()
@@ -17,7 +19,7 @@ class SubrepositoriesTest extends ApiTestCase
             $this->getProjectDefinition(),
         ];
 
-        /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Projects&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -33,7 +35,7 @@ class SubrepositoriesTest extends ApiTestCase
 
         $subrepositoryName = 'subrepository';
 
-        /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Projects&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -47,7 +49,7 @@ class SubrepositoriesTest extends ApiTestCase
     {
         $expected = $this->getProjectDefinition();
 
-        /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Projects&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -61,7 +63,7 @@ class SubrepositoriesTest extends ApiTestCase
     {
         $expected = '';
 
-        /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Projects&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
@@ -83,7 +85,7 @@ class SubrepositoriesTest extends ApiTestCase
             ],
         ];
 
-        /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Projects&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -107,7 +109,7 @@ class SubrepositoriesTest extends ApiTestCase
 
         $teams = [['id' => 42, 'permission' => 'owner']];
 
-        /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Projects&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -121,7 +123,7 @@ class SubrepositoriesTest extends ApiTestCase
     {
         $expected = '';
 
-        /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Projects&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
@@ -144,7 +146,7 @@ class SubrepositoriesTest extends ApiTestCase
             ],
         ];
 
-        /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Projects&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -165,7 +167,7 @@ class SubrepositoriesTest extends ApiTestCase
             'lastUsed' => '2018-03-14T11:36:00+00:00'
         ];
 
-        /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Projects&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -185,7 +187,7 @@ class SubrepositoriesTest extends ApiTestCase
     {
         $expected = [];
 
-        /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Projects&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
@@ -199,7 +201,7 @@ class SubrepositoriesTest extends ApiTestCase
     {
         $expected = [];
 
-        /** @var Projects&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Projects&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
