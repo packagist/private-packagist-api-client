@@ -24,7 +24,7 @@ class RequestSignatureTest extends TestCase
     private $timestamp;
     private $nonce;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->token = 'token';
         $this->secret = 'secret';

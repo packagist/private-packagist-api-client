@@ -20,7 +20,7 @@ class PathPrependTest extends TestCase
     private $next;
     private $first;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

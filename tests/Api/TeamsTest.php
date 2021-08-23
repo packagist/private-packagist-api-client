@@ -9,6 +9,8 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use PHPUnit\Framework\MockObject\MockObject;
+
 class TeamsTest extends ApiTestCase
 {
     public function testAll()
@@ -29,7 +31,7 @@ class TeamsTest extends ApiTestCase
             ]
         ];
 
-        /** @var Customers&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Teams&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -48,7 +50,7 @@ class TeamsTest extends ApiTestCase
             ],
         ];
 
-        /** @var Teams&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Teams&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -67,7 +69,7 @@ class TeamsTest extends ApiTestCase
             ],
         ];
 
-        /** @var Teams&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Teams&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -81,7 +83,7 @@ class TeamsTest extends ApiTestCase
     {
         $expected = [];
 
-        /** @var Teams&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Teams&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')

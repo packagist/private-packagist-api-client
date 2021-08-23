@@ -17,7 +17,7 @@ class ResponseMediatorTest extends TestCase
     /** @var ResponseMediator */
     private $responseMediator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->responseMediator = new ResponseMediator();
     }

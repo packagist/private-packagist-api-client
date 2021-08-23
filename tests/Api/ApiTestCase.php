@@ -10,6 +10,7 @@
 namespace PrivatePackagist\ApiClient\Api;
 
 use Http\Client\HttpClient;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use PrivatePackagist\ApiClient\Client;
 use PrivatePackagist\ApiClient\HttpClient\HttpPluginClientBuilder;
@@ -22,11 +23,11 @@ abstract class ApiTestCase extends TestCase
     abstract protected function getApiClass();
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return MockObject
      */
     protected function getApiMock()
     {
-        /** @var HttpClient&\PHPUnit_Framework_MockObject_MockObject $httpClient */
+        /** @var HttpClient&MockObject $httpClient */
         $httpClient = $this->getMockBuilder(HttpClient::class)
             ->setMethods(['sendRequest'])
             ->getMock();

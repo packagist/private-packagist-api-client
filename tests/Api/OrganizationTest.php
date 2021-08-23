@@ -9,13 +9,15 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use PHPUnit\Framework\MockObject\MockObject;
+
 class OrganizationTest extends ApiTestCase
 {
     public function testSync()
     {
         $expected = [];
 
-        /** @var Organization&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Organization&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')

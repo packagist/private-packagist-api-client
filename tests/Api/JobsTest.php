@@ -9,6 +9,8 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use PHPUnit\Framework\MockObject\MockObject;
+
 class JobsTest extends ApiTestCase
 {
     public function testShow()
@@ -16,7 +18,7 @@ class JobsTest extends ApiTestCase
         $expected = [];
         $jobId = '46bf13150a86fece079ca979cb8ef57c78773faa';
 
-        /** @var Jobs&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var Jobs&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')

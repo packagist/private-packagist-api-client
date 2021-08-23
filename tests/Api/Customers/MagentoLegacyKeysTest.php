@@ -9,6 +9,7 @@
 
 namespace PrivatePackagist\ApiClient\Api\Customers;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PrivatePackagist\ApiClient\Api\ApiTestCase;
 
 class MagentoLegacyKeysTest extends ApiTestCase
@@ -22,7 +23,7 @@ class MagentoLegacyKeysTest extends ApiTestCase
             ],
         ];
 
-        /** @var MagentoLegacyKeys&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var MagentoLegacyKeys&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -39,7 +40,7 @@ class MagentoLegacyKeysTest extends ApiTestCase
             'privateKey' => 'private-fjdgkfdgk233443554mn45',
         ];
 
-        /** @var MagentoLegacyKeys&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var MagentoLegacyKeys&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -53,7 +54,7 @@ class MagentoLegacyKeysTest extends ApiTestCase
     {
         $expected = [];
 
-        /** @var MagentoLegacyKeys&\PHPUnit_Framework_MockObject_MockObject $api */
+        /** @var MagentoLegacyKeys&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
