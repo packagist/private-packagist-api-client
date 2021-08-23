@@ -31,7 +31,7 @@ class TeamsTest extends ApiTestCase
             ]
         ];
 
-        /** @var Customers&MockObject $api */
+        /** @var Teams&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')

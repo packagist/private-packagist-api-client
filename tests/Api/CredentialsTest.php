@@ -26,7 +26,7 @@ class CredentialsTest extends ApiTestCase
             ],
         ];
 
-        /** @var Customers&MockObject $api */
+        /** @var Credentials&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -47,7 +47,7 @@ class CredentialsTest extends ApiTestCase
             'type' => 'http-basic',
         ];
 
-        /** @var Customers&MockObject $api */
+        /** @var Credentials&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -68,7 +68,7 @@ class CredentialsTest extends ApiTestCase
             'type' => 'http-basic',
         ];
 
-        /** @var Customers&MockObject $api */
+        /** @var Credentials&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -103,7 +103,7 @@ class CredentialsTest extends ApiTestCase
     {
         $expected = [];
 
-        /** @var Customers&MockObject $api */
+        /** @var Credentials&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')

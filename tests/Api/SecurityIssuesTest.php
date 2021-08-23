@@ -31,7 +31,7 @@ class SecurityIssuesTest extends ApiTestCase
             ],
         ];
 
-        /** @var Packages&MockObject $api */
+        /** @var SecurityIssues&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -63,7 +63,7 @@ class SecurityIssuesTest extends ApiTestCase
             'security-issue-state' => SecurityIssues::STATE_OPEN,
         ];
 
-        /** @var Packages&MockObject $api */
+        /** @var SecurityIssues&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')

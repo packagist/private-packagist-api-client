@@ -16,10 +16,10 @@ class SubrepositoriesTest extends ApiTestCase
     public function testAll()
     {
         $expected = [
-            $this->getProjectDefinition(),
+            $this->getSubrepositoryDefinition(),
         ];
 
-        /** @var Projects&MockObject $api */
+        /** @var Subrepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -31,11 +31,11 @@ class SubrepositoriesTest extends ApiTestCase
 
     public function testShow()
     {
-        $expected = $this->getProjectDefinition();
+        $expected = $this->getSubrepositoryDefinition();
 
         $subrepositoryName = 'subrepository';
 
-        /** @var Projects&MockObject $api */
+        /** @var Subrepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -47,9 +47,9 @@ class SubrepositoriesTest extends ApiTestCase
 
     public function testCreate()
     {
-        $expected = $this->getProjectDefinition();
+        $expected = $this->getSubrepositoryDefinition();
 
-        /** @var Projects&MockObject $api */
+        /** @var Subrepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -63,7 +63,7 @@ class SubrepositoriesTest extends ApiTestCase
     {
         $expected = '';
 
-        /** @var Projects&MockObject $api */
+        /** @var Subrepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
@@ -85,7 +85,7 @@ class SubrepositoriesTest extends ApiTestCase
             ],
         ];
 
-        /** @var Projects&MockObject $api */
+        /** @var Subrepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -109,7 +109,7 @@ class SubrepositoriesTest extends ApiTestCase
 
         $teams = [['id' => 42, 'permission' => 'owner']];
 
-        /** @var Projects&MockObject $api */
+        /** @var Subrepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -123,7 +123,7 @@ class SubrepositoriesTest extends ApiTestCase
     {
         $expected = '';
 
-        /** @var Projects&MockObject $api */
+        /** @var Subrepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
@@ -146,7 +146,7 @@ class SubrepositoriesTest extends ApiTestCase
             ],
         ];
 
-        /** @var Projects&MockObject $api */
+        /** @var Subrepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
@@ -159,7 +159,7 @@ class SubrepositoriesTest extends ApiTestCase
     public function testCreateToken()
     {
         $expected = [
-            'description' => 'Project Token',
+            'description' => 'Subrepository Token',
             'access' => 'read',
             'url' => 'https://vendor-org.repo.packagist.com/acme-websites/',
             'user' => 'token',
@@ -167,18 +167,18 @@ class SubrepositoriesTest extends ApiTestCase
             'lastUsed' => '2018-03-14T11:36:00+00:00'
         ];
 
-        /** @var Projects&MockObject $api */
+        /** @var Subrepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
             ->with($this->equalTo('/subrepositories/subrepository/tokens/'), $this->equalTo([
-                'description' => 'Project Token',
+                'description' => 'Subrepository Token',
                 'access' => 'read',
             ]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->createToken('subrepository', [
-            'description' => 'Project Token',
+            'description' => 'Subrepository Token',
             'access' => 'read',
         ]));
     }
@@ -187,7 +187,7 @@ class SubrepositoriesTest extends ApiTestCase
     {
         $expected = [];
 
-        /** @var Projects&MockObject $api */
+        /** @var Subrepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
@@ -201,7 +201,7 @@ class SubrepositoriesTest extends ApiTestCase
     {
         $expected = [];
 
-        /** @var Projects&MockObject $api */
+        /** @var Subrepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
@@ -211,7 +211,7 @@ class SubrepositoriesTest extends ApiTestCase
         $this->assertSame($expected, $api->regenerateToken('subrepository', 1, ['IConfirmOldTokenWillStopWorkingImmediately' => true]));
     }
 
-    private function getProjectDefinition()
+    private function getSubrepositoryDefinition()
     {
         return [
             'id' => 1,
