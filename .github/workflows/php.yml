@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version:
+          - "7.2"
+          - "7.3"
+          - "7.4"
+          - "8.0"
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          coverage: "none"
+          ini-values: "memory_limit=-1, phar.readonly=0"
+          php-version: "${{ matrix.php-version }}"
+
+      - name: Validate composer.json
+        run: ./composer.phar validate
+
+      - name: Install dependencies
+        run: ./composer.phar install --prefer-dist --no-progress --no-suggest
+
+      - name: PHPUnit
+        run: ./vendor/bin/phpunit tests
+
+      - name: PHP-CS-Fixer
+        run: ./vendor/bin/php-cs-fixer fix --dry-run --diff
