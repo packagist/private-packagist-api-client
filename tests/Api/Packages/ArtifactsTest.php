@@ -56,7 +56,7 @@ class ArtifactsTest extends ApiTestCase
             ->willReturn($expected);
 
 
-        $this->assertSame($expected, $api->add($packageName,$rawFileContent, $headers['Content-Type'], $headers['X-FILENAME']));
+        $this->assertSame($expected, $api->add($packageName, $rawFileContent, $headers['Content-Type'], $headers['X-FILENAME']));
     }
 
     public function testShow()
