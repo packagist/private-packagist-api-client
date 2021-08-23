@@ -30,10 +30,10 @@ jobs:
           php-version: "${{ matrix.php-version }}"
 
       - name: Validate composer.json
-        run: ./composer.phar validate
+        run: composer validate
 
       - name: Install dependencies
-        run: ./composer.phar install --prefer-dist --no-progress --no-suggest
+        run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: PHPUnit
         run: ./vendor/bin/phpunit tests
