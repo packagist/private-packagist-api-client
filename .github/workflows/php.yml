@@ -46,5 +46,3 @@ jobs:
 
       - name: PHPStan
         run: ./vendor/bin/phpstan analyze src --no-progress
-        env:
-          PHP_CS_FIXER_IGNORE_ENV: 1
