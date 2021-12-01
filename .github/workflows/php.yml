@@ -43,3 +43,8 @@ jobs:
         run: ./vendor/bin/php-cs-fixer fix --dry-run --diff
         env:
           PHP_CS_FIXER_IGNORE_ENV: 1
+
+      - name: PHPStan
+        run: ./vendor/bin/phpstan analyze src --no-progress
+        env:
+          PHP_CS_FIXER_IGNORE_ENV: 1
