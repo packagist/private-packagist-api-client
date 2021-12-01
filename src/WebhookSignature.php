@@ -14,7 +14,7 @@ class WebhookSignature
 
     /**
      * @param string $signature
-     * @param string $payload
+     * @param ?string $payload
      * @return bool
      */
     public function validate($signature, $payload)
