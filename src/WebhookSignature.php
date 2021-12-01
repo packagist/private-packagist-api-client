@@ -19,7 +19,7 @@ class WebhookSignature
      */
     public function validate($signature, $payload)
     {
-        $payloadSignature = 'sha1='.hash_hmac('sha1', $payload, $this->secret);
+        $payloadSignature = 'sha1='.hash_hmac('sha1', $payload ?? '', $this->secret);
 
         return hash_equals($payloadSignature, (string) $signature);
     }
