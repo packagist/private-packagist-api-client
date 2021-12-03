@@ -34,10 +34,15 @@ jobs:
         run: composer validate
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer install --prefer-dist --no-progress
 
       - name: PHPUnit
         run: ./vendor/bin/phpunit tests
 
       - name: PHP-CS-Fixer
         run: ./vendor/bin/php-cs-fixer fix --dry-run --diff
+        env:
+          PHP_CS_FIXER_IGNORE_ENV: 1
+
+      - name: PHPStan
+        run: ./vendor/bin/phpstan analyze src --no-progress
