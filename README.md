@@ -176,6 +176,39 @@ $teamId = 1;
 $packages = $client->teams()->removePackage($teamId, 'acme-website/package');
 ```
 
+### Authentication Tokens
+
+#### List an organization's team authentication tokens
+```php
+$tokens = $client->tokens()->all();
+```
+Returns an array of team tokens.
+
+#### Create a new team authentication token
+```php
+$token = $client->tokens()->create([
+    'description' => 'New Team Token',
+    'access' => 'read',
+    'teamId' => 1, // Get teamId from the list of teams to determine to which packages the token has access to
+]);
+```
+Returns the created token.
+
+#### Delete a team authentication token
+```php
+$client->tokens()->remove($tokenId));
+```
+
+#### Regenerate a team authentication token
+```php
+$customerId = 42;
+$confirmation = [
+    'IConfirmOldTokenWillStopWorkingImmediately' => true,
+];
+$token = $client->tokens()->regenerateToken($tokenId, $confirmation);
+```
+Returns the regenerated token.
+
 ### Customer
 
 #### List an organization's customers

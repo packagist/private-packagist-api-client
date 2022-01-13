@@ -97,7 +97,6 @@ class Client
         return new Api\SecurityIssues($this, $this->responseMediator);
     }
 
-
     public function jobs()
     {
         return new Api\Jobs($this, $this->responseMediator);
@@ -106,6 +105,11 @@ class Client
     public function mirroredRepositories()
     {
         return new Api\MirroredRepositories($this, $this->responseMediator);
+    }
+
+    public function tokens()
+    {
+        return new Api\Tokens($this, $this->responseMediator);
     }
 
     public function getHttpClient()
