@@ -15,6 +15,11 @@
             * [List all private packages a team has access to](#list-all-private-packages-a-team-has-access-to)
             * [Grant a team access to a list of private packages](#grant-a-team-access-to-a-list-of-private-packages)
             * [Remove access for a package from a team](#remove-access-for-a-package-from-a-team)
+         * [Authentication Tokens](#authentication-tokens)
+            * [List an organization's team authentication tokens](#list-an-organizations-team-authentication-tokens)
+            * [Create a new team authentication token](#create-a-new-team-authentication-token)
+            * [Delete a team authentication token](#delete-a-team-authentication-token)
+            * [Regenerate a team authentication token](#regenerate-a-team-authentication-token)
          * [Customer](#customer)
             * [List an organization's customers](#list-an-organizations-customers)
             * [Show a customer](#show-a-customer)
@@ -102,7 +107,7 @@
          * [Validate incoming webhook payloads](#validate-incoming-webhook-payloads)
       * [License](#license)
 
-<!-- Added by: wissem, at: Wed May 26 12:28:19 CEST 2021 -->
+<!-- Added by: glaubinix, at: Thu 13 Jan 2022 13:34:48 GMT -->
 
 <!--te-->
 
