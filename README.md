@@ -191,6 +191,14 @@ Returns an array of team tokens.
 
 #### Create a new team authentication token
 ```php
+// Create a new token with access to all packages
+$token = $client->tokens()->create([
+    'description' => 'New Team Token',
+    'access' => 'read',
+    'accessToAllPackages' => true,
+]);
+
+// Create a new token with access to packages a team has access to
 $token = $client->tokens()->create([
     'description' => 'New Team Token',
     'access' => 'read',
