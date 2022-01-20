@@ -15,6 +15,11 @@
             * [List all private packages a team has access to](#list-all-private-packages-a-team-has-access-to)
             * [Grant a team access to a list of private packages](#grant-a-team-access-to-a-list-of-private-packages)
             * [Remove access for a package from a team](#remove-access-for-a-package-from-a-team)
+         * [Authentication Tokens](#authentication-tokens)
+            * [List an organization's team authentication tokens](#list-an-organizations-team-authentication-tokens)
+            * [Create a new team authentication token](#create-a-new-team-authentication-token)
+            * [Delete a team authentication token](#delete-a-team-authentication-token)
+            * [Regenerate a team authentication token](#regenerate-a-team-authentication-token)
          * [Customer](#customer)
             * [List an organization's customers](#list-an-organizations-customers)
             * [Show a customer](#show-a-customer)
@@ -102,7 +107,7 @@
          * [Validate incoming webhook payloads](#validate-incoming-webhook-payloads)
       * [License](#license)
 
-<!-- Added by: wissem, at: Wed May 26 12:28:19 CEST 2021 -->
+<!-- Added by: glaubinix, at: Thu 13 Jan 2022 13:34:48 GMT -->
 
 <!--te-->
 
@@ -175,6 +180,47 @@ Returns an array of packages.
 $teamId = 1;
 $packages = $client->teams()->removePackage($teamId, 'acme-website/package');
 ```
+
+### Authentication Tokens
+
+#### List an organization's team authentication tokens
+```php
+$tokens = $client->tokens()->all();
+```
+Returns an array of team tokens.
+
+#### Create a new team authentication token
+```php
+// Create a new token with access to all packages
+$token = $client->tokens()->create([
+    'description' => 'New Team Token',
+    'access' => 'read',
+    'accessToAllPackages' => true,
+]);
+
+// Create a new token with access to packages a team has access to
+$token = $client->tokens()->create([
+    'description' => 'New Team Token',
+    'access' => 'read',
+    'teamId' => 1, // Get teamId from the list of teams to determine to which packages the token has access to
+]);
+```
+Returns the created token.
+
+#### Delete a team authentication token
+```php
+$client->tokens()->remove($tokenId));
+```
+
+#### Regenerate a team authentication token
+```php
+$customerId = 42;
+$confirmation = [
+    'IConfirmOldTokenWillStopWorkingImmediately' => true,
+];
+$token = $client->tokens()->regenerateToken($tokenId, $confirmation);
+```
+Returns the regenerated token.
 
 ### Customer
 
