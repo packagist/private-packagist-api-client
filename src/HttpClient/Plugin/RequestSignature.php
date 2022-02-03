@@ -27,6 +27,10 @@ class RequestSignature implements Plugin
      */
     public function __construct($token, $secret)
     {
+        if (!$token || !$secret) {
+            throw new \InvalidArgumentException('$token and $secret must be set');
+        }
+
         $this->token = $token;
         $this->secret = $secret;
     }

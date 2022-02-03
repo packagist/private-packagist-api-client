@@ -67,6 +67,22 @@ class TokensTest extends ApiTestCase
         ]));
     }
 
+    public function testCreateTeamIdAndAllAccess()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        /** @var Tokens&MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->never())
+            ->method('post');
+
+        $api->create([
+            'description' => 'Team Token',
+            'access' => 'read',
+            'teamId' => 1,
+            'accessToAllPackages' => true,
+        ]);
+    }
+
     public function testRemove()
     {
         $expected = [];

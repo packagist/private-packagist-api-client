@@ -20,6 +20,10 @@ class Tokens extends AbstractApi
 
     public function create(array $tokenData)
     {
+        if (isset($tokenData['teamId'], $tokenData['accessToAllPackages'])) {
+            throw new InvalidArgumentException('Only set either "accessToAllPackages" or "teamId"');
+        }
+
         return $this->post('/tokens/', $tokenData);
     }
 
