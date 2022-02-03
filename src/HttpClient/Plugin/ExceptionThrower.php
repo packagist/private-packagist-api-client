@@ -47,7 +47,15 @@ class ExceptionThrower implements Plugin
                 }
             }
 
-            throw new HttpTransportException(isset($content['message']) ? $content['message'] : $content, $response->getStatusCode(), $request->getUri());
+            if (isset($content['message'])) {
+                $message = $content['message'];
+            } elseif (is_string($content)) {
+                $message = $content;
+            } else {
+                $message = json_encode($content);
+            }
+
+            throw new HttpTransportException($message, $response->getStatusCode(), $request->getUri());
         });
     }
 }
