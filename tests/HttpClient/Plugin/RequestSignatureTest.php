@@ -65,4 +65,23 @@ class RequestSignatureTest extends TestCase
 
         $this->assertNotNull($promise->wait(true)->getHeader('Authorization')[0]);
     }
+
+    /**
+     * @dataProvider tokenSecretProvider
+     */
+    public function testMissingTokenOrSecret(string $token, string $secret): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        new RequestSignature($token, $secret);
+    }
+
+    public function tokenSecretProvider(): array
+    {
+        return [
+            ['', ''],
+            ['token', ''],
+            ['', 'secret'],
+        ];
+    }
 }
