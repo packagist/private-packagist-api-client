@@ -28,7 +28,7 @@ class ResponseMediatorTest extends TestCase
         $response = new Response(
             200,
             ['Content-Type' => 'application/json'],
-            \GuzzleHttp\Psr7\stream_for(json_encode($body))
+            json_encode($body)
         );
         $this->assertSame($body, $this->responseMediator->getContent($response));
     }
@@ -39,7 +39,7 @@ class ResponseMediatorTest extends TestCase
         $response = new Response(
             200,
             [],
-            \GuzzleHttp\Psr7\stream_for($body)
+            $body
         );
         $this->assertSame($body, $this->responseMediator->getContent($response));
     }
@@ -50,7 +50,7 @@ class ResponseMediatorTest extends TestCase
         $response = new Response(
             200,
             ['Content-Type' => 'application/json'],
-            \GuzzleHttp\Psr7\stream_for($body)
+            $body
         );
         $this->assertEquals($body, $this->responseMediator->getContent($response));
     }
