@@ -121,10 +121,10 @@
 Via Composer:
 
 ```bash
-$ composer require private-packagist/api-client php-http/guzzle6-adapter
+$ composer require private-packagist/api-client guzzlehttp/guzzle
 ```
 
-Why do you need to require `php-http/guzzle6-adapter`? We are decoupled from any HTTP messaging client with help by [HTTPlug](http://httplug.io/), so you can pick an HTTP client of your choice, guzzle is merely a recommendation.
+Why do you need to require `guzzlehttp/guzzle`? We are decoupled from any HTTP messaging client with help by [HTTPlug](http://httplug.io/), so you can pick an HTTP client of your choice, guzzle is merely a recommendation.
 
 ## Basic usage of `private-packagist/api-client` client
 

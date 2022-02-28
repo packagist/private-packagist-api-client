@@ -9,8 +9,6 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
-use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
-
 /**
  * @deprecated Use the Subrepositories API instead
  */

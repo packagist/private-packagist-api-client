@@ -12,6 +12,7 @@ return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setRules(array(
         '@PSR2' => true,
+        'no_unused_imports' => true,
     ))
     ->setFinder($finder)
 ;
