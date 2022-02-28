@@ -12,14 +12,14 @@ namespace PrivatePackagist\ApiClient\HttpClient;
 use Http\Client\Common\HttpMethodsClient;
 use Http\Client\Common\Plugin;
 use Http\Client\Common\PluginClient;
-use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Message\RequestFactory;
+use Psr\Http\Client\ClientInterface;
 
 class HttpPluginClientBuilder
 {
-    /** @var HttpClient */
+    /** @var ClientInterface */
     private $httpClient;
     /** @var HttpMethodsClient|null */
     private $pluginClient;
@@ -28,7 +28,7 @@ class HttpPluginClientBuilder
     /** @var Plugin[] */
     private $plugins = [];
 
-    public function __construct(HttpClient $httpClient = null, RequestFactory $requestFactory = null)
+    public function __construct(ClientInterface $httpClient = null, RequestFactory $requestFactory = null)
     {
         $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
         $this->requestFactory = $requestFactory ?: MessageFactoryDiscovery::find();
