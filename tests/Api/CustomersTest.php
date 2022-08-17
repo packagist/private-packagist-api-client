@@ -203,6 +203,34 @@ class CustomersTest extends ApiTestCase
         $this->assertSame($expected, $api->listPackages(1));
     }
 
+    public function testShowPackage()
+    {
+        $expected = [
+            'name' => 'composer/composer',
+            'origin' => 'private',
+            'versionConstraint' => null,
+            'expirationDate' => null,
+            'versions' => [
+                [
+                    'version' => '2.3.9',
+                    'versionNormalized' => '2.3.9.0',
+                    'sourceReference' => '015f524c9969255a29cdea8890cbd4fec240ee47',
+                    'distReference' => '015f524c9969255a29cdea8890cbd4fec240ee47',
+                    'releasedAt' => '2022-07-05T14:52:00+00:00',
+                ],
+            ],
+        ];
+
+        /** @var Customers&MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo('/customers/1/packages/composer/composer/'))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->showPackage(1, 'composer/composer'));
+    }
+
     public function testAddOrEditPackages()
     {
         $expected = [
