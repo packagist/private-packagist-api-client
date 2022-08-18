@@ -71,6 +71,11 @@ class Customers extends AbstractApi
         return $this->get(sprintf('/customers/%s/packages/', $customerIdOrUrlName));
     }
 
+    public function showPackage($customerIdOrUrlName, $packageName)
+    {
+        return $this->get(sprintf('/customers/%s/packages/%s/', $customerIdOrUrlName, $packageName));
+    }
+
     /**
      * @deprecated Use addOrEditPackages instead
      */

@@ -29,6 +29,7 @@
             * [Enable a customer](#enable-a-customer)
             * [Disable a customer](#disable-a-customer)
             * [List a customer's packages](#list-a-customers-packages)
+            * [Show a customer's package](#show-a-customers-package)
             * [Grant a customer access to a package or edit the limitations](#grant-a-customer-access-to-a-package-or-edit-the-limitations)
             * [Revoke access to a package from a customer](#revoke-access-to-a-package-from-a-customer)
             * [Regenerate a customer's Composer repository token](#regenerate-a-customers-composer-repository-token)
@@ -107,7 +108,7 @@
          * [Validate incoming webhook payloads](#validate-incoming-webhook-payloads)
       * [License](#license)
 
-<!-- Added by: glaubinix, at: Thu 13 Jan 2022 13:34:48 GMT -->
+<!-- Added by: zanbaldwin, at: Thu 18 Aug 12:50:05 CEST 2022 -->
 
 <!--te-->
 
@@ -285,6 +286,14 @@ $customerId = 42;
 $packages = $client->customers()->listPackages($customerId);
 ```
 Returns an array of customer packages.
+
+#### Show a customer's package
+```php
+$customerId = 42;
+$package = $client->customers()->showPackage($customerId, $packageName);
+$accessibleVersions = $package['versions'];
+```
+Returns a customer's package, including the versions that the customer has been granted access to.
 
 #### Grant a customer access to a package or edit the limitations
 ```php
@@ -508,7 +517,7 @@ $mirroredRepository = $client->subrepositories()->mirroredRepositories()->add($s
 ```
 Returns a list of added mirrored repositories.
 
-#### Edit the mirroring behaviour of mirrored repository in a subrepository 
+#### Edit the mirroring behaviour of mirrored repository in a subrepository
 ```php
 $subrepositoryName = 'subrepository';
 $mirroredRepositoryId = 42;
@@ -845,7 +854,7 @@ When you create or update a webhook in Private Packagist an optional secret can 
 $request = /** any Psr7 request */;
 $secret = 'webhook-secret';
 $webhookSignature = new \PrivatePackagist\ApiClient\WebhookSignature($secret);
-$requestSignature = $request->hasHeader('Packagist-Signature') ? $request->getHeader('Packagist-Signature')[0] : null; 
+$requestSignature = $request->hasHeader('Packagist-Signature') ? $request->getHeader('Packagist-Signature')[0] : null;
 $webhookSignature->validate($requestSignature, (string) $request->getBody());
 ```
 
