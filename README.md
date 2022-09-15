@@ -12,6 +12,11 @@
             * [Trigger a full synchronization](#trigger-a-full-synchronization)
          * [Team](#team)
             * [List an organization's teams](#list-an-organizations-teams)
+            * [Create a New Team](#create-a-new-team)
+            * [Edit a Team](#edit-a-team)
+            * [Delete a Team](#delete-a-team)
+            * [Add Member to Team (by User ID)](#add-member-to-team-by-user-id)
+            * [Remove Member from Team](#remove-member-from-team)
             * [List all private packages a team has access to](#list-all-private-packages-a-team-has-access-to)
             * [Grant a team access to a list of private packages](#grant-a-team-access-to-a-list-of-private-packages)
             * [Remove access for a package from a team](#remove-access-for-a-package-from-a-team)
@@ -108,7 +113,7 @@
          * [Validate incoming webhook payloads](#validate-incoming-webhook-payloads)
       * [License](#license)
 
-<!-- Added by: zanbaldwin, at: Thu 18 Aug 12:50:05 CEST 2022 -->
+<!-- Added by: zanbaldwin, at: Thu 15 Sep 11:30:29 CEST 2022 -->
 
 <!--te-->
 
@@ -161,6 +166,42 @@ Returns an array of created jobs. One for every synchronization.
 $teams = $client->teams()->all();
 ```
 Returns an array of teams.
+
+#### Create a New Team
+```php
+$team = $client->teams()->create('New Team Name', true, false, false, true, false);
+```
+Creates a team and sets permissions applied to team members. Those permissions are (in order):
+
+- `canEditTeamPackages`: members of the team can edit and remove packages, assign package permissions (only applies to packages assigned to team).
+- `canAddPackages`: members of the team can add packages to organization; add, edit and remove credentials and mirrored third-party repositories.
+- `canCreateSubrepositories`: members of the team can create subrepositories.
+- `canViewVendorCustomers`: members of the team can view customers, their Composer information, their packages, and their install statistics.
+- `canManageVendorCustomers`: members of the team can create and delete customers, add and remove packages, update their settings, view Composer information and install statistics.
+
+Returns the newly-created team.
+
+#### Edit a Team
+```php
+$team = $client->teams()->edit($teamId, 'Altered Team Name', true, false, false, true, false);
+```
+Edits a team's name and permissions to be applied to team members. Returns the updated team.
+
+#### Delete a Team
+```php
+$client->teams()->remove($teamId);
+```
+
+#### Add Member to Team (by User ID)
+```php
+$team = $client->teams()->addMember($teamId, $userId);
+```
+Returns the team the user was added to.
+
+#### Remove Member from Team
+```php
+$client->teams()->removeMember($teamId, $userId);
+```
 
 #### List all private packages a team has access to
 ```php
