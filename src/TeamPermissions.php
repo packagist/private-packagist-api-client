@@ -38,4 +38,15 @@ class TeamPermissions
         $permissions->canManageVendorCustomers = ($flags & self::PERMISSION_CAN_MANAGE_VENDOR_CUSTOMERS) > 0;
         return $permissions;
     }
+
+    public static function fromTeamResponse(array $team): self
+    {
+        $permissions = new self;
+        $permissions->canEditTeamPackages = isset($team['permissions']['canEditTeamPackages']) && $team['permissions']['canEditTeamPackages'];
+        $permissions->canAddPackages = isset($team['permissions']['canAddPackages']) && $team['permissions']['canAddPackages'];
+        $permissions->canCreateSubrepositories = isset($team['permissions']['canCreateSubrepositories']) && $team['permissions']['canCreateSubrepositories'];
+        $permissions->canViewVendorCustomers = isset($team['permissions']['canViewVendorCustomers']) && $team['permissions']['canViewVendorCustomers'];
+        $permissions->canManageVendorCustomers = isset($team['permissions']['canManageVendorCustomers']) && $team['permissions']['canManageVendorCustomers'];
+        return $permissions;
+    }
 }

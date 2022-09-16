@@ -190,6 +190,15 @@ $permissions = TeamPermissions::fromFlags(
 );
 ```
 
+Or from the permissions of an existing team:
+
+```php
+use PrivatePackagist\ApiClient\TeamPermissions;
+
+$team = $client->teams()->all()[0];
+$permissions = TeamPermissions::fromTeamResponse($team);
+```
+
 #### List an organization's teams
 ```php
 $teams = $client->teams()->all();
