@@ -113,7 +113,7 @@
          * [Validate incoming webhook payloads](#validate-incoming-webhook-payloads)
       * [License](#license)
 
-<!-- Added by: zanbaldwin, at: Thu 15 Sep 11:30:29 CEST 2022 -->
+<!-- Added by: zanbaldwin, at: Fri 16 Sep 09:48:23 CEST 2022 -->
 
 <!--te-->
 
@@ -161,6 +161,35 @@ Returns an array of created jobs. One for every synchronization.
 
 ### Team
 
+The permissions available for a team are:
+- `canEditTeamPackages`: members of the team can edit and remove packages, assign package permissions (only applies to packages assigned to team).
+- `canAddPackages`: members of the team can add packages to organization; add, edit and remove credentials and mirrored third-party repositories.
+- `canCreateSubrepositories`: members of the team can create subrepositories.
+- `canViewVendorCustomers`: members of the team can view customers, their Composer information, their packages, and their install statistics.
+- `canManageVendorCustomers`: members of the team can create and delete customers, add and remove packages, update their settings, view Composer information and install statistics.
+
+```php
+use PrivatePackagist\ApiClient\TeamPermissions;
+
+$permissions = new TeamPermissions;
+// Grant all permissions.
+$permissions->canEditTeamPackages = true;
+$permissions->canAddPackages = true;
+$permissions->canCreateSubrepositories = true;
+$permissions->canManageVendorCustomers = true;
+$permissions->canManageVendorCustomers = true;
+```
+
+The permissions model can also be constructed via flags:
+
+```php
+use PrivatePackagist\ApiClient\TeamPermissions;
+
+$permissions = TeamPermissions::fromFlags(
+    TeamPermissions::PERMISSION_CAN_EDIT_TEAM_PACKAGES | TeamPermissions::PERMISSION_CAN_ADD_PACKAGES,
+);
+```
+
 #### List an organization's teams
 ```php
 $teams = $client->teams()->all();
@@ -169,21 +198,19 @@ Returns an array of teams.
 
 #### Create a New Team
 ```php
-$team = $client->teams()->create('New Team Name', true, false, false, true, false);
+use PrivatePackagist\ApiClient\TeamPermissions;
+
+$permissions = new TeamPermissions;
+$team = $client->teams()->create('New Team Name', $permissions);
 ```
-Creates a team and sets permissions applied to team members. Those permissions are (in order):
-
-- `canEditTeamPackages`: members of the team can edit and remove packages, assign package permissions (only applies to packages assigned to team).
-- `canAddPackages`: members of the team can add packages to organization; add, edit and remove credentials and mirrored third-party repositories.
-- `canCreateSubrepositories`: members of the team can create subrepositories.
-- `canViewVendorCustomers`: members of the team can view customers, their Composer information, their packages, and their install statistics.
-- `canManageVendorCustomers`: members of the team can create and delete customers, add and remove packages, update their settings, view Composer information and install statistics.
-
-Returns the newly-created team.
+Creates a team and sets permissions applied to team members. Returns the newly-created team.
 
 #### Edit a Team
 ```php
-$team = $client->teams()->edit($teamId, 'Altered Team Name', true, false, false, true, false);
+use PrivatePackagist\ApiClient\TeamPermissions;
+
+$permissions = new TeamPermissions;
+$team = $client->teams()->edit($teamId, 'Altered Team Name', $permissions);
 ```
 Edits a team's name and permissions to be applied to team members. Returns the updated team.
 

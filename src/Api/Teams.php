@@ -9,6 +9,8 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use PrivatePackagist\ApiClient\TeamPermissions;
+
 class Teams extends AbstractApi
 {
     public function all()
@@ -16,32 +18,32 @@ class Teams extends AbstractApi
         return $this->get('/teams/');
     }
 
-    public function create($name, $canEditTeamPackages = false, $canAddPackages = false, $canCreateSubrepositories = false, $canViewVendorCustomers = false, $canManageVendorCustomers = false)
+    public function create($name, TeamPermissions $permissions)
     {
         $parameters = [
             'name' => $name,
             'permissions' => [
-                'canEditTeamPackages' => $canEditTeamPackages,
-                'canAddPackages' => $canAddPackages,
-                'canCreateSubrepositories' => $canCreateSubrepositories,
-                'canViewVendorCustomers' => $canViewVendorCustomers,
-                'canManageVendorCustomers' => $canManageVendorCustomers,
+                'canEditTeamPackages' => (bool) $permissions->canEditTeamPackages,
+                'canAddPackages' => (bool) $permissions->canAddPackages,
+                'canCreateSubrepositories' => (bool) $permissions->canCreateSubrepositories,
+                'canViewVendorCustomers' => (bool) $permissions->canViewVendorCustomers,
+                'canManageVendorCustomers' => (bool) $permissions->canManageVendorCustomers,
             ],
         ];
 
         return $this->post('/teams/', $parameters);
     }
 
-    public function edit($teamId, $name, $canEditTeamPackages, $canAddPackages, $canCreateSubrepositories, $canViewVendorCustomers, $canManageVendorCustomers)
+    public function edit($teamId, $name, TeamPermissions $permissions)
     {
         $parameters = [
             'name' => $name,
             'permissions' => [
-                'canEditTeamPackages' => $canEditTeamPackages,
-                'canAddPackages' => $canAddPackages,
-                'canCreateSubrepositories' => $canCreateSubrepositories,
-                'canViewVendorCustomers' => $canViewVendorCustomers,
-                'canManageVendorCustomers' => $canManageVendorCustomers,
+                'canEditTeamPackages' => (bool) $permissions->canEditTeamPackages,
+                'canAddPackages' => (bool) $permissions->canAddPackages,
+                'canCreateSubrepositories' => (bool) $permissions->canCreateSubrepositories,
+                'canViewVendorCustomers' => (bool) $permissions->canViewVendorCustomers,
+                'canManageVendorCustomers' => (bool) $permissions->canManageVendorCustomers,
             ],
         ];
 

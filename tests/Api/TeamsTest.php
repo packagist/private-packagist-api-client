@@ -10,6 +10,7 @@
 namespace PrivatePackagist\ApiClient\Api;
 
 use PHPUnit\Framework\MockObject\MockObject;
+use PrivatePackagist\ApiClient\TeamPermissions;
 
 class TeamsTest extends ApiTestCase
 {
@@ -125,7 +126,10 @@ class TeamsTest extends ApiTestCase
             ]))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->create('New Team', true, false, false, true, false));
+        $permissions = new TeamPermissions;
+        $permissions->canEditTeamPackages = true;
+        $permissions->canViewVendorCustomers = true;
+        $this->assertSame($expected, $api->create('New Team', $permissions));
     }
 
     public function testEditTeam()
@@ -160,7 +164,10 @@ class TeamsTest extends ApiTestCase
             ]))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->edit(123, 'New Team', true, false, false, true, false));
+        $permissions = new TeamPermissions;
+        $permissions->canEditTeamPackages = true;
+        $permissions->canViewVendorCustomers = true;
+        $this->assertSame($expected, $api->edit(123, 'New Team', $permissions));
     }
 
     public function testDeleteTeam()
