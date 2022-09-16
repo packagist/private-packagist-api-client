@@ -50,11 +50,9 @@ class Teams extends AbstractApi
         return $this->put(sprintf('/teams/%s/', $teamId), $parameters);
     }
 
-    public function remove($teamId): bool
+    public function remove($teamId): array
     {
-        // Returns empty response on success.
-        $this->delete(sprintf('/teams/%s/', $teamId));
-        return true;
+        return $this->delete(sprintf('/teams/%s/', $teamId));
     }
 
     public function addMember($teamId, $userId): array
@@ -62,11 +60,9 @@ class Teams extends AbstractApi
         return $this->put(sprintf('/teams/%s/members/%s/', $teamId, $userId));
     }
 
-    public function removeMember($teamId, $userId): bool
+    public function removeMember($teamId, $userId): array
     {
-        // Returns empty response on success.
-        $this->delete(sprintf('/teams/%s/members/%s/', $teamId, $userId));
-        return true;
+        return $this->delete(sprintf('/teams/%s/members/%s/', $teamId, $userId));
     }
 
     public function packages($teamId)

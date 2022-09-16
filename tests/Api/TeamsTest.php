@@ -168,15 +168,16 @@ class TeamsTest extends ApiTestCase
 
     public function testDeleteTeam(): void
     {
+        $expected = [];
+
         /** @var Teams&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
             ->with($this->equalTo('/teams/1/'))
-            // Will return empty response.
-            ->willReturn([]);
+            ->willReturn($expected);
 
-        $this->assertSame(true, $api->remove(1));
+        $this->assertSame($expected, $api->remove(1));
     }
 
     public function testAddMember(): void
@@ -204,15 +205,16 @@ class TeamsTest extends ApiTestCase
 
     public function removeMember(): void
     {
+        $expected = [];
+
         /** @var Teams&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
             ->with($this->equalTo('/teams/1/members/12/'))
-            // Will return empty response.
-            ->willReturn([]);
+            ->willReturn($expected);
 
-        $this->assertSame(true, $api->removeMember(1, 12));
+        $this->assertSame($expected, $api->removeMember(1, 12));
     }
 
     /**
