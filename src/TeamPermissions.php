@@ -9,7 +9,7 @@
 
 namespace PrivatePackagist\ApiClient;
 
-class TeamPermissions
+final class TeamPermissions
 {
     public const PERMISSION_CAN_EDIT_TEAM_PACKAGES = 1 << 0;
     public const PERMISSION_CAN_ADD_PACKAGES = 1 << 1;
