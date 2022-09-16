@@ -9,11 +9,60 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use PrivatePackagist\ApiClient\TeamPermissions;
+
 class Teams extends AbstractApi
 {
     public function all()
     {
         return $this->get('/teams/');
+    }
+
+    public function create(string $name, TeamPermissions $permissions): array
+    {
+        $parameters = [
+            'name' => $name,
+            'permissions' => [
+                'canEditTeamPackages' => (bool) $permissions->canEditTeamPackages,
+                'canAddPackages' => (bool) $permissions->canAddPackages,
+                'canCreateSubrepositories' => (bool) $permissions->canCreateSubrepositories,
+                'canViewVendorCustomers' => (bool) $permissions->canViewVendorCustomers,
+                'canManageVendorCustomers' => (bool) $permissions->canManageVendorCustomers,
+            ],
+        ];
+
+        return $this->post('/teams/', $parameters);
+    }
+
+    public function edit($teamId, string $name, TeamPermissions $permissions): array
+    {
+        $parameters = [
+            'name' => $name,
+            'permissions' => [
+                'canEditTeamPackages' => (bool) $permissions->canEditTeamPackages,
+                'canAddPackages' => (bool) $permissions->canAddPackages,
+                'canCreateSubrepositories' => (bool) $permissions->canCreateSubrepositories,
+                'canViewVendorCustomers' => (bool) $permissions->canViewVendorCustomers,
+                'canManageVendorCustomers' => (bool) $permissions->canManageVendorCustomers,
+            ],
+        ];
+
+        return $this->put(sprintf('/teams/%s/', $teamId), $parameters);
+    }
+
+    public function remove($teamId): array
+    {
+        return $this->delete(sprintf('/teams/%s/', $teamId));
+    }
+
+    public function addMember($teamId, $userId): array
+    {
+        return $this->put(sprintf('/teams/%s/members/%s/', $teamId, $userId));
+    }
+
+    public function removeMember($teamId, $userId): array
+    {
+        return $this->delete(sprintf('/teams/%s/members/%s/', $teamId, $userId));
     }
 
     public function packages($teamId)

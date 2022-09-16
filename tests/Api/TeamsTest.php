@@ -10,6 +10,7 @@
 namespace PrivatePackagist\ApiClient\Api;
 
 use PHPUnit\Framework\MockObject\MockObject;
+use PrivatePackagist\ApiClient\TeamPermissions;
 
 class TeamsTest extends ApiTestCase
 {
@@ -91,6 +92,129 @@ class TeamsTest extends ApiTestCase
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->removePackage(1, 'acme-website/package'));
+    }
+
+    public function testCreateTeam(): void
+    {
+        $expected = [
+            'id' => 1,
+            'name' => 'New Team',
+            'permissions' => [
+                'canEditTeamPackages' => true,
+                'canAddPackages' => false,
+                'canCreateSubrepositories' => false,
+                'canViewVendorCustomers' => true,
+                'canManageVendorCustomers' => false,
+            ],
+        ];
+
+        /** @var Teams&MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('post')
+            ->with($this->equalTo('/teams/'), $this->equalTo([
+                'name' => 'New Team',
+                'permissions' => [
+                    'canEditTeamPackages' => true,
+                    'canAddPackages' => false,
+                    'canCreateSubrepositories' => false,
+                    'canViewVendorCustomers' => true,
+                    'canManageVendorCustomers' => false,
+                ],
+            ]))
+            ->willReturn($expected);
+
+        $permissions = new TeamPermissions;
+        $permissions->canEditTeamPackages = true;
+        $permissions->canViewVendorCustomers = true;
+        $this->assertSame($expected, $api->create('New Team', $permissions));
+    }
+
+    public function testEditTeam(): void
+    {
+        $expected = [
+            'id' => 123,
+            'name' => 'New Team',
+            'permissions' => [
+                'canEditTeamPackages' => true,
+                'canAddPackages' => false,
+                'canCreateSubrepositories' => false,
+                'canViewVendorCustomers' => true,
+                'canManageVendorCustomers' => false,
+            ],
+        ];
+
+        /** @var Teams&MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('put')
+            ->with($this->equalTo('/teams/123/'), $this->equalTo([
+                'name' => 'New Team',
+                'permissions' => [
+                    'canEditTeamPackages' => true,
+                    'canAddPackages' => false,
+                    'canCreateSubrepositories' => false,
+                    'canViewVendorCustomers' => true,
+                    'canManageVendorCustomers' => false,
+                ],
+            ]))
+            ->willReturn($expected);
+
+        $permissions = new TeamPermissions;
+        $permissions->canEditTeamPackages = true;
+        $permissions->canViewVendorCustomers = true;
+        $this->assertSame($expected, $api->edit(123, 'New Team', $permissions));
+    }
+
+    public function testDeleteTeam(): void
+    {
+        $expected = [];
+
+        /** @var Teams&MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('delete')
+            ->with($this->equalTo('/teams/1/'))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->remove(1));
+    }
+
+    public function testAddMember(): void
+    {
+        $expected = [
+            'id' => 1,
+            'name' => 'New Team',
+            'members' => [
+                [
+                    'id' => 12,
+                    'username' => 'username'
+                ]
+            ],
+        ];
+
+        /** @var Teams&MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('put')
+            ->with($this->equalTo('/teams/1/members/12/'))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->addMember(1, 12));
+    }
+
+    public function removeMember(): void
+    {
+        $expected = [];
+
+        /** @var Teams&MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('delete')
+            ->with($this->equalTo('/teams/1/members/12/'))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->removeMember(1, 12));
     }
 
     /**

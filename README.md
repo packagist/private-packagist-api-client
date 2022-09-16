@@ -12,6 +12,11 @@
             * [Trigger a full synchronization](#trigger-a-full-synchronization)
          * [Team](#team)
             * [List an organization's teams](#list-an-organizations-teams)
+            * [Create a New Team](#create-a-new-team)
+            * [Edit a Team](#edit-a-team)
+            * [Delete a Team](#delete-a-team)
+            * [Add Member to Team (by User ID)](#add-member-to-team-by-user-id)
+            * [Remove Member from Team](#remove-member-from-team)
             * [List all private packages a team has access to](#list-all-private-packages-a-team-has-access-to)
             * [Grant a team access to a list of private packages](#grant-a-team-access-to-a-list-of-private-packages)
             * [Remove access for a package from a team](#remove-access-for-a-package-from-a-team)
@@ -108,7 +113,7 @@
          * [Validate incoming webhook payloads](#validate-incoming-webhook-payloads)
       * [License](#license)
 
-<!-- Added by: zanbaldwin, at: Thu 18 Aug 12:50:05 CEST 2022 -->
+<!-- Added by: zanbaldwin, at: Fri 16 Sep 09:48:23 CEST 2022 -->
 
 <!--te-->
 
@@ -156,11 +161,83 @@ Returns an array of created jobs. One for every synchronization.
 
 ### Team
 
+The permissions available for a team are:
+- `canEditTeamPackages`: members of the team can edit and remove packages, assign package permissions (only applies to packages assigned to team).
+- `canAddPackages`: members of the team can add packages to organization; add, edit and remove credentials and mirrored third-party repositories.
+- `canCreateSubrepositories`: members of the team can create subrepositories.
+- `canViewVendorCustomers`: members of the team can view customers, their Composer information, their packages, and their install statistics.
+- `canManageVendorCustomers`: members of the team can create and delete customers, add and remove packages, update their settings, view Composer information and install statistics.
+
+```php
+use PrivatePackagist\ApiClient\TeamPermissions;
+
+$permissions = new TeamPermissions;
+// Grant all permissions.
+$permissions->canEditTeamPackages = true;
+$permissions->canAddPackages = true;
+$permissions->canCreateSubrepositories = true;
+$permissions->canManageVendorCustomers = true;
+$permissions->canManageVendorCustomers = true;
+```
+
+The permissions model can also be constructed via flags:
+
+```php
+use PrivatePackagist\ApiClient\TeamPermissions;
+
+$permissions = TeamPermissions::fromFlags(
+    TeamPermissions::PERMISSION_CAN_EDIT_TEAM_PACKAGES | TeamPermissions::PERMISSION_CAN_ADD_PACKAGES,
+);
+```
+
+Or from the permissions of an existing team:
+
+```php
+use PrivatePackagist\ApiClient\TeamPermissions;
+
+$team = $client->teams()->all()[0];
+$permissions = TeamPermissions::fromTeamResponse($team);
+```
+
 #### List an organization's teams
 ```php
 $teams = $client->teams()->all();
 ```
 Returns an array of teams.
+
+#### Create a New Team
+```php
+use PrivatePackagist\ApiClient\TeamPermissions;
+
+$permissions = new TeamPermissions;
+$team = $client->teams()->create('New Team Name', $permissions);
+```
+Creates a team and sets permissions applied to team members. Returns the newly-created team.
+
+#### Edit a Team
+```php
+use PrivatePackagist\ApiClient\TeamPermissions;
+
+$permissions = new TeamPermissions;
+$team = $client->teams()->edit($teamId, 'Altered Team Name', $permissions);
+```
+Edits a team's name and permissions to be applied to team members. Returns the updated team.
+
+#### Delete a Team
+```php
+$client->teams()->remove($teamId);
+```
+
+#### Add Member to Team (by User ID)
+```php
+$team = $client->teams()->addMember($teamId, $userId);
+```
+Returns the team the user was added to.
+
+#### Remove Member from Team
+```php
+$client->teams()->removeMember($teamId, $userId);
+```
 
 #### List all private packages a team has access to
 ```php
