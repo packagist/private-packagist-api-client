@@ -18,7 +18,7 @@ class Teams extends AbstractApi
         return $this->get('/teams/');
     }
 
-    public function create($name, TeamPermissions $permissions)
+    public function create(string $name, TeamPermissions $permissions): array
     {
         $parameters = [
             'name' => $name,
@@ -34,7 +34,7 @@ class Teams extends AbstractApi
         return $this->post('/teams/', $parameters);
     }
 
-    public function edit($teamId, $name, TeamPermissions $permissions)
+    public function edit($teamId, string $name, TeamPermissions $permissions): array
     {
         $parameters = [
             'name' => $name,
@@ -50,19 +50,23 @@ class Teams extends AbstractApi
         return $this->put(sprintf('/teams/%s/', $teamId), $parameters);
     }
 
-    public function remove($teamId)
+    public function remove($teamId): bool
     {
-        return $this->delete(sprintf('/teams/%s/', $teamId));
+        // Returns empty response on success.
+        $this->delete(sprintf('/teams/%s/', $teamId));
+        return true;
     }
 
-    public function addMember($teamId, $userId)
+    public function addMember($teamId, $userId): array
     {
         return $this->put(sprintf('/teams/%s/members/%s/', $teamId, $userId));
     }
 
-    public function removeMember($teamId, $userId)
+    public function removeMember($teamId, $userId): bool
     {
-        return $this->delete(sprintf('/teams/%s/members/%s/', $teamId, $userId));
+        // Returns empty response on success.
+        $this->delete(sprintf('/teams/%s/members/%s/', $teamId, $userId));
+        return true;
     }
 
     public function packages($teamId)

@@ -94,19 +94,17 @@ class TeamsTest extends ApiTestCase
         $this->assertSame($expected, $api->removePackage(1, 'acme-website/package'));
     }
 
-    public function testCreateTeam()
+    public function testCreateTeam(): void
     {
         $expected = [
-            [
-                'id' => 1,
-                'name' => 'New Team',
-                'permissions' => [
-                    'canEditTeamPackages' => true,
-                    'canAddPackages' => false,
-                    'canCreateSubrepositories' => false,
-                    'canViewVendorCustomers' => true,
-                    'canManageVendorCustomers' => false,
-                ],
+            'id' => 1,
+            'name' => 'New Team',
+            'permissions' => [
+                'canEditTeamPackages' => true,
+                'canAddPackages' => false,
+                'canCreateSubrepositories' => false,
+                'canViewVendorCustomers' => true,
+                'canManageVendorCustomers' => false,
             ],
         ];
 
@@ -132,19 +130,17 @@ class TeamsTest extends ApiTestCase
         $this->assertSame($expected, $api->create('New Team', $permissions));
     }
 
-    public function testEditTeam()
+    public function testEditTeam(): void
     {
         $expected = [
-            [
-                'id' => 1,
-                'name' => 'New Team',
-                'permissions' => [
-                    'canEditTeamPackages' => true,
-                    'canAddPackages' => false,
-                    'canCreateSubrepositories' => false,
-                    'canViewVendorCustomers' => true,
-                    'canManageVendorCustomers' => false,
-                ],
+            'id' => 123,
+            'name' => 'New Team',
+            'permissions' => [
+                'canEditTeamPackages' => true,
+                'canAddPackages' => false,
+                'canCreateSubrepositories' => false,
+                'canViewVendorCustomers' => true,
+                'canManageVendorCustomers' => false,
             ],
         ];
 
@@ -170,36 +166,30 @@ class TeamsTest extends ApiTestCase
         $this->assertSame($expected, $api->edit(123, 'New Team', $permissions));
     }
 
-    public function testDeleteTeam()
+    public function testDeleteTeam(): void
     {
-        $expected = null;
-
         /** @var Teams&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
             ->with($this->equalTo('/teams/1/'))
-            ->willReturn($expected);
+            // Will return empty response.
+            ->willReturn([]);
 
-        $this->assertSame($expected, $api->remove(1));
+        $this->assertSame(true, $api->remove(1));
     }
 
-    public function testAddMember()
+    public function testAddMember(): void
     {
         $expected = [
-            [
-                'id' => 1,
-                'name' => 'New Team',
-                'permission' => 'view',
-                'members' => [
-                    [
-                        'id' => 12,
-                        'username' => 'username'
-                    ]
-                ],
-                'projects' => [
-                ],
-            ]
+            'id' => 1,
+            'name' => 'New Team',
+            'members' => [
+                [
+                    'id' => 12,
+                    'username' => 'username'
+                ]
+            ],
         ];
 
         /** @var Teams&MockObject $api */
@@ -212,27 +202,17 @@ class TeamsTest extends ApiTestCase
         $this->assertSame($expected, $api->addMember(1, 12));
     }
 
-    public function removeMember()
+    public function removeMember(): void
     {
-        $expected = [
-            [
-                'id' => 1,
-                'name' => 'New Team',
-                'permission' => 'view',
-                'members' => [],
-                'projects' => [
-                ],
-            ]
-        ];
-
         /** @var Teams&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
             ->with($this->equalTo('/teams/1/members/12/'))
-            ->willReturn($expected);
+            // Will return empty response.
+            ->willReturn([]);
 
-        $this->assertSame($expected, $api->removeMember(1, 12));
+        $this->assertSame(true, $api->removeMember(1, 12));
     }
 
     /**
