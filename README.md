@@ -13,6 +13,7 @@
          * [Team](#team)
             * [List an organization's teams](#list-an-organizations-teams)
             * [Create a New Team](#create-a-new-team)
+            * [Show a Team](#show-a-team)
             * [Edit a Team](#edit-a-team)
             * [Delete a Team](#delete-a-team)
             * [Add Member to Team (by User ID)](#add-member-to-team-by-user-id)
@@ -113,7 +114,7 @@
          * [Validate incoming webhook payloads](#validate-incoming-webhook-payloads)
       * [License](#license)
 
-<!-- Added by: zanbaldwin, at: Fri 16 Sep 09:48:23 CEST 2022 -->
+<!-- Added by: glaubinix, at: Tue 24 Jan 2023 14:03:21 GMT -->
 
 <!--te-->
 
@@ -213,6 +214,14 @@ $permissions = new TeamPermissions;
 $team = $client->teams()->create('New Team Name', $permissions);
 ```
 Creates a team and sets permissions applied to team members. Returns the newly-created team.
+
+#### Show a Team
+```php
+
+$team = $client->teams()->show($teamId);
+```
+Returns the team including all its members.
+
 
 #### Edit a Team
 ```php

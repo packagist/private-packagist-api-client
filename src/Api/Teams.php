@@ -34,6 +34,11 @@ class Teams extends AbstractApi
         return $this->post('/teams/', $parameters);
     }
 
+    public function show($teamId)
+    {
+        return $this->get(sprintf('/teams/%s/', $teamId));
+    }
+
     public function edit($teamId, string $name, TeamPermissions $permissions): array
     {
         $parameters = [
