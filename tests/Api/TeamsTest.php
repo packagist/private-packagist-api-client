@@ -130,6 +130,33 @@ class TeamsTest extends ApiTestCase
         $this->assertSame($expected, $api->create('New Team', $permissions));
     }
 
+    public function testShowTeam(): void
+    {
+        $expected = [
+            'id' => 1,
+            'name' => 'New Team',
+            'permissions' => [
+                'canEditTeamPackages' => true,
+                'canAddPackages' => false,
+                'canCreateSubrepositories' => false,
+                'canViewVendorCustomers' => true,
+                'canManageVendorCustomers' => false,
+            ],
+        ];
+
+        /** @var Teams&MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo('/teams/123/'))
+            ->willReturn($expected);
+
+        $permissions = new TeamPermissions;
+        $permissions->canEditTeamPackages = true;
+        $permissions->canViewVendorCustomers = true;
+        $this->assertSame($expected, $api->show(123));
+    }
+
     public function testEditTeam(): void
     {
         $expected = [
