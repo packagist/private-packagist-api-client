@@ -331,7 +331,7 @@ Returns a single customer.
 ```php
 $customer = $client->customers()->create('New customer name');
 // or
-$customer = $client->customers()->create('New customer name', false, 'customer-url-name', 'beta');
+$customer = $client->customers()->create('New customer name', false, 'customer-url-name', 'beta', true);
 ```
 Returns the customer.
 
@@ -343,6 +343,7 @@ $customerData = [
     'urlName' => 'customer',
     'accessToVersionControlSource' => false,
     'minimumAccessibleStability' => 'beta',
+    'assignAllPackages' => true,
 ];
 $customer = $client->customers()->edit($customerId, $customerData);
 ```
