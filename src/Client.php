@@ -112,6 +112,11 @@ class Client
         return new Api\Tokens($this, $this->responseMediator);
     }
 
+    public function synchronizations()
+    {
+        return new Api\Synchronizations($this, $this->responseMediator);
+    }
+
     public function getHttpClient()
     {
         return $this->getHttpClientBuilder()->getHttpClient();
