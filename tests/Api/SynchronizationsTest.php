@@ -22,7 +22,7 @@ class SynchronizationsTest extends ApiTestCase
             ]
         ];
 
-        /** @var Teams&MockObject $api */
+        /** @var Synchronizations&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
