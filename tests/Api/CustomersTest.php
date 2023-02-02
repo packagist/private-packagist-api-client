@@ -21,6 +21,7 @@ class CustomersTest extends ApiTestCase
                 'id' => 1,
                 'type' => 'composer-repo',
                 'name' => 'Customer',
+                'assignAllPackages' => false,
             ],
         ];
 
@@ -39,7 +40,8 @@ class CustomersTest extends ApiTestCase
         $expected = [
             'id' => 1,
             'type' => 'composer-repo',
-            'name' => $name = 'Customer',
+            'name' => 'Customer',
+            'assignAllPackages' => false,
         ];
 
         /** @var Customers&MockObject $api */
@@ -61,6 +63,7 @@ class CustomersTest extends ApiTestCase
                 'name' => $name = 'Customer',
                 'accessToVersionControlSource' => false,
                 'minimumAccessibleStability' => 'dev',
+                'assignAllPackages' => false,
             ],
         ];
 
@@ -68,7 +71,7 @@ class CustomersTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
-            ->with($this->equalTo('/customers/'), $this->equalTo(['name' => $name, 'accessToVersionControlSource' => false, 'minimumAccessibleStability' => null]))
+            ->with($this->equalTo('/customers/'), $this->equalTo(['name' => $name, 'accessToVersionControlSource' => false, 'minimumAccessibleStability' => null, 'assignAllPackages' => false]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->create($name));
@@ -82,7 +85,8 @@ class CustomersTest extends ApiTestCase
                 'type' => 'composer-repo',
                 'name' => $name = 'Customer',
                 'accessToVersionControlSource' => false,
-                'minimumAccessibleStability' => 'beta'
+                'minimumAccessibleStability' => 'beta',
+                'assignAllPackages' => true,
             ],
         ];
 
@@ -90,10 +94,10 @@ class CustomersTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
-            ->with($this->equalTo('/customers/'), $this->equalTo(['name' => $name, 'accessToVersionControlSource' => true, 'urlName' => 'url-name', 'minimumAccessibleStability' => 'beta']))
+            ->with($this->equalTo('/customers/'), $this->equalTo(['name' => $name, 'accessToVersionControlSource' => true, 'urlName' => 'url-name', 'minimumAccessibleStability' => 'beta', 'assignAllPackages' => true]))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->create($name, true, 'url-name', 'beta'));
+        $this->assertSame($expected, $api->create($name, true, 'url-name', 'beta', true));
     }
 
     public function tesEdit()
@@ -106,6 +110,7 @@ class CustomersTest extends ApiTestCase
                 'urlName' => 'customer',
                 'accessToVersionControlSource' => false,
                 'minimumAccessibleStability' => 'dev',
+                'assignAllPackages' => false,
             ],
         ];
 
@@ -114,6 +119,7 @@ class CustomersTest extends ApiTestCase
             'urlName' => 'customer',
             'accessToVersionControlSource' => false,
             'minimumAccessibleStability' => null,
+            'assignAllPackages' => false,
         ];
 
         /** @var Customers&MockObject $api */
@@ -149,6 +155,7 @@ class CustomersTest extends ApiTestCase
             'urlName' => 'customer',
             'accessToVersionControlSource' => false,
             'enabled' => true,
+            'assignAllPackages' => false,
         ];
 
         /** @var Customers&MockObject $api */
@@ -170,6 +177,7 @@ class CustomersTest extends ApiTestCase
             'urlName' => 'customer',
             'accessToVersionControlSource' => false,
             'enabled' => false,
+            'assignAllPackages' => false,
         ];
 
         /** @var Customers&MockObject $api */
