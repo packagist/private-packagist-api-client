@@ -34,5 +34,10 @@
     },
     "scripts": {
         "toc": "./gh-md-toc --insert README.md"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     }
 }
