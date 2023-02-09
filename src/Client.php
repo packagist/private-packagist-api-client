@@ -117,6 +117,11 @@ class Client
         return new Api\Synchronizations($this, $this->responseMediator);
     }
 
+    public function vendorBundles()
+    {
+        return new Api\VendorBundles($this, $this->responseMediator);
+    }
+
     public function getHttpClient()
     {
         return $this->getHttpClientBuilder()->getHttpClient();
