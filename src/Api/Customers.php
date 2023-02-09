@@ -122,4 +122,9 @@ class Customers extends AbstractApi
     {
         return new MagentoLegacyKeys($this->client);
     }
+
+    public function vendorBundles()
+    {
+        return new \PrivatePackagist\ApiClient\Api\Customers\VendorBundles($this->client);
+    }
 }

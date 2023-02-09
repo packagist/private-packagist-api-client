@@ -39,6 +39,9 @@
             * [Grant a customer access to a package or edit the limitations](#grant-a-customer-access-to-a-package-or-edit-the-limitations)
             * [Revoke access to a package from a customer](#revoke-access-to-a-package-from-a-customer)
             * [Regenerate a customer's Composer repository token](#regenerate-a-customers-composer-repository-token)
+            * [List a customer's vendor bundles](#list-a-customers-vendor-bundles)
+            * [Grant a customer access to a vendor bundle or edit the limitations](#grant-a-customer-access-to-a-vendor-bundle-or-edit-the-limitations)
+            * [Revoke access to a vendor bundle from a customer](#revoke-access-to-a-vendor-bundle-from-a-customer)
          * [Vendor Bundle](#vendor-bundle)
             * [List an organization's vendor bundles](#list-an-organizations-vendor-bundles)
             * [Show a vendor bundle](#show-a-vendor-bundle)
@@ -123,7 +126,7 @@
          * [Validate incoming webhook payloads](#validate-incoming-webhook-payloads)
       * [License](#license)
 
-<!-- Added by: glaubinix, at: Thu  9 Feb 2023 15:12:39 GMT -->
+<!-- Added by: glaubinix, at: Thu  9 Feb 2023 15:40:34 GMT -->
 
 <!--te-->
 
@@ -422,6 +425,29 @@ $confirmation = [
 $composerRepository = $client->customers()->regenerateToken($customerId, $confirmation);
 ```
 Returns the edited Composer repository.
+
+#### List a customer's vendor bundles
+```php
+$customerId = 42;
+$packages = $client->customers()->vendorBundles()->listVendorBundles($customerId);
+```
+Returns an array of customer vendor bundles.
+
+#### Grant a customer access to a vendor bundle or edit the limitations
+```php
+$customerId = 42;
+$vendorBundleId = 12;
+$expirationDate = (new \DateTime())->add(new \DateInterval('P1Y'))->format('c'), // optional expiration date to limit updates the customer receives
+$packages = $client->customers()->vendorBundles()->addOrEditVendorBundle($customerId, $vendorBundleId, $expirationDate);
+```
+Returns the added or edited customer vendor bundle.
+
+#### Revoke access to a vendor bundle from a customer
+```php
+$customerId = 42;
+$vendorBundleId = 12;
+$client->customers()->vendorBundles()->removeVendorBundle($customerId, $vendorBundleId);
+```
 
 ### Vendor Bundle
 

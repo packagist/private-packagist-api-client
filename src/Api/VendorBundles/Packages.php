@@ -25,13 +25,13 @@ class Packages extends AbstractApi
 
     /**
      * @param int $vendorBundleId
-     * @param array{name: string, versionConstraint?: string, minimumAccessibleStability?: string}[]
+     * @param array{name: string, versionConstraint?: string, minimumAccessibleStability?: string}[] $packages
      * @return array[]
      */
     public function addOrEditPackages($vendorBundleId, array $packages)
     {
         foreach ($packages as $package) {
-            if (!isset($package['name'])) {
+            if (!isset($package['name'])) { // @phpstan-ignore-line
                 throw new InvalidArgumentException('Parameter "name" is required.');
             }
         }
@@ -42,7 +42,6 @@ class Packages extends AbstractApi
     /**
      * @param int $vendorBundleId
      * @param string $packageName
-     * @return null
      */
     public function removePackage($vendorBundleId, $packageName)
     {

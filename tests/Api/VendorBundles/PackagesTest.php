@@ -65,7 +65,7 @@ class PackagesTest extends ApiTestCase
         /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
 
-        $api->addOrEditPackages(1, [[]]);
+        $api->addOrEditPackages(1, [[]]); // @phpstan-ignore-line
     }
 
     public function testRemovePackage()
