@@ -39,6 +39,15 @@
             * [Grant a customer access to a package or edit the limitations](#grant-a-customer-access-to-a-package-or-edit-the-limitations)
             * [Revoke access to a package from a customer](#revoke-access-to-a-package-from-a-customer)
             * [Regenerate a customer's Composer repository token](#regenerate-a-customers-composer-repository-token)
+         * [Vendor Bundle](#vendor-bundle)
+            * [List an organization's vendor bundles](#list-an-organizations-vendor-bundles)
+            * [Show a vendor bundle](#show-a-vendor-bundle)
+            * [Create a vendor bundle](#create-a-vendor-bundle)
+            * [Edit a customer](#edit-a-customer-1)
+            * [Delete a vendor bundle](#delete-a-vendor-bundle)
+            * [List packages in a vendor bundle](#list-packages-in-a-vendor-bundle)
+            * [Add one or more packages to a vendor bundle or edit their limitations](#add-one-or-more-packages-to-a-vendor-bundle-or-edit-their-limitations)
+            * [Remove a package from a vendor bundle](#remove-a-package-from-a-vendor-bundle)
          * [Subrepository](#subrepository)
             * [List an organization's subrepositories](#list-an-organizations-subrepositories)
             * [Show a subrepository](#show-a-subrepository)
@@ -114,7 +123,7 @@
          * [Validate incoming webhook payloads](#validate-incoming-webhook-payloads)
       * [License](#license)
 
-<!-- Added by: glaubinix, at: Tue 24 Jan 2023 14:03:21 GMT -->
+<!-- Added by: glaubinix, at: Thu  9 Feb 2023 15:12:39 GMT -->
 
 <!--te-->
 
@@ -413,6 +422,77 @@ $confirmation = [
 $composerRepository = $client->customers()->regenerateToken($customerId, $confirmation);
 ```
 Returns the edited Composer repository.
+
+### Vendor Bundle
+
+#### List an organization's vendor bundles
+```php
+$vendorBundles = $client->vendorBundles()->all();
+```
+Returns an array of vendor bundles.
+
+#### Show a vendor bundle
+```php
+$vendorBundleId = 42;
+$vendorBundle = $client->vendorBundles()->show($vendorBundleId);
+```
+Returns a single vendor bundle.
+
+#### Create a vendor bundle
+```php
+$vendorBundle = $client->vendorBundles()->create('New bundle name');
+// or
+$vendorBundle = $client->vendorBundles()->create('New bundle name', 'dev', '^1.0', true, [123]);
+```
+Returns the vendor bundle.
+
+#### Edit a customer
+```php
+$vendorBundleId = 42;
+$vendorBundleData = [
+    'name' => 'Bundle name',
+    'minimumAccessibleStability' => 'dev', 
+    'versionConstraint' => '^1.0',
+    'assignAllPackages' => true,
+    'synchronizationIds' => [123], // A list of synchronization ids for which new packages should automatically be added to the bundle.
+];
+$vendorBundle = $client->vendorBundles()->edit($vendorBundleId, $vendorBundleData);
+```
+Returns the vendor bundle.
+
+#### Delete a vendor bundle
+```php
+$vendorBundleId = 42;
+$client->vendorBundles()->remove($vendorBundleId);
+```
+
+#### List packages in a vendor bundle
+```php
+$vendorBundleId = 42;
+$packages = $client->vendorBundles()->packages()->listPackages($vendorBundleId);
+```
+Returns an array of vendor bundle packages.
+
+#### Add one or more packages to a vendor bundle or edit their limitations
+```php
+$vendorBundleId = 42;
+$packages = [
+    [
+        'name' => 'acme-website/package',
+        'versionConstraint' => '^1.0 | ^2.0', // optional version constraint to limit updates the customer receives
+        'minimumAccessibleStability' => 'beta', // optional stability to restrict customers to specific package version stabilities like alpha, beta, or RC
+    ],
+];
+$packages = $client->vendorBundles()->packages()->addOrEditPackages($vendorBundleId, $packages);
+```
+Returns an array of all added or edited customer packages.
+
+#### Remove a package from a vendor bundle
+```php
+$vendorBundleId = 42;
+$packageName = 'acme-website/package';
+$client->vendorBundles()->packages()->removePackage($vendorBundleId, $packageName);
+```
 
 ### Subrepository
 
