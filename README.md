@@ -212,6 +212,10 @@ $team = $client->teams()->all()[0];
 $permissions = TeamPermissions::fromTeamResponse($team);
 ```
 
+Additionally, teams have a separate "All Package Access" flag, determining whether the team has access to all current and future
+organization packages which do not have their permissions synchronized. Revoking "All Package Access" will not remove access to
+packages the team can currently access, but will prevent access to new packages and allow revoking individual package access.
+
 #### List an organization's teams
 ```php
 $teams = $client->teams()->all();
@@ -223,9 +227,11 @@ Returns an array of teams.
 use PrivatePackagist\ApiClient\TeamPermissions;
 
 $permissions = new TeamPermissions;
-$team = $client->teams()->create('New Team Name', $permissions);
+$team = $client->teams()->create('New Team Name', $permissions, $canAccessAllPackages);
 ```
 Creates a team and sets permissions applied to team members. Returns the newly-created team.
+
+The `$canAccessAllPackages` argument defaults to `false`.
 
 #### Show a Team
 ```php
@@ -240,9 +246,11 @@ Returns the team including all its members.
 use PrivatePackagist\ApiClient\TeamPermissions;
 
 $permissions = new TeamPermissions;
-$team = $client->teams()->edit($teamId, 'Altered Team Name', $permissions);
+$team = $client->teams()->edit($teamId, 'Altered Team Name', $permissions, $canAccessAllPackages);
 ```
 Edits a team's name and permissions to be applied to team members. Returns the updated team.
+
+The `$canAccessAllPackages` argument defaults to `null`, meaning that the setting is left unchanged.
 
 #### Delete a Team
 ```php
@@ -477,7 +485,7 @@ Returns the vendor bundle.
 $vendorBundleId = 42;
 $vendorBundleData = [
     'name' => 'Bundle name',
-    'minimumAccessibleStability' => 'dev', 
+    'minimumAccessibleStability' => 'dev',
     'versionConstraint' => '^1.0',
     'assignAllPackages' => true,
     'synchronizationIds' => [123], // A list of synchronization ids for which new packages should automatically be added to the bundle.
