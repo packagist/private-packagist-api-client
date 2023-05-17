@@ -229,11 +229,9 @@ Returns an array of teams.
 use PrivatePackagist\ApiClient\TeamPermissions;
 
 $permissions = new TeamPermissions;
-$team = $client->teams()->create('New Team Name', $permissions, $canAccessAllPackages);
+$team = $client->teams()->create('New Team Name', $permissions);
 ```
 Creates a team and sets permissions applied to team members. Returns the newly-created team.
-
-The `$canAccessAllPackages` argument defaults to `false`.
 
 #### Show a Team
 ```php
@@ -248,11 +246,9 @@ Returns the team including all its members.
 use PrivatePackagist\ApiClient\TeamPermissions;
 
 $permissions = new TeamPermissions;
-$team = $client->teams()->edit($teamId, 'Altered Team Name', $permissions, $canAccessAllPackages);
+$team = $client->teams()->edit($teamId, 'Altered Team Name', $permissions);
 ```
 Edits a team's name and permissions to be applied to team members. Returns the updated team.
-
-The `$canAccessAllPackages` argument defaults to `null`, meaning that the setting is left unchanged.
 
 #### Grant All Package Access
 ```php
