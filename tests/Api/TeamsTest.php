@@ -157,42 +157,6 @@ class TeamsTest extends ApiTestCase
         $this->assertSame($expected, $api->show(123));
     }
 
-    public function testEditTeamLegacy(): void
-    {
-        $expected = [
-            'id' => 123,
-            'name' => 'New Team',
-            'permissions' => [
-                'canEditTeamPackages' => true,
-                'canAddPackages' => false,
-                'canCreateSubrepositories' => false,
-                'canViewVendorCustomers' => true,
-                'canManageVendorCustomers' => false,
-            ],
-        ];
-
-        /** @var Teams&MockObject $api */
-        $api = $this->getApiMock();
-        $api->expects($this->once())
-            ->method('put')
-            ->with($this->equalTo('/teams/123/'), $this->equalTo([
-                'name' => 'New Team',
-                'permissions' => [
-                    'canEditTeamPackages' => true,
-                    'canAddPackages' => false,
-                    'canCreateSubrepositories' => false,
-                    'canViewVendorCustomers' => true,
-                    'canManageVendorCustomers' => false,
-                ],
-            ]))
-            ->willReturn($expected);
-
-        $permissions = new TeamPermissions;
-        $permissions->canEditTeamPackages = true;
-        $permissions->canViewVendorCustomers = true;
-        $this->assertSame($expected, $api->edit(123, 'New Team', $permissions));
-    }
-
     public function testEditTeam(): void
     {
         $expected = [
