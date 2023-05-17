@@ -15,6 +15,8 @@
             * [Create a New Team](#create-a-new-team)
             * [Show a Team](#show-a-team)
             * [Edit a Team](#edit-a-team)
+            * [Grant All Package Access](#grant-all-package-access)
+            * [Revoke All Package Access](#revoke-all-package-access)
             * [Delete a Team](#delete-a-team)
             * [Add Member to Team (by User ID)](#add-member-to-team-by-user-id)
             * [Remove Member from Team](#remove-member-from-team)
@@ -126,7 +128,7 @@
          * [Validate incoming webhook payloads](#validate-incoming-webhook-payloads)
       * [License](#license)
 
-<!-- Added by: glaubinix, at: Thu  9 Feb 2023 15:40:34 GMT -->
+<!-- Added by: zanbaldwin, at: Wed May 17 20:53:35 CEST 2023 -->
 
 <!--te-->
 
@@ -251,6 +253,20 @@ $team = $client->teams()->edit($teamId, 'Altered Team Name', $permissions, $canA
 Edits a team's name and permissions to be applied to team members. Returns the updated team.
 
 The `$canAccessAllPackages` argument defaults to `null`, meaning that the setting is left unchanged.
+
+#### Grant All Package Access
+```php
+$team = $client->teams()->grantAccessToAllPackages($teamId);
+```
+
+Granting a team access to all packages will give this team access to all current and future organization packages which do not have their permissions synchronized.
+
+#### Revoke All Package Access
+```php
+$team = $client->teams()->revokeAccessToAllPackages($teamId);
+```
+
+Revoking a team's access to all packages will not remove access to packages the team can currently access, but will prevent access to new packages and allow revoking individual package access.
 
 #### Delete a Team
 ```php

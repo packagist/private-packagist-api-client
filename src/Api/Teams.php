@@ -18,7 +18,7 @@ class Teams extends AbstractApi
         return $this->get('/teams/');
     }
 
-    public function create(string $name, TeamPermissions $permissions, bool $canAccessAllPackages = false): array
+    public function create(string $name, TeamPermissions $permissions): array
     {
         $parameters = [
             'name' => $name,
@@ -29,7 +29,6 @@ class Teams extends AbstractApi
                 'canViewVendorCustomers' => (bool) $permissions->canViewVendorCustomers,
                 'canManageVendorCustomers' => (bool) $permissions->canManageVendorCustomers,
             ],
-            'canAccessAllPackages' => $canAccessAllPackages,
         ];
 
         return $this->post('/teams/', $parameters);
@@ -40,7 +39,7 @@ class Teams extends AbstractApi
         return $this->get(sprintf('/teams/%s/', $teamId));
     }
 
-    public function edit($teamId, string $name, TeamPermissions $permissions, ?bool $canAccessAllPackages = null): array
+    public function edit($teamId, string $name, TeamPermissions $permissions): array
     {
         $parameters = [
             'name' => $name,
@@ -52,11 +51,18 @@ class Teams extends AbstractApi
                 'canManageVendorCustomers' => (bool) $permissions->canManageVendorCustomers,
             ],
         ];
-        if ($canAccessAllPackages !== null) {
-            $parameters['canAccessAllPackages'] = $canAccessAllPackages;
-        }
 
         return $this->put(sprintf('/teams/%s/', $teamId), $parameters);
+    }
+
+    public function grantAccessToAllPackages($teamId): array
+    {
+        return $this->put(sprintf('/teams/%s/all-package-access/grant', $teamId));
+    }
+
+    public function revokeAccessToAllPackages($teamId): array
+    {
+        return $this->put(sprintf('/teams/%s/all-package-access/revoke', $teamId));
     }
 
     public function remove($teamId): array

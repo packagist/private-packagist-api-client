@@ -106,7 +106,6 @@ class TeamsTest extends ApiTestCase
                 'canViewVendorCustomers' => true,
                 'canManageVendorCustomers' => false,
             ],
-            'canAccessAllPackages' => false,
         ];
 
         /** @var Teams&MockObject $api */
@@ -122,7 +121,6 @@ class TeamsTest extends ApiTestCase
                     'canViewVendorCustomers' => true,
                     'canManageVendorCustomers' => false,
                 ],
-                'canAccessAllPackages' => false,
             ]))
             ->willReturn($expected);
 
@@ -207,7 +205,6 @@ class TeamsTest extends ApiTestCase
                 'canViewVendorCustomers' => true,
                 'canManageVendorCustomers' => false,
             ],
-            'canAccessAllPackages' => true,
         ];
 
         /** @var Teams&MockObject $api */
@@ -223,14 +220,61 @@ class TeamsTest extends ApiTestCase
                     'canViewVendorCustomers' => true,
                     'canManageVendorCustomers' => false,
                 ],
-                'canAccessAllPackages' => true,
             ]))
             ->willReturn($expected);
 
         $permissions = new TeamPermissions;
         $permissions->canEditTeamPackages = true;
         $permissions->canViewVendorCustomers = true;
-        $this->assertSame($expected, $api->edit(123, 'New Team', $permissions, true));
+        $this->assertSame($expected, $api->edit(123, 'New Team', $permissions));
+    }
+
+    public function testTeamGrant(): void
+    {
+        $expected = [
+            'id' => 123,
+            'name' => 'New Team',
+            'permissions' => [
+                'canEditTeamPackages' => true,
+                'canAddPackages' => false,
+                'canCreateSubrepositories' => false,
+                'canViewVendorCustomers' => true,
+                'canManageVendorCustomers' => false,
+            ],
+        ];
+
+        /** @var Teams&MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('put')
+            ->with($this->equalTo('/teams/123/all-package-access/grant'), $this->equalTo([]))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->grantAccessToAllPackages(123));
+    }
+
+    public function testTeamRevoke(): void
+    {
+        $expected = [
+            'id' => 123,
+            'name' => 'New Team',
+            'permissions' => [
+                'canEditTeamPackages' => true,
+                'canAddPackages' => false,
+                'canCreateSubrepositories' => false,
+                'canViewVendorCustomers' => true,
+                'canManageVendorCustomers' => false,
+            ],
+        ];
+
+        /** @var Teams&MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('put')
+            ->with($this->equalTo('/teams/123/all-package-access/revoke'), $this->equalTo([]))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->revokeAccessToAllPackages(123));
     }
 
     public function testDeleteTeam(): void
