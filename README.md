@@ -214,10 +214,6 @@ $team = $client->teams()->all()[0];
 $permissions = TeamPermissions::fromTeamResponse($team);
 ```
 
-Additionally, teams have a separate "All Package Access" flag, determining whether the team has access to all current and future
-organization packages which do not have their permissions synchronized. Revoking "All Package Access" will not remove access to
-packages the team can currently access, but will prevent access to new packages and allow revoking individual package access.
-
 #### List an organization's teams
 ```php
 $teams = $client->teams()->all();
