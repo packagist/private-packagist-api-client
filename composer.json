@@ -17,6 +17,7 @@
         "php-http/discovery": "^1.0",
         "psr/http-client-implementation": "^1.0",
         "php-http/client-common": "^1.9 || ^2.0",
+        "php-http/message-factory": "^1.0",
         "composer-runtime-api": "^2.0"
     },
     "require-dev": {

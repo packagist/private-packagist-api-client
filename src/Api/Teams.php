@@ -55,6 +55,16 @@ class Teams extends AbstractApi
         return $this->put(sprintf('/teams/%s/', $teamId), $parameters);
     }
 
+    public function grantAccessToAllPackages($teamId): array
+    {
+        return $this->put(sprintf('/teams/%s/all-package-access/grant', $teamId));
+    }
+
+    public function revokeAccessToAllPackages($teamId): array
+    {
+        return $this->put(sprintf('/teams/%s/all-package-access/revoke', $teamId));
+    }
+
     public function remove($teamId): array
     {
         return $this->delete(sprintf('/teams/%s/', $teamId));
