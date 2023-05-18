@@ -14,6 +14,7 @@ use Http\Client\Common\Plugin;
 use Http\Client\Common\PluginClient;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
+use Http\Message\RequestFactory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 
@@ -28,10 +29,33 @@ class HttpPluginClientBuilder
     /** @var Plugin[] */
     private $plugins = [];
 
-    public function __construct(ClientInterface $httpClient = null, RequestFactoryInterface $requestFactory = null)
+    /**
+     * @param ClientInterface|null $httpClient
+     * @param RequestFactory|RequestFactoryInterface|null $requestFactory
+     */
+    public function __construct(ClientInterface $httpClient = null, $requestFactory = null)
     {
+        $requestFactory = $requestFactory ?: Psr17FactoryDiscovery::findRequestFactory();
+        if ($requestFactory instanceof RequestFactory) {
+            trigger_deprecation(
+                'private-packagist/api-client',
+                '1.35.0',
+                '',
+                RequestFactory::class,
+                RequestFactoryInterface::class
+            );
+        } elseif (!$requestFactory instanceof RequestFactoryInterface) {
+            throw new \TypeError(sprintf(
+                '%s::__construct(): Argument #2 ($requestFactory) must be of type %s|%s, %s given',
+                self::class,
+                RequestFactory::class,
+                RequestFactoryInterface::class,
+                is_object($requestFactory) ? get_class($requestFactory) : gettype($requestFactory)
+            ));
+        }
+
         $this->httpClient = $httpClient ?: Psr18ClientDiscovery::find();
-        $this->requestFactory = $requestFactory ?: Psr17FactoryDiscovery::findRequestFactory();
+        $this->requestFactory = $requestFactory;
     }
 
     public function addPlugin(Plugin $plugin)
