@@ -12,10 +12,10 @@ namespace PrivatePackagist\ApiClient\HttpClient;
 use Http\Client\Common\HttpMethodsClient;
 use Http\Client\Common\Plugin;
 use Http\Client\Common\PluginClient;
-use Http\Discovery\HttpClientDiscovery;
-use Http\Discovery\MessageFactoryDiscovery;
-use Http\Message\RequestFactory;
+use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 
 class HttpPluginClientBuilder
 {
@@ -23,15 +23,15 @@ class HttpPluginClientBuilder
     private $httpClient;
     /** @var HttpMethodsClient|null */
     private $pluginClient;
-    /** @var RequestFactory */
+    /** @var RequestFactoryInterface */
     private $requestFactory;
     /** @var Plugin[] */
     private $plugins = [];
 
-    public function __construct(ClientInterface $httpClient = null, RequestFactory $requestFactory = null)
+    public function __construct(ClientInterface $httpClient = null, RequestFactoryInterface $requestFactory = null)
     {
-        $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
-        $this->requestFactory = $requestFactory ?: MessageFactoryDiscovery::find();
+        $this->httpClient = $httpClient ?: Psr18ClientDiscovery::find();
+        $this->requestFactory = $requestFactory ?: Psr17FactoryDiscovery::findRequestFactory();
     }
 
     public function addPlugin(Plugin $plugin)
