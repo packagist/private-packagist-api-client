@@ -34,7 +34,7 @@ class HttpPluginClientBuilder
      */
     public function __construct(?ClientInterface $httpClient = null, $requestFactory = null)
     {
-        $requestFactory = $requestFactory ?: Psr17FactoryDiscovery::findRequestFactory();
+        $requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
         if ($requestFactory instanceof RequestFactory) {
             // Use same format as symfony/deprecation-contracts.
             @trigger_error(sprintf(
@@ -55,7 +55,7 @@ class HttpPluginClientBuilder
             ));
         }
 
-        $this->httpClient = $httpClient ?: Psr18ClientDiscovery::find();
+        $this->httpClient = $httpClient ?? Psr18ClientDiscovery::find();
         $this->requestFactory = $requestFactory;
     }
 
