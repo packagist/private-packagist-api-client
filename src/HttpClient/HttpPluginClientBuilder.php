@@ -24,7 +24,7 @@ class HttpPluginClientBuilder
     private $httpClient;
     /** @var HttpMethodsClient|null */
     private $pluginClient;
-    /** @var RequestFactoryInterface */
+    /** @var RequestFactory|RequestFactoryInterface */
     private $requestFactory;
     /** @var Plugin[] */
     private $plugins = [];
