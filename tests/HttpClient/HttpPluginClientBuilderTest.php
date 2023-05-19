@@ -66,7 +66,7 @@ class HttpPluginClientBuilderTest extends TestCase
     }
 
     /** @return iterable{object|null, class-string|null} */
-    private static function provideRequestFactories(): iterable
+    public static function provideRequestFactories(): iterable
     {
         // Fallback
         yield [null, null];
