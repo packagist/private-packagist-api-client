@@ -30,21 +30,22 @@ class HttpPluginClientBuilder
     private $plugins = [];
 
     /**
-     * @param ClientInterface|null $httpClient
      * @param RequestFactory|RequestFactoryInterface|null $requestFactory
      */
-    public function __construct(ClientInterface $httpClient = null, $requestFactory = null)
+    public function __construct(?ClientInterface $httpClient = null, $requestFactory = null)
     {
         $requestFactory = $requestFactory ?: Psr17FactoryDiscovery::findRequestFactory();
         if ($requestFactory instanceof RequestFactory) {
-            trigger_deprecation(
+            // Use same format as symfony/deprecation-contracts.
+            @trigger_error(sprintf(
+                'Since %s %s: %s is deprecated, use %s instead.',
                 'private-packagist/api-client',
                 '1.35.0',
-                '',
                 RequestFactory::class,
                 RequestFactoryInterface::class
-            );
+            ), \E_USER_DEPRECATED);
         } elseif (!$requestFactory instanceof RequestFactoryInterface) {
+            /** @var mixed $requestFactory value unknown; set to mixed, prevent PHPStan complaining about guard clauses */
             throw new \TypeError(sprintf(
                 '%s::__construct(): Argument #2 ($requestFactory) must be of type %s|%s, %s given',
                 self::class,
