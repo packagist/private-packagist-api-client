@@ -22,13 +22,16 @@ use Psr\Http\Message\ResponseInterface;
 
 class HttpPluginClientBuilderTest extends TestCase
 {
-    /** @dataProvider provideRequestFactories */
-    public function testRequestFactory(?object $factory, ?string $expectedException): void
+    public function testInvalidRequestFactory(): void
     {
-        if ($expectedException !== null) {
-            $this->expectException($expectedException);
-        }
+        $this->expectException(\TypeError::class);
+        $definitelyNotARequestFactory = new \stdClass;
+        new HttpPluginClientBuilder(new MockClient, $definitelyNotARequestFactory);
+    }
 
+    /** @dataProvider provideRequestFactories */
+    public function testRequestFactory(?object $factory): void
+    {
         $mockHttp = new MockClient;
         $mockHttp->setDefaultException(new \Exception('Mock HTTP client did not match request.'));
         $mockHttp->on($this->matchRequestIncludingHeaders(), new Response(307, ['Location' => '/kittens.jpg']));
@@ -52,7 +55,7 @@ class HttpPluginClientBuilderTest extends TestCase
      * The concrete implementation of the RequestMatcher interface does not allow matching on
      * headers, which we need to test to ensure both legacy and PSR17 implementations work.
      */
-    protected function matchRequestIncludingHeaders(): RequestMatcherInterface
+    private function matchRequestIncludingHeaders(): RequestMatcherInterface
     {
         return new class implements RequestMatcherInterface {
             public function matches(RequestInterface $request): bool
@@ -65,16 +68,11 @@ class HttpPluginClientBuilderTest extends TestCase
         };
     }
 
-    /** @return iterable{object|null, class-string|null} */
+    /** @return iterable{object|null} */
     public static function provideRequestFactories(): iterable
     {
-        // Fallback
-        yield [null, null];
-        // Legacy
-        yield [new GuzzleMessageFactory, null];
-        // PSR17
-        yield [new HttpFactory, null];
-        // Invalid
-        yield [new \stdClass, \TypeError::class];
+        yield [null];
+        yield [new GuzzleMessageFactory];
+        yield [new HttpFactory];
     }
 }
