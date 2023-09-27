@@ -97,6 +97,8 @@
             * [List all dependents of a package](#list-all-dependents-of-a-package)
             * [List all customers with access to a package](#list-all-customers-with-access-to-a-package)
             * [List all security issues of a package](#list-all-security-issues-of-a-package)
+            * [Show the security monitoring config of a package](#show-the-security-monitoring-config-of-a-package)
+            * [Edit the security monitoring config of a package](#edit-the-security-monitoring-config-of-a-package)
             * [Create an artifact package file](#create-an-artifact-package-file)
             * [Create an artifact package](#create-an-artifact-package)
             * [Add an artifact file to an existing package](#add-an-artifact-file-to-an-existing-package)
@@ -128,7 +130,7 @@
          * [Validate incoming webhook payloads](#validate-incoming-webhook-payloads)
       * [License](#license)
 
-<!-- Added by: zanbaldwin, at: Wed May 17 20:53:35 CEST 2023 -->
+<!-- Added by: glaubinix, at: Wed 27 Sep 2023 14:25:14 BST -->
 
 <!--te-->
 
@@ -857,6 +859,24 @@ $filters = [
 $client->packages()->listSecurityIssues('acme-website/package', $filters);
 ```
 Returns a list of security issues.
+
+#### Show the security monitoring config of a package
+```php
+$client->packages()->showSecurityMonitoringConfig('acme-website/package');
+```
+Returns the security monitoring config of the package.
+
+#### Edit the security monitoring config of a package
+```php
+$config = [
+    "monitorAllBranches" => false, // If set to true then monitoredBranches will be ignored and can be omitted 
+    "monitoredBranches" => [
+        "dev-main"
+    ],
+];
+$client->packages()->editSecurityMonitoringConfig('acme-website/package', $config);
+```
+Returns the edited security monitoring config of the package.
 
 #### Create an artifact package file
 

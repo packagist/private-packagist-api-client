@@ -68,7 +68,7 @@ class Packages extends AbstractApi
 
         return $this->post('/packages/', ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentialId]);
     }
-    
+
     public function createArtifactPackage(array $artifactPackageFileIds)
     {
         return $this->post('/packages/', ['repoType' => 'artifact', 'artifactIds' => $artifactPackageFileIds]);
@@ -123,6 +123,16 @@ class Packages extends AbstractApi
     public function listSecurityIssues($packageName, array $filters = [])
     {
         return $this->get(sprintf('/packages/%s/security-issues/', $packageName), $filters);
+    }
+
+    public function showSecurityMonitoringConfig($packageName)
+    {
+        return $this->get(sprintf('/packages/%s/security-monitoring/', $packageName));
+    }
+
+    public function editSecurityMonitoringConfig($packageName, array $config)
+    {
+        return $this->put(sprintf('/packages/%s/security-monitoring/', $packageName), $config);
     }
 
     public function artifacts()
