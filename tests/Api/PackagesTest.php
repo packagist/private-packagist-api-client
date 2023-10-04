@@ -292,6 +292,47 @@ class PackagesTest extends ApiTestCase
         $this->assertSame($expected, $api->listSecurityIssues($packageName));
     }
 
+    public function testShowSecurityMonitoringConfig()
+    {
+        $packageName = 'acme-website/core-package';
+        $expected = [
+            "monitorAllBranches" => false,
+            "monitoredBranches" => [
+                "dev-main"
+            ],
+        ];
+
+        /** @var Packages&MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo('/packages/acme-website/core-package/security-monitoring/'))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->showSecurityMonitoringConfig($packageName));
+    }
+
+    public function testEditSecurityMonitoringConfig()
+    {
+        $packageName = 'acme-website/core-package';
+
+        $editedConfig = [
+            "monitorAllBranches" => false,
+            "monitoredBranches" => [
+                "dev-main"
+            ],
+        ];
+
+        /** @var Packages&MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('put')
+            ->with($this->equalTo('/packages/acme-website/core-package/security-monitoring/'), $this->equalTo($editedConfig))
+            ->willReturn($editedConfig);
+
+        $this->assertSame($editedConfig, $api->editSecurityMonitoringConfig($packageName, $editedConfig));
+    }
+
     protected function getApiClass()
     {
         return Packages::class;
