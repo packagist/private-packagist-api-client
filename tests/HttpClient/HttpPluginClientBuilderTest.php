@@ -26,6 +26,7 @@ class HttpPluginClientBuilderTest extends TestCase
     {
         $this->expectException(\TypeError::class);
         $definitelyNotARequestFactory = new \stdClass;
+        /** @phpstan-ignore-next-line We are passing in an invalid type on purpose. */
         new HttpPluginClientBuilder(new MockClient, $definitelyNotARequestFactory);
     }
 
@@ -72,7 +73,9 @@ class HttpPluginClientBuilderTest extends TestCase
     public static function provideRequestFactories(): iterable
     {
         yield [null];
+        // Http\Message\RequestFactory
         yield [new GuzzleMessageFactory];
+        // Psr\Http\Message\RequestFactoryInterface
         yield [new HttpFactory];
     }
 }

@@ -27,6 +27,7 @@ class HttpPluginClientBuilder
     private $pluginClient;
     /** @var RequestFactory|RequestFactoryInterface */
     private $requestFactory;
+    /** @var StreamFactoryInterface */
     private $streamFactory;
     /** @var Plugin[] */
     private $plugins = [];
@@ -73,7 +74,7 @@ class HttpPluginClientBuilder
     }
 
     /**
-     * @param string $pluginClass
+     * @param class-string $pluginClass
      */
     public function removePlugin($pluginClass)
     {
