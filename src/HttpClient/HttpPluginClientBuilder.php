@@ -40,7 +40,7 @@ class HttpPluginClientBuilder
             @trigger_error(sprintf(
                 'Since %s %s: %s is deprecated, use %s instead.',
                 'private-packagist/api-client',
-                '1.35.0',
+                '1.36.0',
                 RequestFactory::class,
                 RequestFactoryInterface::class
             ), \E_USER_DEPRECATED);
