@@ -10,7 +10,7 @@
 namespace PrivatePackagist\ApiClient;
 
 use Http\Client\Common\Plugin;
-use Http\Discovery\UriFactoryDiscovery;
+use Http\Discovery\Psr17FactoryDiscovery;
 use PrivatePackagist\ApiClient\HttpClient\HttpPluginClientBuilder;
 use PrivatePackagist\ApiClient\HttpClient\Message\ResponseMediator;
 use PrivatePackagist\ApiClient\HttpClient\Plugin\ExceptionThrower;
@@ -31,7 +31,7 @@ class Client
         $privatePackagistUrl = $privatePackagistUrl ? : 'https://packagist.com';
         $this->responseMediator = $responseMediator ? : new ResponseMediator();
 
-        $builder->addPlugin(new Plugin\AddHostPlugin(UriFactoryDiscovery::find()->createUri($privatePackagistUrl)));
+        $builder->addPlugin(new Plugin\AddHostPlugin(Psr17FactoryDiscovery::findUriFactory()->createUri($privatePackagistUrl)));
         $builder->addPlugin(new PathPrepend('/api'));
         $builder->addPlugin(new Plugin\RedirectPlugin());
         $headers = [
