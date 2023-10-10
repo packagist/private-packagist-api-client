@@ -17,6 +17,7 @@ use Http\Discovery\Psr18ClientDiscovery;
 use Http\Message\RequestFactory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 class HttpPluginClientBuilder
 {
@@ -26,14 +27,19 @@ class HttpPluginClientBuilder
     private $pluginClient;
     /** @var RequestFactory|RequestFactoryInterface */
     private $requestFactory;
+    private $streamFactory;
     /** @var Plugin[] */
     private $plugins = [];
 
     /**
      * @param RequestFactory|RequestFactoryInterface|null $requestFactory
+     * @param StreamFactoryInterface|null $streamFactory
      */
-    public function __construct(?ClientInterface $httpClient = null, $requestFactory = null)
-    {
+    public function __construct(
+        ?ClientInterface $httpClient = null,
+        $requestFactory = null,
+        ?StreamFactoryInterface $streamFactory= null
+    ) {
         $requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
         if ($requestFactory instanceof RequestFactory) {
             // Use same format as symfony/deprecation-contracts.
@@ -57,6 +63,7 @@ class HttpPluginClientBuilder
 
         $this->httpClient = $httpClient ?? Psr18ClientDiscovery::find();
         $this->requestFactory = $requestFactory;
+        $this->streamFactory = $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory();
     }
 
     public function addPlugin(Plugin $plugin)
@@ -83,7 +90,8 @@ class HttpPluginClientBuilder
         if (!$this->pluginClient) {
             $this->pluginClient = new HttpMethodsClient(
                 new PluginClient($this->httpClient, $this->plugins),
-                $this->requestFactory
+                $this->requestFactory,
+                $this->streamFactory
             );
         }
 
