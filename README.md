@@ -58,10 +58,10 @@
             * [Show a subrepository](#show-a-subrepository)
             * [Create a subrepository](#create-a-subrepository)
             * [Delete a subrepository](#delete-a-subrepository)
-            * [List a subrepositories's teams](#list-a-subrepositoriess-teams)
+            * [List a subrepository's teams](#list-a-subrepositoriess-teams)
             * [Add a team to a subrepository or edit the permission](#add-a-team-to-a-subrepository-or-edit-the-permission)
             * [Remove a team from a subrepository](#remove-a-team-from-a-subrepository)
-            * [List a subrepositories's packages](#list-a-subrepositoriess-packages)
+            * [List a subrepository's packages](#list-a-subrepositoriess-packages)
             * [Show a subrepository package](#show-a-subrepository-package)
             * [Create a vcs package in a subrepository](#create-a-vcs-package-in-a-subrepository)
             * [Create a vcs package with credentials in a subrepository](#create-a-vcs-package-with-credentials-in-a-subrepository)
@@ -71,11 +71,11 @@
             * [Edit a custom package in a subrepository](#edit-a-custom-package-in-a-subrepository)
             * [Delete a package from a subrepository](#delete-a-package-from-a-subrepository)
             * [List all dependents of a subrepository package](#list-all-dependents-of-a-subrepository-package)
-            * [List a subrepositories's authentication tokens](#list-a-subrepositoriess-authentication-tokens)
+            * [List a subrepository's authentication tokens](#list-a-subrepositoriess-authentication-tokens)
             * [Create a subrepository authentication token](#create-a-subrepository-authentication-token)
             * [Delete a subrepository authentication token](#delete-a-subrepository-authentication-token)
             * [Regenerate a subrepository authentication token](#regenerate-a-subrepository-authentication-token)
-            * [List a subrepositories's mirrored repositories](#list-a-subrepositoriess-mirrored-repositories)
+            * [List a subrepository's mirrored repositories](#list-a-subrepositoriess-mirrored-repositories)
             * [Show a mirrored repository](#show-a-mirrored-repository)
             * [Add mirrored repositories to a subrepository](#add-mirrored-repositories-to-a-subrepository)
             * [Edit the mirroring behaviour of mirrored repository in a subrepository](#edit-the-mirroring-behaviour-of-mirrored-repository-in-a-subrepository)
@@ -565,7 +565,7 @@ $subrepositoryName = 'subrepository';
 $client->subrepositories()->remove($subrepositoryName);
 ```
 
-#### List a subrepositories's teams
+#### List a subrepository's teams
 ```php
 $subrepositoryName = 'subrepository';
 $teams = $client->subrepositories()->listTeams($subrepositoryName);
@@ -593,7 +593,7 @@ $teamId = 12;
 $client->subrepositories()->removeTeam($subrepositoryName, $teamId);
 ```
 
-#### List a subrepositories's packages
+#### List a subrepository's packages
 ```php
 $subrepositoryName = 'subrepository';
 $packages = $client->subrepositories()->packages()->all($subrepositoryName);
@@ -667,7 +667,7 @@ $client->subrepositories()->packages()->listDependents($subrepositoryName, 'acme
 ```
 Returns a list of packages.
 
-#### List a subrepositories's authentication tokens
+#### List a subrepository's authentication tokens
 ```php
 $subrepositoryName = 'subrepository';
 $tokens = $client->subrepositories()->listTokens($subrepositoryName);
@@ -703,7 +703,7 @@ $token = $client->subrepositories()->regenerateToken($subrepositoryName, $confir
 ```
 Returns the authentication token.
 
-#### List a subrepositories's mirrored repositories
+#### List a subrepository's mirrored repositories
 ```php
 $subrepositoryName = 'subrepository';
 $mirroredRepositories = $client->subrepositories()->mirroredRepositories()->all($subrepositoryName);
