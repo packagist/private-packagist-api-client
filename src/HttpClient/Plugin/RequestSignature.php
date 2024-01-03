@@ -17,21 +17,21 @@ class RequestSignature implements Plugin
     use Plugin\VersionBridgePlugin;
 
     /** @var string */
-    private $token;
+    private $key;
     /** @var string */
     private $secret;
 
     /**
-     * @param string $token
+     * @param string $key
      * @param string $secret
      */
-    public function __construct($token, $secret)
+    public function __construct($key, $secret)
     {
-        if (!$token || !$secret) {
-            throw new \InvalidArgumentException('$token and $secret must be set');
+        if (!$key || !$secret) {
+            throw new \InvalidArgumentException('$key and $secret must be set');
         }
 
-        $this->token = $token;
+        $this->key = $key;
         $this->secret = $secret;
     }
 
@@ -41,7 +41,7 @@ class RequestSignature implements Plugin
     protected function doHandleRequest(RequestInterface $request, callable $next, callable $first)
     {
         $params = [
-            'key' => $this->token,
+            'key' => $this->key,
             'timestamp' => $this->getTimestamp(),
             'cnonce' => $this->getNonce(),
         ];

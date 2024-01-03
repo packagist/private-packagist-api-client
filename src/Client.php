@@ -45,13 +45,13 @@ class Client
     }
 
     /**
-     * @param string $token
+     * @param string $key
      * @param string $secret
      */
-    public function authenticate($token, $secret)
+    public function authenticate($key, $secret)
     {
         $this->httpClientBuilder->removePlugin(RequestSignature::class);
-        $this->httpClientBuilder->addPlugin(new RequestSignature($token, $secret));
+        $this->httpClientBuilder->addPlugin(new RequestSignature($key, $secret));
     }
 
     public function credentials()
