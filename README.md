@@ -159,7 +159,7 @@ Why do you need to require `guzzlehttp/guzzle`? We are decoupled from any HTTP m
 require_once __DIR__ . '/vendor/autoload.php';
 
 $client = new \PrivatePackagist\ApiClient\Client();
-$client->authenticate('api-token', 'api-secret');
+$client->authenticate('api-key', 'api-secret');
 $packages = $client->packages()->all();
 ```
 

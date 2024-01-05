@@ -19,18 +19,18 @@ class RequestSignatureTest extends TestCase
     private $plugin;
     private $next;
     private $first;
-    private $token;
+    private $key;
     private $secret;
     private $timestamp;
     private $nonce;
 
     protected function setUp(): void
     {
-        $this->token = 'token';
+        $this->key = 'token';
         $this->secret = 'secret';
         $this->timestamp = 1518721253;
         $this->nonce = '78b9869e96cf58b5902154e0228f8576f042e5ac';
-        $this->plugin = new RequestSignatureMock($this->token, $this->secret);
+        $this->plugin = new RequestSignatureMock($this->key, $this->secret);
         $this->plugin->init($this->timestamp, $this->nonce);
         $this->next = function (Request $request) {
             return new FulfilledPromise($request);
@@ -47,7 +47,7 @@ class RequestSignatureTest extends TestCase
             'POST',
             '/packages/?foo=bar',
             [
-                'Authorization' => ["PACKAGIST-HMAC-SHA256 Key={$this->token}, Timestamp={$this->timestamp}, Cnonce={$this->nonce}, Signature=a6wxBLYrmz4Mwmv/TKBZR5WHFcSCRbsny2frobJMt24="],
+                'Authorization' => ["PACKAGIST-HMAC-SHA256 Key={$this->key}, Timestamp={$this->timestamp}, Cnonce={$this->nonce}, Signature=a6wxBLYrmz4Mwmv/TKBZR5WHFcSCRbsny2frobJMt24="],
             ],
             json_encode(['foo' => 'bar'])
         );
@@ -67,20 +67,20 @@ class RequestSignatureTest extends TestCase
     }
 
     /**
-     * @dataProvider tokenSecretProvider
+     * @dataProvider keySecretProvider
      */
-    public function testMissingTokenOrSecret(string $token, string $secret): void
+    public function testMissingTokenOrSecret(string $key, string $secret): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        new RequestSignature($token, $secret);
+        new RequestSignature($key, $secret);
     }
 
-    public function tokenSecretProvider(): array
+    public function keySecretProvider(): array
     {
         return [
             ['', ''],
-            ['token', ''],
+            ['key', ''],
             ['', 'secret'],
         ];
     }
