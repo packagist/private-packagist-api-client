@@ -11,6 +11,8 @@ namespace PrivatePackagist\ApiClient\Api\Subrepositories;
 
 use PrivatePackagist\ApiClient\Api\AbstractApi;
 use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
+use PrivatePackagist\ApiClient\Payload\CustomPackageConfig;
+use PrivatePackagist\ApiClient\Payload\VcsPackageConfig;
 
 class Packages extends AbstractApi
 {
@@ -28,28 +30,32 @@ class Packages extends AbstractApi
         return $this->get(sprintf('/subrepositories/%s/packages/%s', $subrepositoryName, $packageName));
     }
 
-    public function createVcsPackage($subrepositoryName, $url, $credentialId = null, $type = 'vcs')
+    public function createVcsPackage($subrepositoryName, $url, $credentialId = null, $type = 'vcs', $defaultSubrepositoryAccess = null)
     {
-        return $this->post(sprintf('/subrepositories/%s/packages/', $subrepositoryName), ['repoType' => $type, 'repoUrl' => $url, 'credentials' => $credentialId]);
+        $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSubrepositoryAccess);
+
+        return $this->post(sprintf('/subrepositories/%s/packages/', $subrepositoryName), $data->toParameters());
     }
 
-    public function createCustomPackage($subrepositoryName, $customJson, $credentialId = null)
+    public function createCustomPackage($subrepositoryName, $customJson, $credentialId = null, $defaultSubrepositoryAccess = null)
     {
-        if (is_array($customJson) || is_object($customJson)) {
-            $customJson = json_encode($customJson);
-        }
+        $data = new CustomPackageConfig($customJson, $credentialId, $defaultSubrepositoryAccess);
 
-        return $this->post(sprintf('/subrepositories/%s/packages/', $subrepositoryName), ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentialId]);
+        return $this->post(sprintf('/subrepositories/%s/packages/', $subrepositoryName), $data->toParameters());
     }
 
-    public function editVcsPackage($subrepositoryName, $packageName, $url, $credentialId = null, $type = 'vcs')
+    public function editVcsPackage($subrepositoryName, $packageName, $url, $credentialId = null, $type = 'vcs', $defaultSubrepositoryAccess = null)
     {
-        return $this->put(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageName), ['repoType' => $type, 'repoUrl' => $url, 'credentials' => $credentialId]);
+        $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSubrepositoryAccess);
+
+        return $this->put(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageName), $data->toParameters());
     }
 
-    public function editCustomPackage($subrepositoryName, $packageName, $customJson, $credentialId = null)
+    public function editCustomPackage($subrepositoryName, $packageName, $customJson, $credentialId = null, $defaultSubrepositoryAccess = null)
     {
-        return $this->put(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageName), ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentialId]);
+        $data = new CustomPackageConfig($customJson, $credentialId, $defaultSubrepositoryAccess);
+
+        return $this->put(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageName), $data->toParameters());
     }
 
     public function remove($subrepositoryName, $packageName)
