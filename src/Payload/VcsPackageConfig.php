@@ -2,6 +2,10 @@
 
 namespace PrivatePackagist\ApiClient\Payload;
 
+/**
+ * @internal
+ * @final
+ */
 class VcsPackageConfig
 {
     /** @var string */

@@ -2,6 +2,10 @@
 
 namespace PrivatePackagist\ApiClient\Payload;
 
+/**
+ * @internal
+ * @final
+ */
 class CustomPackageConfig
 {
     /** @var string */
