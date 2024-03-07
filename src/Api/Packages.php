@@ -11,6 +11,9 @@ namespace PrivatePackagist\ApiClient\Api;
 
 use PrivatePackagist\ApiClient\Api\Packages\Artifacts;
 use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
+use PrivatePackagist\ApiClient\Payload\ArtifactPackageConfig;
+use PrivatePackagist\ApiClient\Payload\CustomPackageConfig;
+use PrivatePackagist\ApiClient\Payload\VcsPackageConfig;
 
 class Packages extends AbstractApi
 {
@@ -55,23 +58,25 @@ class Packages extends AbstractApi
         return $this->get(sprintf('/packages/%s/', $packageName));
     }
 
-    public function createVcsPackage($url, $credentialId = null, $type = 'vcs')
+    public function createVcsPackage($url, $credentialId = null, $type = 'vcs', $defaultSubrepositoryAccess = null)
     {
-        return $this->post('/packages/', ['repoType' => $type, 'repoUrl' => $url, 'credentials' => $credentialId]);
+        $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSubrepositoryAccess);
+
+        return $this->post('/packages/', $data->toParameters());
     }
 
-    public function createCustomPackage($customJson, $credentialId = null)
+    public function createCustomPackage($customJson, $credentialId = null, $defaultSubrepositoryAccess = null)
     {
-        if (is_array($customJson) || is_object($customJson)) {
-            $customJson = json_encode($customJson);
-        }
+        $data = new CustomPackageConfig($customJson, $credentialId, $defaultSubrepositoryAccess);
 
-        return $this->post('/packages/', ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentialId]);
+        return $this->post('/packages/', $data->toParameters());
     }
 
-    public function createArtifactPackage(array $artifactPackageFileIds)
+    public function createArtifactPackage(array $artifactPackageFileIds, $defaultSubrepositoryAccess = null)
     {
-        return $this->post('/packages/', ['repoType' => 'artifact', 'artifactIds' => $artifactPackageFileIds]);
+        $data = new ArtifactPackageConfig($artifactPackageFileIds, $defaultSubrepositoryAccess);
+
+        return $this->post('/packages/', $data->toParameters());
     }
 
     /**
@@ -82,14 +87,18 @@ class Packages extends AbstractApi
         return $this->editVcsPackage($packageName, $url, $credentialId);
     }
 
-    public function editVcsPackage($packageName, $url, $credentialId = null, $type = 'vcs')
+    public function editVcsPackage($packageName, $url, $credentialId = null, $type = 'vcs', $defaultSubrepositoryAccess = null)
     {
-        return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => $type, 'repoUrl' => $url, 'credentials' => $credentialId]);
+        $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSubrepositoryAccess);
+
+        return $this->put(sprintf('/packages/%s/', $packageName), $data->toParameters());
     }
 
-    public function editArtifactPackage($packageName, array $artifactPackageFileIds)
+    public function editArtifactPackage($packageName, array $artifactPackageFileIds, $defaultSubrepositoryAccess = null)
     {
-        return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => 'artifact', 'artifactIds' => $artifactPackageFileIds]);
+        $data = new ArtifactPackageConfig($artifactPackageFileIds, $defaultSubrepositoryAccess);
+
+        return $this->put(sprintf('/packages/%s/', $packageName), $data->toParameters());
     }
 
     /**
@@ -97,12 +106,14 @@ class Packages extends AbstractApi
      */
     public function updateCustomPackage($packageName, $customJson, $credentialId = null)
     {
-        return $this->editVcsPackage($packageName, $customJson, $credentialId);
+        return $this->editCustomPackage($packageName, $customJson, $credentialId);
     }
 
-    public function editCustomPackage($packageName, $customJson, $credentialId = null)
+    public function editCustomPackage($packageName, $customJson, $credentialId = null, $defaultSubrepositoryAccess = null)
     {
-        return $this->put(sprintf('/packages/%s/', $packageName), ['repoType' => 'package', 'repoConfig' => $customJson, 'credentials' => $credentialId]);
+        $data = new CustomPackageConfig($customJson, $credentialId, $defaultSubrepositoryAccess);
+
+        return $this->put(sprintf('/packages/%s/', $packageName), $data->toParameters());
     }
 
     public function remove($packageName)
