@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * (c) Packagist Conductors GmbH <contact@packagist.com>
  *
  * For the full copyright and license information, please view the LICENSE
