@@ -131,9 +131,9 @@ class Packages extends AbstractApi
         return $this->get(sprintf('/packages/%s/dependents/', $packageName));
     }
 
-    public function listSecurityIssues($packageName, array $filters = [])
+    public function listSecurityIssues($packageIdOrName, array $filters = [])
     {
-        return $this->get(sprintf('/packages/%s/security-issues/', $packageName), $filters);
+        return $this->get(sprintf('/packages/%s/security-issues/', $packageIdOrName), $filters);
     }
 
     public function showSecurityMonitoringConfig($packageIdOrName)
