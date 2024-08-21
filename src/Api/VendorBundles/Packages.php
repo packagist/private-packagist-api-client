@@ -41,10 +41,10 @@ class Packages extends AbstractApi
 
     /**
      * @param int $vendorBundleId
-     * @param string $packageName
+     * @param string|int $packageIdOrName
      */
-    public function removePackage($vendorBundleId, $packageName)
+    public function removePackage($vendorBundleId, $packageIdOrName)
     {
-        return $this->delete(sprintf('/vendor-bundles/%s/packages/%s/', $vendorBundleId, $packageName));
+        return $this->delete(sprintf('/vendor-bundles/%s/packages/%s/', $vendorBundleId, $packageIdOrName));
     }
 }

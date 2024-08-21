@@ -53,9 +53,9 @@ class Packages extends AbstractApi
         return $this->get('/packages/', $filters);
     }
 
-    public function show($packageName)
+    public function show($packageIdOrName)
     {
-        return $this->get(sprintf('/packages/%s/', $packageName));
+        return $this->get(sprintf('/packages/%s/', $packageIdOrName));
     }
 
     public function createVcsPackage($url, $credentialId = null, $type = 'vcs', $defaultSubrepositoryAccess = null)
@@ -87,18 +87,18 @@ class Packages extends AbstractApi
         return $this->editVcsPackage($packageName, $url, $credentialId);
     }
 
-    public function editVcsPackage($packageName, $url, $credentialId = null, $type = 'vcs', $defaultSubrepositoryAccess = null)
+    public function editVcsPackage($packageIdOrName, $url, $credentialId = null, $type = 'vcs', $defaultSubrepositoryAccess = null)
     {
         $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSubrepositoryAccess);
 
-        return $this->put(sprintf('/packages/%s/', $packageName), $data->toParameters());
+        return $this->put(sprintf('/packages/%s/', $packageIdOrName), $data->toParameters());
     }
 
-    public function editArtifactPackage($packageName, array $artifactPackageFileIds, $defaultSubrepositoryAccess = null)
+    public function editArtifactPackage($packageIdOrName, array $artifactPackageFileIds, $defaultSubrepositoryAccess = null)
     {
         $data = new ArtifactPackageConfig($artifactPackageFileIds, $defaultSubrepositoryAccess);
 
-        return $this->put(sprintf('/packages/%s/', $packageName), $data->toParameters());
+        return $this->put(sprintf('/packages/%s/', $packageIdOrName), $data->toParameters());
     }
 
     /**
@@ -109,21 +109,21 @@ class Packages extends AbstractApi
         return $this->editCustomPackage($packageName, $customJson, $credentialId);
     }
 
-    public function editCustomPackage($packageName, $customJson, $credentialId = null, $defaultSubrepositoryAccess = null)
+    public function editCustomPackage($packageIdOrName, $customJson, $credentialId = null, $defaultSubrepositoryAccess = null)
     {
         $data = new CustomPackageConfig($customJson, $credentialId, $defaultSubrepositoryAccess);
 
-        return $this->put(sprintf('/packages/%s/', $packageName), $data->toParameters());
+        return $this->put(sprintf('/packages/%s/', $packageIdOrName), $data->toParameters());
     }
 
-    public function remove($packageName)
+    public function remove($packageIdOrName)
     {
-        return $this->delete(sprintf('/packages/%s/', $packageName));
+        return $this->delete(sprintf('/packages/%s/', $packageIdOrName));
     }
 
-    public function listCustomers($packageName)
+    public function listCustomers($packageIdOrName)
     {
-        return $this->get(sprintf('/packages/%s/customers/', $packageName));
+        return $this->get(sprintf('/packages/%s/customers/', $packageIdOrName));
     }
 
     public function listDependents($packageName)
@@ -131,19 +131,19 @@ class Packages extends AbstractApi
         return $this->get(sprintf('/packages/%s/dependents/', $packageName));
     }
 
-    public function listSecurityIssues($packageName, array $filters = [])
+    public function listSecurityIssues($packageIdOrName, array $filters = [])
     {
-        return $this->get(sprintf('/packages/%s/security-issues/', $packageName), $filters);
+        return $this->get(sprintf('/packages/%s/security-issues/', $packageIdOrName), $filters);
     }
 
-    public function showSecurityMonitoringConfig($packageName)
+    public function showSecurityMonitoringConfig($packageIdOrName)
     {
-        return $this->get(sprintf('/packages/%s/security-monitoring/', $packageName));
+        return $this->get(sprintf('/packages/%s/security-monitoring/', $packageIdOrName));
     }
 
-    public function editSecurityMonitoringConfig($packageName, array $config)
+    public function editSecurityMonitoringConfig($packageIdOrName, array $config)
     {
-        return $this->put(sprintf('/packages/%s/security-monitoring/', $packageName), $config);
+        return $this->put(sprintf('/packages/%s/security-monitoring/', $packageIdOrName), $config);
     }
 
     public function artifacts()

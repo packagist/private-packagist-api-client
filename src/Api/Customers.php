@@ -72,9 +72,9 @@ class Customers extends AbstractApi
         return $this->get(sprintf('/customers/%s/packages/', $customerIdOrUrlName));
     }
 
-    public function showPackage($customerIdOrUrlName, $packageName)
+    public function showPackage($customerIdOrUrlName, $packageIdOrName)
     {
-        return $this->get(sprintf('/customers/%s/packages/%s/', $customerIdOrUrlName, $packageName));
+        return $this->get(sprintf('/customers/%s/packages/%s/', $customerIdOrUrlName, $packageIdOrName));
     }
 
     /**
@@ -104,9 +104,9 @@ class Customers extends AbstractApi
         return $this->addOrEditPackages($customerIdOrUrlName, $packages);
     }
 
-    public function removePackage($customerIdOrUrlName, $packageName)
+    public function removePackage($customerIdOrUrlName, $packageIdOrName)
     {
-        return $this->delete(sprintf('/customers/%s/packages/%s/', $customerIdOrUrlName, $packageName));
+        return $this->delete(sprintf('/customers/%s/packages/%s/', $customerIdOrUrlName, $packageIdOrName));
     }
 
     public function regenerateToken($customerIdOrUrlName, array $confirmation)
