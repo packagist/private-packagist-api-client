@@ -287,13 +287,19 @@ $packages = $client->teams()->packages($teamId);
 Returns an array of packages.
 
 #### Grant a team access to a list of private packages
+
+You pass an array of packages to give access to. The values of the array can be either package ID or package name.
+
 ```php
 $teamId = 1;
-$packages = $client->teams()->addPackages($teamId, ['acme-website/package']);
+$packages = $client->teams()->addPackages($teamId, ['acme-website/package', 1]);
 ```
 Returns an array of packages.
 
 #### Remove access for a package from a team
+
+You can use the package ID or package name as a reference. 
+
 ```php
 $teamId = 1;
 $packages = $client->teams()->removePackage($teamId, 'acme-website/package');
@@ -429,6 +435,9 @@ $packages = $client->customers()->addOrEditPackages($customerId, $packages);
 Returns an array of all added or edited customer packages.
 
 #### Revoke access to a package from a customer
+
+You can reference the package by its ID or name.
+
 ```php
 $customerId = 42;
 $packageName = 'acme-website/package';
@@ -533,6 +542,9 @@ $packages = $client->vendorBundles()->packages()->addOrEditPackages($vendorBundl
 Returns an array of all added or edited customer packages.
 
 #### Remove a package from a vendor bundle
+
+You can reference the package by its ID or name.
+
 ```php
 $vendorBundleId = 42;
 $packageName = 'acme-website/package';
@@ -772,6 +784,8 @@ $client->subrepositories()->mirroredRepositories()->removePackages($subrepositor
 
 ### Package
 
+You can reference a package by its name or ID. 
+
 #### List an organization's packages
 ```php
 $filters = [
@@ -784,7 +798,10 @@ Returns an array of packages.
 
 #### Show a package
 ```php
+// Either use package name:
 $package = $client->packages()->show('acme-website/package');
+// Or the package ID: 
+$package = $client->packages()->show(123);
 ```
 Returns the package.
 
@@ -847,6 +864,9 @@ $client->packages()->listDependents('acme-website/package');
 Returns a list of packages.
 
 #### List all customers with access to a package
+
+Pass either package ID or package name as argument.
+
 ```php
 $client->packages()->listCustomers('acme-website/package');
 ```
