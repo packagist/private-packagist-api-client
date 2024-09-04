@@ -614,9 +614,15 @@ $packages = $client->subrepositories()->packages()->all($subrepositoryName);
 Returns an array of subrepositories packages.
 
 #### Show a subrepository package
+
+You can reference a package by its name or ID.
+
 ```php
 $subrepositoryName = 'subrepository';
+// Either use package name:
 $package = $client->subrepositories()->packages()->show($subrepositoryName, 'acme-website/package');
+// Or the package ID: 
+$package = $client->subrepositories()->packages()->show($subrepositoryName, 123);
 ```
 Returns the package.
 

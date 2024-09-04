@@ -25,9 +25,9 @@ class Packages extends AbstractApi
         return $this->get(sprintf('/subrepositories/%s/packages/', $subrepositoryName), $filters);
     }
 
-    public function show($subrepositoryName, $packageName)
+    public function show($subrepositoryName, $packageIdOrName)
     {
-        return $this->get(sprintf('/subrepositories/%s/packages/%s', $subrepositoryName, $packageName));
+        return $this->get(sprintf('/subrepositories/%s/packages/%s', $subrepositoryName, $packageIdOrName));
     }
 
     public function createVcsPackage($subrepositoryName, $url, $credentialId = null, $type = 'vcs', $defaultSubrepositoryAccess = null)
@@ -44,27 +44,27 @@ class Packages extends AbstractApi
         return $this->post(sprintf('/subrepositories/%s/packages/', $subrepositoryName), $data->toParameters());
     }
 
-    public function editVcsPackage($subrepositoryName, $packageName, $url, $credentialId = null, $type = 'vcs', $defaultSubrepositoryAccess = null)
+    public function editVcsPackage($subrepositoryName, $packageIdOrName, $url, $credentialId = null, $type = 'vcs', $defaultSubrepositoryAccess = null)
     {
         $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSubrepositoryAccess);
 
-        return $this->put(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageName), $data->toParameters());
+        return $this->put(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageIdOrName), $data->toParameters());
     }
 
-    public function editCustomPackage($subrepositoryName, $packageName, $customJson, $credentialId = null, $defaultSubrepositoryAccess = null)
+    public function editCustomPackage($subrepositoryName, $packageIdOrName, $customJson, $credentialId = null, $defaultSubrepositoryAccess = null)
     {
         $data = new CustomPackageConfig($customJson, $credentialId, $defaultSubrepositoryAccess);
 
-        return $this->put(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageName), $data->toParameters());
+        return $this->put(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageIdOrName), $data->toParameters());
     }
 
-    public function remove($subrepositoryName, $packageName)
+    public function remove($subrepositoryName, $packageIdOrName)
     {
-        return $this->delete(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageName));
+        return $this->delete(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageIdOrName));
     }
 
-    public function listDependents($subrepositoryName, $packageName)
+    public function listDependents($subrepositoryName, $packageIdOrName)
     {
-        return $this->get(sprintf('/subrepositories/%s/packages/%s/dependents/', $subrepositoryName, $packageName));
+        return $this->get(sprintf('/subrepositories/%s/packages/%s/dependents/', $subrepositoryName, $packageIdOrName));
     }
 }
