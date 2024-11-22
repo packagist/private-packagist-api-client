@@ -53,36 +53,36 @@
          * [List packages in a vendor bundle](#list-packages-in-a-vendor-bundle)
          * [Add one or more packages to a vendor bundle or edit their limitations](#add-one-or-more-packages-to-a-vendor-bundle-or-edit-their-limitations)
          * [Remove a package from a vendor bundle](#remove-a-package-from-a-vendor-bundle)
-      * [Subrepository](#subrepository)
-         * [List an organization's subrepositories](#list-an-organizations-subrepositories)
-         * [Show a subrepository](#show-a-subrepository)
-         * [Create a subrepository](#create-a-subrepository)
-         * [Delete a subrepository](#delete-a-subrepository)
-         * [List a subrepository's teams](#list-a-subrepositorys-teams)
-         * [Add a team to a subrepository or edit the permission](#add-a-team-to-a-subrepository-or-edit-the-permission)
-         * [Remove a team from a subrepository](#remove-a-team-from-a-subrepository)
-         * [List a subrepository's packages](#list-a-subrepositorys-packages)
-         * [Show a subrepository package](#show-a-subrepository-package)
-         * [Create a vcs package in a subrepository](#create-a-vcs-package-in-a-subrepository)
-         * [Create a vcs package with credentials in a subrepository](#create-a-vcs-package-with-credentials-in-a-subrepository)
-         * [Create a custom package in a subrepository](#create-a-custom-package-in-a-subrepository)
-         * [Create a custom package with credentials in a subrepository](#create-a-custom-package-with-credentials-in-a-subrepository)
-         * [Edit a vcs package in a subrepository in a subrepository](#edit-a-vcs-package-in-a-subrepository-in-a-subrepository)
-         * [Edit a custom package in a subrepository](#edit-a-custom-package-in-a-subrepository)
-         * [Delete a package from a subrepository](#delete-a-package-from-a-subrepository)
-         * [List all dependents of a subrepository package](#list-all-dependents-of-a-subrepository-package)
-         * [List a subrepository's authentication tokens](#list-a-subrepositorys-authentication-tokens)
-         * [Create a subrepository authentication token](#create-a-subrepository-authentication-token)
-         * [Delete a subrepository authentication token](#delete-a-subrepository-authentication-token)
-         * [Regenerate a subrepository authentication token](#regenerate-a-subrepository-authentication-token)
-         * [List a subrepository's mirrored repositories](#list-a-subrepositorys-mirrored-repositories)
+      * [Suborganization](#suborganization)
+         * [List an organization's suborganizations](#list-an-organizations-suborganizations)
+         * [Show a suborganization](#show-a-suborganization)
+         * [Create a suborganization](#create-a-suborganization)
+         * [Delete a suborganization](#delete-a-suborganization)
+         * [List a suborganization's teams](#list-a-suborganizations-teams)
+         * [Add a team to a suborganization or edit the permission](#add-a-team-to-a-suborganization-or-edit-the-permission)
+         * [Remove a team from a suborganization](#remove-a-team-from-a-suborganization)
+         * [List a suborganization's packages](#list-a-suborganizations-packages)
+         * [Show a suborganization package](#show-a-suborganization-package)
+         * [Create a vcs package in a suborganization](#create-a-vcs-package-in-a-suborganization)
+         * [Create a vcs package with credentials in a suborganization](#create-a-vcs-package-with-credentials-in-a-suborganization)
+         * [Create a custom package in a suborganization](#create-a-custom-package-in-a-suborganization)
+         * [Create a custom package with credentials in a suborganization](#create-a-custom-package-with-credentials-in-a-suborganization)
+         * [Edit a vcs package in a suborganization in a suborganization](#edit-a-vcs-package-in-a-suborganization-in-a-suborganization)
+         * [Edit a custom package in a suborganization](#edit-a-custom-package-in-a-suborganization)
+         * [Delete a package from a suborganization](#delete-a-package-from-a-suborganization)
+         * [List all dependents of a suborganization package](#list-all-dependents-of-a-suborganization-package)
+         * [List a suborganization's authentication tokens](#list-a-suborganizations-authentication-tokens)
+         * [Create a suborganization authentication token](#create-a-suborganization-authentication-token)
+         * [Delete a suborganization authentication token](#delete-a-suborganization-authentication-token)
+         * [Regenerate a suborganization authentication token](#regenerate-a-suborganization-authentication-token)
+         * [List a suborganization's mirrored repositories](#list-a-suborganizations-mirrored-repositories)
          * [Show a mirrored repository](#show-a-mirrored-repository)
-         * [Add mirrored repositories to a subrepository](#add-mirrored-repositories-to-a-subrepository)
-         * [Edit the mirroring behaviour of mirrored repository in a subrepository](#edit-the-mirroring-behaviour-of-mirrored-repository-in-a-subrepository)
-         * [Delete a mirrored repository from a subrepository](#delete-a-mirrored-repository-from-a-subrepository)
-         * [List all mirrored packages from a mirrored repository in a subrepository](#list-all-mirrored-packages-from-a-mirrored-repository-in-a-subrepository)
-         * [Add mirrored packages from one mirrored repository to a subrepository](#add-mirrored-packages-from-one-mirrored-repository-to-a-subrepository)
-         * [Remove all mirrored packages from one mirrored repository in a subrepository](#remove-all-mirrored-packages-from-one-mirrored-repository-in-a-subrepository)
+         * [Add mirrored repositories to a suborganization](#add-mirrored-repositories-to-a-suborganization)
+         * [Edit the mirroring behaviour of mirrored repository in a suborganization](#edit-the-mirroring-behaviour-of-mirrored-repository-in-a-suborganization)
+         * [Delete a mirrored repository from a suborganization](#delete-a-mirrored-repository-from-a-suborganization)
+         * [List all mirrored packages from a mirrored repository in a suborganization](#list-all-mirrored-packages-from-a-mirrored-repository-in-a-suborganization)
+         * [Add mirrored packages from one mirrored repository to a suborganization](#add-mirrored-packages-from-one-mirrored-repository-to-a-suborganization)
+         * [Remove all mirrored packages from one mirrored repository in a suborganization](#remove-all-mirrored-packages-from-one-mirrored-repository-in-a-suborganization)
       * [Package](#package)
          * [List an organization's packages](#list-an-organizations-packages)
          * [Show a package](#show-a-package)
@@ -131,7 +131,7 @@
    * [License](#license)
 
 <!-- Created by https://github.com/ekalinin/github-markdown-toc -->
-<!-- Added by: glaubinix, at: Wed  1 Nov 2023 16:24:17 GMT -->
+<!-- Added by: glaubinix, at: Fri 22 Nov 2024 16:10:24 GMT -->
 
 <!--te-->
 
@@ -182,7 +182,7 @@ Returns an array of created jobs. One for every synchronization.
 The permissions available for a team are:
 - `canEditTeamPackages`: members of the team can edit and remove packages, assign package permissions (only applies to packages assigned to team).
 - `canAddPackages`: members of the team can add packages to organization; add, edit and remove credentials and mirrored third-party repositories.
-- `canCreateSubrepositories`: members of the team can create subrepositories.
+- `canCreateSuborganizations`: members of the team can create suborganizations.
 - `canViewVendorCustomers`: members of the team can view customers, their Composer information, their packages, and their install statistics.
 - `canManageVendorCustomers`: members of the team can create and delete customers, add and remove packages, update their settings, view Composer information and install statistics.
 
@@ -193,7 +193,7 @@ $permissions = new TeamPermissions;
 // Grant all permissions.
 $permissions->canEditTeamPackages = true;
 $permissions->canAddPackages = true;
-$permissions->canCreateSubrepositories = true;
+$permissions->canCreateSuborganizations = true;
 $permissions->canManageVendorCustomers = true;
 $permissions->canManageVendorCustomers = true;
 ```
@@ -551,241 +551,242 @@ $packageName = 'acme-website/package';
 $client->vendorBundles()->packages()->removePackage($vendorBundleId, $packageName);
 ```
 
-### Subrepository
+### Suborganization
 
-#### List an organization's subrepositories
+#### List an organization's suborganizations
 ```php
-$subrepositories = $client->subrepositories()->all();
+$suborganizations = $client->suborganizations()->all();
 ```
-Returns an array of subrepositories.
+Returns an array of suborganizations.
 
-#### Show a subrepository
+#### Show a suborganization
 ```php
-$subrepositoryName = 'subrepository';
-$subrepository = $client->subrepositories()->show($subrepositoryName);
+$suborganizationName = 'suborganization';
+$suborganization = $client->suborganizations()->show($suborganizationName);
 ```
-Returns a single subrepository.
+Returns a single suborganization.
 
-#### Create a subrepository
+#### Create a suborganization
 ```php
-$subrepository = $client->subrepositories()->create('New subrepository name');
+$suborganization = $client->subrepositories()->create('New suborganization name');
 ```
-Returns the subrepository.
+Returns the suborganization.
 
-#### Delete a subrepository
+#### Delete a suborganization
 ```php
-$subrepositoryName = 'subrepository';
-$client->subrepositories()->remove($subrepositoryName);
+$suborganizationName = 'suborganization';
+$client->suborganizations()->remove($suborganizationName);
 ```
 
-#### List a subrepository's teams
+#### List a suborganization's teams
 ```php
-$subrepositoryName = 'subrepository';
-$teams = $client->subrepositories()->listTeams($subrepositoryName);
+$suborganizationName = 'suborganization';
+$teams = $client->suborganizations()->listTeams($suborganizationName);
 ```
-Returns an array of subrepositories teams.
+Returns an array of suborganizations teams.
 
-#### Add a team to a subrepository or edit the permission
+#### Add a team to a suborganization or edit the permission
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 $teams = [
     [
         'id' => 12,
         'permission' => 'owner',
     ],
 ];
-$teams = $client->subrepositories()->addOrEditTeams($subrepositoryName, $teams);
+$teams = $client->suborganizations()->addOrEditTeams($suborganizationName, $teams);
 ```
-Returns an array of added subrepository teams.
+Returns an array of added suborganization teams.
 
 
-#### Remove a team from a subrepository
+#### Remove a team from a suborganization
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 $teamId = 12;
-$client->subrepositories()->removeTeam($subrepositoryName, $teamId);
+$client->suborganizations()->removeTeam($suborganizationName, $teamId);
 ```
 
-#### List a subrepository's packages
+#### List a suborganization's packages
 ```php
-$subrepositoryName = 'subrepository';
-$packages = $client->subrepositories()->packages()->all($subrepositoryName);
+$suborganizationName = 'suborganization';
+$packages = $client->suborganizations()->packages()->all($suborganizationName);
 ```
-Returns an array of subrepositories packages.
+Returns an array of suborganizations packages.
 
-#### Show a subrepository package
+#### Show a suborganization package
 
 You can reference a package by its name or ID.
 
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 // Either use package name:
-$package = $client->subrepositories()->packages()->show($subrepositoryName, 'acme-website/package');
+$package = $client->suborganizations()->packages()->show($suborganizationName, 'acme-website/package');
 // Or the package ID: 
-$package = $client->subrepositories()->packages()->show($subrepositoryName, 123);
+$package = $client->suborganizations()->packages()->show($suborganizationName, 123);
 ```
 Returns the package.
 
-#### Create a vcs package in a subrepository
+#### Create a vcs package in a suborganization
 ```php
-$subrepositoryName = 'subrepository';
-$job = $client->subrepositories()->packages()->createVcsPackage($subrepositoryName, 'https://github.com/acme-website/package');
+$suborganizationName = 'suborganization';
+$job = $client->suborganizations()->packages()->createVcsPackage($suborganizationName, 'https://github.com/acme-website/package');
 ```
 Returns a new job.
 
-#### Create a vcs package with credentials in a subrepository
+#### Create a vcs package with credentials in a suborganization
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 $credentialId = 42;
-$job = $client->subrepositories()->packages()->createVcsPackage($subrepositoryName,'https://github.com/acme-website/package', $credentialId);
+$job = $client->suborganizations()->packages()->createVcsPackage($suborganizationName,'https://github.com/acme-website/package', $credentialId);
 ```
 Returns a new job.
 
-#### Create a custom package in a subrepository
+#### Create a custom package in a suborganization
+
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 $packageDefinition = '{...}';
-$job = $client->subrepositories()->packages()->createCustomPackage($subrepositoryName, $packageDefinition);
+$job = $client->suborganizations()->packages()->createCustomPackage($suborganizationName, $packageDefinition);
 ```
 Returns a new job.
 
-#### Create a custom package with credentials in a subrepository
+#### Create a custom package with credentials in a suborganization
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 $packageDefinition = '{...}';
 $credentialId = 42;
-$job = $client->subrepositories()->packages()->createCustomPackage($subrepositoryName, $packageDefinition, $credentialId);
+$job = $client->suborganizations()->packages()->createCustomPackage($suborganizationName, $packageDefinition, $credentialId);
 ```
 Returns a new job.
 
-#### Edit a vcs package in a subrepository in a subrepository
+#### Edit a vcs package in a suborganization in a suborganization
 ```php
-$subrepositoryName = 'subrepository';
-$job = $client->subrepositories()->packages()->editVcsPackage($subrepositoryName, 'acme-website/package', 'https://github.com/acme-website/package');
+$suborganizationName = 'suborganization';
+$job = $client->suborganizations()->packages()->editVcsPackage($suborganizationName, 'acme-website/package', 'https://github.com/acme-website/package');
 ```
 Returns a new job.
 
-#### Edit a custom package in a subrepository
+#### Edit a custom package in a suborganization
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 $packageDefinition = '{...}';
-$job = $client->subrepositories()->packages()->editCustomPackage($subrepositoryName, 'acme-website/package', $packageDefinition);
+$job = $client->suborganizations()->packages()->editCustomPackage($suborganizationName, 'acme-website/package', $packageDefinition);
 ```
 Returns a new job.
 
-#### Delete a package from a subrepository
+#### Delete a package from a suborganization
 ```php
-$subrepositoryName = 'subrepository';
-$client->subrepositories()->packages()->remove($subrepositoryName, 'acme-website/package');
+$suborganizationName = 'suborganization';
+$client->suborganizations()->packages()->remove($suborganizationName, 'acme-website/package');
 ```
 
-#### List all dependents of a subrepository package
+#### List all dependents of a suborganization package
 ```php
-$subrepositoryName = 'subrepository';
-$client->subrepositories()->packages()->listDependents($subrepositoryName, 'acme-website/package');
+$suborganizationName = 'suborganization';
+$client->suborganizations()->packages()->listDependents($suborganizationName, 'acme-website/package');
 ```
 Returns a list of packages.
 
-#### List a subrepository's authentication tokens
+#### List a suborganization's authentication tokens
 ```php
-$subrepositoryName = 'subrepository';
-$tokens = $client->subrepositories()->listTokens($subrepositoryName);
+$suborganizationName = 'suborganization';
+$tokens = $client->suborganizations()->listTokens($suborganizationName);
 ```
 Returns an array of authentication tokens.
 
-#### Create a subrepository authentication token
+#### Create a suborganization authentication token
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 $data = [
-  'description' => 'Subrepository Token',
+  'description' => 'Suborganization Token',
   'access' => 'read',
 ];
-$token = $client->subrepositories()->createToken($subrepositoryName, $data);
+$token = $client->suborganizations()->createToken($suborganizationName, $data);
 ```
 Returns the authentication token.
 
-#### Delete a subrepository authentication token
+#### Delete a suborganization authentication token
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 $tokenId = 33;
-$client->subrepositories()->removeToken($subrepositoryName, $tokenId);
+$client->suborganizations()->removeToken($suborganizationName, $tokenId);
 ```
 
-#### Regenerate a subrepository authentication token
+#### Regenerate a suborganization authentication token
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 $tokenId = 33;
 $confirmation = [
     'IConfirmOldTokenWillStopWorkingImmediately' => true,
 ];
-$token = $client->subrepositories()->regenerateToken($subrepositoryName, $confirmation);
+$token = $client->suborganizations()->regenerateToken($suborganizationName, $confirmation);
 ```
 Returns the authentication token.
 
-#### List a subrepository's mirrored repositories
+#### List a suborganization's mirrored repositories
 ```php
-$subrepositoryName = 'subrepository';
-$mirroredRepositories = $client->subrepositories()->mirroredRepositories()->all($subrepositoryName);
+$suborganizationName = 'suborganization';
+$mirroredRepositories = $client->suborganizations()->mirroredRepositories()->all($suborganizationName);
 ```
 Returns an array of mirrored repositories.
 
 #### Show a mirrored repository
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 $mirroredRepositoryId = 42;
-$mirroredRepository = $client->subrepositories()->mirroredRepositories()->show($subrepositoryName, $mirroredRepositoryId);
+$mirroredRepository = $client->suborganizations()->mirroredRepositories()->show($suborganizationName, $mirroredRepositoryId);
 ```
 Returns the mirrored repository.
 
-#### Add mirrored repositories to a subrepository
+#### Add mirrored repositories to a suborganization
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 $mirroredRepositoriesToAdd = [
     ['id' => 12, 'mirroringBehavior' => 'add_on_use'],
 ];
-$mirroredRepository = $client->subrepositories()->mirroredRepositories()->add($subrepositoryName, $mirroredRepositoriesToAdd);
+$mirroredRepository = $client->suborganizations()->mirroredRepositories()->add($suborganizationName, $mirroredRepositoriesToAdd);
 ```
 Returns a list of added mirrored repositories.
 
-#### Edit the mirroring behaviour of mirrored repository in a subrepository
+#### Edit the mirroring behaviour of mirrored repository in a suborganization
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 $mirroredRepositoryId = 42;
-$mirroredRepository = $client->subrepositories()->mirroredRepositories()->create($subrepositoryName, $mirroredRepositoryId, 'add_on_use');
+$mirroredRepository = $client->suborganizations()->mirroredRepositories()->create($suborganizationName, $mirroredRepositoryId, 'add_on_use');
 ```
 Returns the edited mirrored repository.
 
-#### Delete a mirrored repository from a subrepository
+#### Delete a mirrored repository from a suborganization
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 $mirroredRepositoryId = 42;
-$client->subrepositories()->mirroredRepositories()->remove($subrepositoryName, $mirroredRepositoryId);
+$client->suborganizations()->mirroredRepositories()->remove($suborganizationName, $mirroredRepositoryId);
 ```
 
-#### List all mirrored packages from a mirrored repository in a subrepository
+#### List all mirrored packages from a mirrored repository in a suborganization
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 $mirroredRepositoryId = 42;
-$packages = $client->subrepositories()->mirroredRepositories()->listPackages($subrepositoryName, $mirroredRepositoryId);
+$packages = $client->suborganizations()->mirroredRepositories()->listPackages($suborganizationName, $mirroredRepositoryId);
 ```
 Returns an array of packages.
 
-#### Add mirrored packages from one mirrored repository to a subrepository
+#### Add mirrored packages from one mirrored repository to a suborganization
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 $mirroredRepositoryId = 42;
 $packages = [
     'acme/cool-lib
 ];
-$jobs = $client->subrepositories()->mirroredRepositories()->addPackages($subrepositoryName, $mirroredRepositoryId, $packages);
+$jobs = $client->suborganizations()->mirroredRepositories()->addPackages($suborganizationName, $mirroredRepositoryId, $packages);
 ```
 Returns an array of jobs.
 
-#### Remove all mirrored packages from one mirrored repository in a subrepository
+#### Remove all mirrored packages from one mirrored repository in a suborganization
 ```php
-$subrepositoryName = 'subrepository';
+$suborganizationName = 'suborganization';
 $mirroredRepositoryId = 42;
-$client->subrepositories()->mirroredRepositories()->removePackages($subrepositoryName, $mirroredRepositoryId);
+$client->suborganizations()->mirroredRepositories()->removePackages($suborganizationName, $mirroredRepositoryId);
 ```
 
 ### Package
