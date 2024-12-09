@@ -48,8 +48,12 @@ class Client
      * @param string $key
      * @param string $secret
      */
-    public function authenticate($key, $secret)
-    {
+    public function authenticate(
+        #[\SensitiveParameter]
+        $key,
+        #[\SensitiveParameter]
+        $secret
+    ) {
         $this->httpClientBuilder->removePlugin(RequestSignature::class);
         $this->httpClientBuilder->addPlugin(new RequestSignature($key, $secret));
     }

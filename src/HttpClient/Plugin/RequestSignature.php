@@ -25,8 +25,12 @@ class RequestSignature implements Plugin
      * @param string $key
      * @param string $secret
      */
-    public function __construct($key, $secret)
-    {
+    public function __construct(
+        #[\SensitiveParameter]
+        $key,
+        #[\SensitiveParameter]
+        $secret
+    ) {
         if (!$key || !$secret) {
             throw new \InvalidArgumentException('$key and $secret must be set');
         }

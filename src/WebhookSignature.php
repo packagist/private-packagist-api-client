@@ -14,8 +14,10 @@ class WebhookSignature
     /** @var string */
     private $secret;
 
-    public function __construct($secret)
-    {
+    public function __construct(
+        #[\SensitiveParameter]
+        $secret
+    ) {
         $this->secret = $secret;
     }
 
