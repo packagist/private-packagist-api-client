@@ -3,3 +3,6 @@ parameters:
     paths:
         - src
         - tests
+
+    ignoreErrors:
+        - '#Attribute class Deprecated does not exist#'

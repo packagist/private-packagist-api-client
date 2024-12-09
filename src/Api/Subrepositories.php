@@ -41,6 +41,7 @@ class Subrepositories extends AbstractApi
     /**
      * @deprecated Use addOrEditTeams instead
      */
+    #[\Deprecated('Use Subrepositories::addOrEditTeams instead', '1.10.0')]
     public function addOrUpdateTeams($subrepositoryName, array $teams)
     {
         return $this->addOrEditTeams($subrepositoryName, $teams);
@@ -69,6 +70,7 @@ class Subrepositories extends AbstractApi
     /**
      * @deprecated use packages()->all()
      */
+    #[\Deprecated('Use Subrepositories::packages()->all() instead', '1.16.1')]
     public function listPackages($subrepositoryName)
     {
         return $this->packages()->all($subrepositoryName);

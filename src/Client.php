@@ -72,6 +72,7 @@ class Client
     /**
      * @deprecated Use Client::subrepositories instead
      */
+    #[\Deprecated('Use Client::subrepositories instead', '1.16.1')]
     public function projects()
     {
         return new Api\Subrepositories($this, $this->responseMediator);
