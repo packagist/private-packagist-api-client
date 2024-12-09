@@ -15,7 +15,7 @@ class HttpTransportException extends RuntimeException
 {
     private $requestUri;
 
-    public function __construct($message = "", $code = 0, $requestUri = "", Throwable $previous = null)
+    public function __construct($message = "", $code = 0, $requestUri = "", ?Throwable $previous = null)
     {
         $this->requestUri = $requestUri;
         parent::__construct($message, $code, $previous);

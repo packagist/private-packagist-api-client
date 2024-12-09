@@ -25,7 +25,7 @@ class Client
     private $responseMediator;
 
     /** @param string $privatePackagistUrl */
-    public function __construct(HttpPluginClientBuilder $httpClientBuilder = null, $privatePackagistUrl = null, ResponseMediator $responseMediator = null)
+    public function __construct(?HttpPluginClientBuilder $httpClientBuilder = null, $privatePackagistUrl = null, ?ResponseMediator $responseMediator = null)
     {
         $this->httpClientBuilder = $builder = $httpClientBuilder ?: new HttpPluginClientBuilder();
         $privatePackagistUrl = $privatePackagistUrl ? : 'https://packagist.com';

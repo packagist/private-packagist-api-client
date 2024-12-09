@@ -19,10 +19,10 @@ abstract class AbstractApi
     /** @var ResponseMediator */
     private $responseMediator;
 
-    public function __construct(Client $client, ResponseMediator $responseMediator = null)
+    public function __construct(Client $client, ?ResponseMediator $responseMediator = null)
     {
         $this->client = $client;
-        $this->responseMediator = $responseMediator ? $responseMediator : new ResponseMediator();
+        $this->responseMediator = $responseMediator ? : new ResponseMediator();
     }
 
     /**
