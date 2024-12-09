@@ -42,6 +42,7 @@ class Customers extends AbstractApi
     /**
      * @deprecated Use edit instead
      */
+    #[\Deprecated('Use Customers::edit instead', '1.11.0')]
     public function update($customerIdOrUrlName, array $customer)
     {
         return $this->edit($customerIdOrUrlName, $customer);
@@ -80,6 +81,7 @@ class Customers extends AbstractApi
     /**
      * @deprecated Use addOrEditPackages instead
      */
+    #[\Deprecated('Use Customers::addOrEditPackages instead', '1.11.0')]
     public function addOrUpdatePackages($customerIdOrUrlName, array $packages)
     {
         return $this->addOrEditPackages($customerIdOrUrlName, $packages);
@@ -99,6 +101,7 @@ class Customers extends AbstractApi
     /**
      * @deprecated Use addOrEditPackages instead
      */
+    #[\Deprecated('Use Customers::addOrEditPackages instead', '1.11.0')]
     public function addPackages($customerIdOrUrlName, array $packages)
     {
         return $this->addOrEditPackages($customerIdOrUrlName, $packages);

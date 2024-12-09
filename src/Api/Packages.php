@@ -35,11 +35,13 @@ class Packages extends AbstractApi
     /**
      * @deprecated Use Packages::ORIGIN_PUBLIC_MIRROR instead
      */
+    #[\Deprecated('Use Packages::ORIGIN_PUBLIC_MIRROR instead', '1.13.0')]
     const ORIGIN_PUBLIC_PROXY = self::ORIGIN_PUBLIC_MIRROR;
 
     /**
      * @deprecated Use Packages::ORIGIN_PRIVATE_MIRROR instead
      */
+    #[\Deprecated('Use Packages::ORIGIN_PRIVATE_MIRROR instead', '1.13.0')]
     const ORIGIN_PRIVATE_PROXY = self::ORIGIN_PRIVATE_MIRROR;
 
     const AVAILABLE_ORIGINS = [self::ORIGIN_PUBLIC_MIRROR, self::ORIGIN_PRIVATE_MIRROR, self::ORIGIN_PRIVATE, 'public-proxy', 'private-proxy'];
@@ -82,6 +84,7 @@ class Packages extends AbstractApi
     /**
      * @deprecated Use editVcsPackage instead
      */
+    #[\Deprecated('Use Packages::editVcsPackage instead', '1.11.0')]
     public function updateVcsPackage($packageName, $url, $credentialId = null)
     {
         return $this->editVcsPackage($packageName, $url, $credentialId);
@@ -104,6 +107,7 @@ class Packages extends AbstractApi
     /**
      * @deprecated Use editCustomPackage instead
      */
+    #[\Deprecated('Use Packages::editCustomPackage instead', '1.11.0')]
     public function updateCustomPackage($packageName, $customJson, $credentialId = null)
     {
         return $this->editCustomPackage($packageName, $customJson, $credentialId);

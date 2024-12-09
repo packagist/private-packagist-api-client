@@ -25,7 +25,7 @@ class Client
     private $responseMediator;
 
     /** @param string $privatePackagistUrl */
-    public function __construct(HttpPluginClientBuilder $httpClientBuilder = null, $privatePackagistUrl = null, ResponseMediator $responseMediator = null)
+    public function __construct(?HttpPluginClientBuilder $httpClientBuilder = null, $privatePackagistUrl = null, ?ResponseMediator $responseMediator = null)
     {
         $this->httpClientBuilder = $builder = $httpClientBuilder ?: new HttpPluginClientBuilder();
         $privatePackagistUrl = $privatePackagistUrl ? : 'https://packagist.com';
@@ -48,8 +48,12 @@ class Client
      * @param string $key
      * @param string $secret
      */
-    public function authenticate($key, $secret)
-    {
+    public function authenticate(
+        #[\SensitiveParameter]
+        $key,
+        #[\SensitiveParameter]
+        $secret
+    ) {
         $this->httpClientBuilder->removePlugin(RequestSignature::class);
         $this->httpClientBuilder->addPlugin(new RequestSignature($key, $secret));
     }
@@ -72,6 +76,7 @@ class Client
     /**
      * @deprecated Use Client::subrepositories instead
      */
+    #[\Deprecated('Use Client::subrepositories instead', '1.16.1')]
     public function projects()
     {
         return new Api\Subrepositories($this, $this->responseMediator);

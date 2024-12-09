@@ -24,9 +24,9 @@ class ExceptionThrower implements Plugin
     /** @var ResponseMediator */
     private $responseMediator;
 
-    public function __construct(ResponseMediator $responseMediator = null)
+    public function __construct(?ResponseMediator $responseMediator = null)
     {
-        $this->responseMediator = $responseMediator ? $responseMediator : new ResponseMediator();
+        $this->responseMediator = $responseMediator ? : new ResponseMediator();
     }
 
     protected function doHandleRequest(RequestInterface $request, callable $next, callable $first)

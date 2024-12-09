@@ -43,6 +43,7 @@ class Credentials extends AbstractApi
     /**
      * @deprecated Use edit instead
      */
+    #[\Deprecated('Use Credentials::edit instead', '1.11.0')]
     public function update($credentialId, $type, $username, $credential)
     {
         return $this->edit($credentialId, $type, $username, $credential);
