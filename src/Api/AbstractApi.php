@@ -22,7 +22,7 @@ abstract class AbstractApi
     public function __construct(Client $client, ?ResponseMediator $responseMediator = null)
     {
         $this->client = $client;
-        $this->responseMediator = $responseMediator ? : new ResponseMediator();
+        $this->responseMediator = $responseMediator ?: new ResponseMediator();
     }
 
     /**
