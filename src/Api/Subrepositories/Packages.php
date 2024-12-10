@@ -14,6 +14,9 @@ use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
 use PrivatePackagist\ApiClient\Payload\CustomPackageConfig;
 use PrivatePackagist\ApiClient\Payload\VcsPackageConfig;
 
+/**
+ *  @deprecated Use \PrivatePackagist\ApiClient\Api\Suborganizations\Packages instead
+ */
 class Packages extends AbstractApi
 {
     public function all($subrepositoryName, array $filters = [])

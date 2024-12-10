@@ -25,7 +25,7 @@ class Teams extends AbstractApi
             'permissions' => [
                 'canEditTeamPackages' => (bool) $permissions->canEditTeamPackages,
                 'canAddPackages' => (bool) $permissions->canAddPackages,
-                'canCreateSubrepositories' => (bool) $permissions->canCreateSubrepositories,
+                'canCreateSuborganizations' => $permissions->canCreateSuborganizations || $permissions->canCreateSubrepositories,
                 'canViewVendorCustomers' => (bool) $permissions->canViewVendorCustomers,
                 'canManageVendorCustomers' => (bool) $permissions->canManageVendorCustomers,
             ],
@@ -46,7 +46,7 @@ class Teams extends AbstractApi
             'permissions' => [
                 'canEditTeamPackages' => (bool) $permissions->canEditTeamPackages,
                 'canAddPackages' => (bool) $permissions->canAddPackages,
-                'canCreateSubrepositories' => (bool) $permissions->canCreateSubrepositories,
+                'canCreateSuborganizations' => $permissions->canCreateSuborganizations || $permissions->canCreateSubrepositories,
                 'canViewVendorCustomers' => (bool) $permissions->canViewVendorCustomers,
                 'canManageVendorCustomers' => (bool) $permissions->canManageVendorCustomers,
             ],

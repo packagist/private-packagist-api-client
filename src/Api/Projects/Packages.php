@@ -10,7 +10,7 @@
 namespace PrivatePackagist\ApiClient\Api\Projects;
 
 /**
- * @deprecated Use Subrepositories\Packages instead
+ *  @deprecated Use \PrivatePackagist\ApiClient\Api\Suborganizations\Packages instead
  */
 class Packages extends \PrivatePackagist\ApiClient\Api\Subrepositories\Packages
 {

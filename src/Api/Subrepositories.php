@@ -11,6 +11,9 @@ namespace PrivatePackagist\ApiClient\Api;
 
 use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
 
+/**
+ * @deprecated Use the Suborganizations API instead
+ */
 class Subrepositories extends AbstractApi
 {
     public function all()

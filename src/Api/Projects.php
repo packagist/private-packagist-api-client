@@ -10,7 +10,7 @@
 namespace PrivatePackagist\ApiClient\Api;
 
 /**
- * @deprecated Use the Subrepositories API instead
+ * @deprecated Use the Suborganizations API instead
  */
 class Projects extends Subrepositories
 {
