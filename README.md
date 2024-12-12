@@ -568,7 +568,7 @@ Returns a single suborganization.
 
 #### Create a suborganization
 ```php
-$suborganization = $client->subrepositories()->create('New suborganization name');
+$suborganization = $client->suborganizations()->create('New suborganization name');
 ```
 Returns the suborganization.
 
