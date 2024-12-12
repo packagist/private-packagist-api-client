@@ -102,7 +102,7 @@ class TeamsTest extends ApiTestCase
             'permissions' => [
                 'canEditTeamPackages' => true,
                 'canAddPackages' => false,
-                'canCreateSubrepositories' => false,
+                'canCreateSuborganizations' => false,
                 'canViewVendorCustomers' => true,
                 'canManageVendorCustomers' => false,
             ],
@@ -117,7 +117,7 @@ class TeamsTest extends ApiTestCase
                 'permissions' => [
                     'canEditTeamPackages' => true,
                     'canAddPackages' => false,
-                    'canCreateSubrepositories' => false,
+                    'canCreateSuborganizations' => false,
                     'canViewVendorCustomers' => true,
                     'canManageVendorCustomers' => false,
                 ],
@@ -138,7 +138,7 @@ class TeamsTest extends ApiTestCase
             'permissions' => [
                 'canEditTeamPackages' => true,
                 'canAddPackages' => false,
-                'canCreateSubrepositories' => false,
+                'canCreateSuborganizations' => false,
                 'canViewVendorCustomers' => true,
                 'canManageVendorCustomers' => false,
             ],
@@ -165,7 +165,7 @@ class TeamsTest extends ApiTestCase
             'permissions' => [
                 'canEditTeamPackages' => true,
                 'canAddPackages' => false,
-                'canCreateSubrepositories' => false,
+                'canCreateSuborganizations' => false,
                 'canViewVendorCustomers' => true,
                 'canManageVendorCustomers' => false,
             ],
@@ -180,7 +180,7 @@ class TeamsTest extends ApiTestCase
                 'permissions' => [
                     'canEditTeamPackages' => true,
                     'canAddPackages' => false,
-                    'canCreateSubrepositories' => false,
+                    'canCreateSuborganizations' => false,
                     'canViewVendorCustomers' => true,
                     'canManageVendorCustomers' => false,
                 ],
@@ -201,7 +201,7 @@ class TeamsTest extends ApiTestCase
             'permissions' => [
                 'canEditTeamPackages' => true,
                 'canAddPackages' => false,
-                'canCreateSubrepositories' => false,
+                'canCreateSuborganizations' => false,
                 'canViewVendorCustomers' => true,
                 'canManageVendorCustomers' => false,
             ],
@@ -225,7 +225,7 @@ class TeamsTest extends ApiTestCase
             'permissions' => [
                 'canEditTeamPackages' => true,
                 'canAddPackages' => false,
-                'canCreateSubrepositories' => false,
+                'canCreateSuborganizations' => false,
                 'canViewVendorCustomers' => true,
                 'canManageVendorCustomers' => false,
             ],

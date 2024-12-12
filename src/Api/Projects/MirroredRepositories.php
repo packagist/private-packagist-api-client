@@ -10,7 +10,7 @@
 namespace PrivatePackagist\ApiClient\Api\Projects;
 
 /**
- * @deprecated Use Subrepositories\MirroredRepositories instead
+ * @deprecated Use \PrivatePackagist\ApiClient\Api\Suborganizations\MirroredRepositories instead
  */
 class MirroredRepositories extends \PrivatePackagist\ApiClient\Api\Subrepositories\MirroredRepositories
 {

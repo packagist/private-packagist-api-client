@@ -74,17 +74,26 @@ class Client
     }
 
     /**
-     * @deprecated Use Client::subrepositories instead
+     * @deprecated Use Client::suborganizations instead
      */
-    #[\Deprecated('Use Client::subrepositories instead', '1.16.1')]
+    #[\Deprecated('Use Client::suborganizations instead', '1.16.1')]
     public function projects()
     {
         return new Api\Subrepositories($this, $this->responseMediator);
     }
 
+    /**
+     * @deprecated Use Client::suborganizations instead
+     */
+    #[\Deprecated('Use Client::suborganizations instead', '1.38.0')]
     public function subrepositories()
     {
         return new Api\Subrepositories($this, $this->responseMediator);
+    }
+
+    public function suborganizations()
+    {
+        return new Api\Suborganizations($this, $this->responseMediator);
     }
 
     public function organization()

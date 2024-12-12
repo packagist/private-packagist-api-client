@@ -12,6 +12,9 @@ namespace PrivatePackagist\ApiClient\Api\Subrepositories;
 use PrivatePackagist\ApiClient\Api\AbstractApi;
 use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
 
+/**
+ * @deprecated Use \PrivatePackagist\ApiClient\Api\Suborganizations\MirroredRepositories instead
+ */
 class MirroredRepositories extends AbstractApi
 {
     public function all($subrepositoryName)
