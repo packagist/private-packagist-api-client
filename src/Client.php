@@ -16,6 +16,10 @@ use PrivatePackagist\ApiClient\HttpClient\Message\ResponseMediator;
 use PrivatePackagist\ApiClient\HttpClient\Plugin\ExceptionThrower;
 use PrivatePackagist\ApiClient\HttpClient\Plugin\PathPrepend;
 use PrivatePackagist\ApiClient\HttpClient\Plugin\RequestSignature;
+use PrivatePackagist\ApiClient\HttpClient\Plugin\TrustedPublishingTokenExchange;
+use PrivatePackagist\OIDC\Identities\TokenGenerator;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 class Client
 {
@@ -23,13 +27,16 @@ class Client
     private $httpClientBuilder;
     /** @var ResponseMediator */
     private $responseMediator;
+    /** @var LoggerInterface */
+    private $logger;
 
     /** @param string $privatePackagistUrl */
-    public function __construct(?HttpPluginClientBuilder $httpClientBuilder = null, $privatePackagistUrl = null, ?ResponseMediator $responseMediator = null)
+    public function __construct(?HttpPluginClientBuilder $httpClientBuilder = null, $privatePackagistUrl = null, ?ResponseMediator $responseMediator = null, ?LoggerInterface  $logger = null)
     {
         $this->httpClientBuilder = $builder = $httpClientBuilder ?: new HttpPluginClientBuilder();
         $privatePackagistUrl = $privatePackagistUrl ? : 'https://packagist.com';
         $this->responseMediator = $responseMediator ? : new ResponseMediator();
+        $this->logger = $logger ? : new NullLogger();
 
         $builder->addPlugin(new Plugin\AddHostPlugin(Psr17FactoryDiscovery::findUriFactory()->createUri($privatePackagistUrl)));
         $builder->addPlugin(new PathPrepend('/api'));
@@ -56,6 +63,12 @@ class Client
     ) {
         $this->httpClientBuilder->removePlugin(RequestSignature::class);
         $this->httpClientBuilder->addPlugin(new RequestSignature($key, $secret));
+    }
+
+    public function authenticateWithTrustedPublishing(string $organizationUrlName, string $packageName)
+    {
+        $this->httpClientBuilder->removePlugin(TrustedPublishingTokenExchange::class);
+        $this->httpClientBuilder->addPlugin(new TrustedPublishingTokenExchange($organizationUrlName, $packageName, $this->getHttpClientBuilder(), new TokenGenerator($this->logger, $this->getHttpClientBuilder()->getHttpClientWithoutPlugins())));
     }
 
     public function credentials()

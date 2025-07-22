@@ -98,4 +98,13 @@ class HttpPluginClientBuilder
 
         return $this->pluginClient;
     }
+
+    public function getHttpClientWithoutPlugins(): HttpMethodsClient
+    {
+        return new HttpMethodsClient(
+            $this->httpClient,
+            $this->requestFactory,
+            $this->streamFactory
+        );
+    }
 }

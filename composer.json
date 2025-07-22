@@ -18,7 +18,8 @@
         "php-http/discovery": "^1.0",
         "psr/http-client-implementation": "^1.0",
         "php-http/message-factory": "^1.0",
-        "psr/http-message-implementation": "^1.0"
+        "psr/http-message-implementation": "^1.0",
+        "private-packagist/oidc-identities": "^1.0.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
