@@ -27,7 +27,7 @@ class Packages extends AbstractApi
 
     public function show($suborganizationName, $packageIdOrName)
     {
-        return $this->get(sprintf('/suborganizations/%s/packages/%s', $suborganizationName, $packageIdOrName));
+        return $this->get(sprintf('/suborganizations/%s/packages/%s/', $suborganizationName, $packageIdOrName));
     }
 
     public function createVcsPackage($suborganizationName, $url, $credentialId = null, $type = 'vcs', $defaultSuborganizationAccess = null)
