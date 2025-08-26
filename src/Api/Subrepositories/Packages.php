@@ -30,7 +30,7 @@ class Packages extends AbstractApi
 
     public function show($subrepositoryName, $packageIdOrName)
     {
-        return $this->get(sprintf('/subrepositories/%s/packages/%s', $subrepositoryName, $packageIdOrName));
+        return $this->get(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageIdOrName));
     }
 
     public function createVcsPackage($subrepositoryName, $url, $credentialId = null, $type = 'vcs', $defaultSubrepositoryAccess = null)

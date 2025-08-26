@@ -88,7 +88,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/subrepositories/project/packages/acme-website/package'))
+            ->with($this->equalTo('/subrepositories/project/packages/acme-website/package/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->show($projectName, 'acme-website/package'));
