@@ -169,6 +169,21 @@ From `$client` object, you can access the full Private Packagist API.
 
 Full documentation can be found in the [Private Packagist documentation](https://packagist.com/docs/api).
 
+### Trusted publishing
+
+To upload artifact files, trusted publishing can be used in certain environment like GitHub Actions without the need to
+configure authentication via API key and secret.
+
+```php
+$fileName = 'package1.zip';
+$file = file_get_contents($fileName);
+$client = new \PrivatePackagist\ApiClient\Client();
+$client->authenticateWithTrustedPublishing('acme-org', 'acme/package');
+$client->packages()->artifacts()->add('acme/package', $file, 'application/zip', $fileName);
+```
+
+We recommend using the [GitHub action](https://github.com/packagist/artifact-publish-github-action) directly.
+
 ### Organization
 
 #### Trigger a full synchronization

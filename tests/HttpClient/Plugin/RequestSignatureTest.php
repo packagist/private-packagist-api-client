@@ -10,15 +10,11 @@
 namespace PrivatePackagist\ApiClient\HttpClient\Plugin;
 
 use GuzzleHttp\Psr7\Request;
-use Http\Promise\FulfilledPromise;
-use PHPUnit\Framework\TestCase;
 
-class RequestSignatureTest extends TestCase
+class RequestSignatureTest extends PluginTestCase
 {
     /** @var RequestSignature */
     private $plugin;
-    private $next;
-    private $first;
     private $key;
     private $secret;
     private $timestamp;
@@ -26,18 +22,14 @@ class RequestSignatureTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->key = 'token';
         $this->secret = 'secret';
         $this->timestamp = 1518721253;
         $this->nonce = '78b9869e96cf58b5902154e0228f8576f042e5ac';
         $this->plugin = new RequestSignatureMock($this->key, $this->secret);
         $this->plugin->init($this->timestamp, $this->nonce);
-        $this->next = function (Request $request) {
-            return new FulfilledPromise($request);
-        };
-        $this->first = function () {
-            throw new \RuntimeException('Did not expect plugin to call first');
-        };
     }
 
     public function testPrefixRequestPath()
