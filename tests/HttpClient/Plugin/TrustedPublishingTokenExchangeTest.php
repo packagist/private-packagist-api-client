@@ -57,6 +57,10 @@ class TrustedPublishingTokenExchangeTest extends PluginTestCase
         $this->assertCount(2, $requests);
         $this->assertSame('/oidc/audience', (string) $requests[0]->getUri());
         $this->assertSame('/oidc/token-exchange/organization/acme/package', (string) $requests[1]->getUri());
+        
+        // Verify that the signature is configured using the correct key
+        $this->builder->getHttpClient()->get('/api/foo');
+        $this->assertStringContainsString('PACKAGIST-HMAC-SHA256 Key=key', $requests[2]->getHeader('Authorization')[0]);
     }
 
     public function testNoTokenGenerated(): void
