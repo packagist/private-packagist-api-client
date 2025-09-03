@@ -12,6 +12,7 @@ namespace PrivatePackagist\ApiClient\HttpClient\Plugin;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Http\Mock\Client;
+use Http\Promise\FulfilledPromise;
 use PHPUnit\Framework\MockObject\MockObject;
 use PrivatePackagist\ApiClient\HttpClient\HttpPluginClientBuilder;
 use PrivatePackagist\OIDC\Identities\Token;
@@ -51,16 +52,18 @@ class TrustedPublishingTokenExchangeTest extends PluginTestCase
         $this->httpClient->addResponse(new Response(200, [], json_encode(['audience' => 'test'])));
         $this->httpClient->addResponse(new Response(200, [], json_encode(['key' => 'key', 'secret' => 'secret'])));
 
-        $this->plugin->handleRequest($request, $this->next, $this->first);
+        $this->plugin->handleRequest($request, function (Request $request) use (&$requestAfterPlugin) {
+            $requestAfterPlugin = $request;
+
+            return new FulfilledPromise($request);
+        }, $this->first);
 
         $requests = $this->httpClient->getRequests();
         $this->assertCount(2, $requests);
         $this->assertSame('/oidc/audience', (string) $requests[0]->getUri());
         $this->assertSame('/oidc/token-exchange/organization/acme/package', (string) $requests[1]->getUri());
-        
-        // Verify that the signature is configured using the correct key
-        $this->builder->getHttpClient()->get('/api/foo');
-        $this->assertStringContainsString('PACKAGIST-HMAC-SHA256 Key=key', $requests[2]->getHeader('Authorization')[0]);
+
+        $this->assertStringContainsString('PACKAGIST-HMAC-SHA256 Key=key', $requestAfterPlugin->getHeader('Authorization')[0]);
     }
 
     public function testNoTokenGenerated(): void
