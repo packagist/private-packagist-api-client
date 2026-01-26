@@ -33,7 +33,7 @@ class SynchronizationsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/synchronizations/'))
+            ->with($this->equalTo('/synchronizations/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all());

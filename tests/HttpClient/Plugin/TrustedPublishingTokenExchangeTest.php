@@ -17,6 +17,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PrivatePackagist\ApiClient\HttpClient\HttpPluginClientBuilder;
 use PrivatePackagist\OIDC\Identities\Token;
 use PrivatePackagist\OIDC\Identities\TokenGeneratorInterface;
+use Psr\Http\Message\RequestInterface;
 
 class TrustedPublishingTokenExchangeTest extends PluginTestCase
 {
@@ -52,7 +53,7 @@ class TrustedPublishingTokenExchangeTest extends PluginTestCase
         $this->httpClient->addResponse(new Response(200, [], json_encode(['audience' => 'test'])));
         $this->httpClient->addResponse(new Response(200, [], json_encode(['key' => 'key', 'secret' => 'secret'])));
 
-        $this->plugin->handleRequest($request, function (Request $request) use (&$requestAfterPlugin) {
+        $this->plugin->handleRequest($request, function (RequestInterface $request) use (&$requestAfterPlugin) {
             $requestAfterPlugin = $request;
 
             return new FulfilledPromise($request);

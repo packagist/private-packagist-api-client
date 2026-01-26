@@ -39,7 +39,7 @@ abstract class ApiTestCase extends TestCase
         $client = new Client(new HttpPluginClientBuilder($httpClient));
 
         return $this->getMockBuilder($this->getApiClass())
-            ->setMethods(['get', 'post', 'postFile', 'patch', 'delete', 'put', 'head'])
+            ->setMethods(['get', 'getCollection', 'post', 'postFile', 'patch', 'delete', 'put', 'head'])
             ->setConstructorArgs([$client])
             ->getMock();
     }

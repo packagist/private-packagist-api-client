@@ -36,6 +36,6 @@ class Artifacts extends AbstractApi
 
     public function showPackageArtifacts($packageIdOrName)
     {
-        return $this->get(sprintf('/packages/%s/artifacts/', $packageIdOrName));
+        return $this->get(sprintf('/packages/%s/artifacts/', $packageIdOrName), ['limit' => self::DEFAULT_LIMIT]);
     }
 }

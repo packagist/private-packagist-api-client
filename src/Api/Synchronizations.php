@@ -13,6 +13,6 @@ class Synchronizations extends AbstractApi
 {
     public function all()
     {
-        return $this->get('/synchronizations/');
+        return $this->get('/synchronizations/', ['limit' => self::DEFAULT_LIMIT]);
     }
 }

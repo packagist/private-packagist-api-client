@@ -23,7 +23,7 @@ class ProjectsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/subrepositories/'))
+            ->with($this->equalTo('/subrepositories/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all());
@@ -89,7 +89,7 @@ class ProjectsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/subrepositories/project/teams/'))
+            ->with($this->equalTo('/subrepositories/project/teams/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listTeams('project'));
@@ -150,7 +150,7 @@ class ProjectsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/subrepositories/project/tokens/'))
+            ->with($this->equalTo('/subrepositories/project/tokens/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listTokens('project'));

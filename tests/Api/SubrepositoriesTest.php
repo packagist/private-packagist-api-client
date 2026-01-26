@@ -23,7 +23,7 @@ class SubrepositoriesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/subrepositories/'))
+            ->with($this->equalTo('/subrepositories/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all());
@@ -89,7 +89,7 @@ class SubrepositoriesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/subrepositories/subrepository/teams/'))
+            ->with($this->equalTo('/subrepositories/subrepository/teams/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listTeams('subrepository'));
@@ -150,7 +150,7 @@ class SubrepositoriesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/subrepositories/subrepository/tokens/'))
+            ->with($this->equalTo('/subrepositories/subrepository/tokens/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listTokens('subrepository'));

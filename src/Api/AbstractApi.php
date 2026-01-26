@@ -9,11 +9,14 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use Composer\Pcre\Preg;
 use PrivatePackagist\ApiClient\Client;
 use PrivatePackagist\ApiClient\HttpClient\Message\ResponseMediator;
 
 abstract class AbstractApi
 {
+    const DEFAULT_LIMIT = 500;
+
     /** @var Client */
     protected $client;
     /** @var ResponseMediator */
@@ -45,6 +48,47 @@ abstract class AbstractApi
         );
 
         return $this->responseMediator->getContent($response);
+    }
+
+    /**
+     * @param string $path
+     * @param array $parameters
+     * @param array $headers
+     * @return array
+     */
+    protected function getCollection($path, array $parameters = [], array $headers = [])
+    {
+        if (count($parameters) > 0) {
+            $path .= '?'.http_build_query($parameters);
+        }
+
+        $content = [];
+        $nextUrl = $path;
+
+        do {
+            $response = $this->client->getHttpClient()->get(
+                $nextUrl,
+                array_merge($headers, [
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                ])
+            );
+
+            $pageContent = $this->responseMediator->getContent($response);
+
+            if ($response->getStatusCode() !== 200) {
+                return $pageContent;
+            }
+
+            $content = array_merge($content, $pageContent);
+
+            $nextUrl = null;
+            if ($response->hasHeader('Link')) {
+                $nextUrl = $this->parseLinkHeader($response->getHeaderLine('Link'), 'next');
+            }
+        } while ($nextUrl !== null);
+
+        return $content;
     }
 
     /**
@@ -126,5 +170,24 @@ abstract class AbstractApi
     protected function createJsonBody(array $parameters)
     {
         return (count($parameters) === 0) ? null : json_encode($parameters);
+    }
+
+    /**
+     * @param string $header
+     * @param string $type
+     * @return string|null
+     */
+    private function parseLinkHeader(string $header, string $type): ?string
+    {
+        foreach (explode(',', $header) as $relation) {
+            if (Preg::isMatch('/<(.*)>; rel="(.*)"/i', \trim($relation, ','), $match)) {
+                /** @var string[] $match */
+                if (3 === count($match) && $match[2] === $type) {
+                    return $match[1];
+                }
+            }
+        }
+
+        return null;
     }
 }

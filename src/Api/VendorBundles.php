@@ -16,7 +16,7 @@ class VendorBundles extends AbstractApi
      */
     public function all()
     {
-        return $this->get('/vendor-bundles/');
+        return $this->get('/vendor-bundles/', ['limit' => self::DEFAULT_LIMIT]);
     }
 
     /**

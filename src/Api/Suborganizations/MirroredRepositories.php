@@ -16,7 +16,7 @@ class MirroredRepositories extends AbstractApi
 {
     public function all($suborganizationName)
     {
-        return $this->get(sprintf('/suborganizations/%s/mirrored-repositories/', $suborganizationName));
+        return $this->get(sprintf('/suborganizations/%s/mirrored-repositories/', $suborganizationName), ['limit' => self::DEFAULT_LIMIT]);
     }
 
     public function add($suborganizationName, array $mirroredRepositories)
@@ -49,7 +49,7 @@ class MirroredRepositories extends AbstractApi
 
     public function listPackages($suborganizationName, $mirroredRepositoryId)
     {
-        return $this->get(sprintf('/suborganizations/%s/mirrored-repositories/%s/packages/', $suborganizationName, $mirroredRepositoryId));
+        return $this->get(sprintf('/suborganizations/%s/mirrored-repositories/%s/packages/', $suborganizationName, $mirroredRepositoryId), ['limit' => self::DEFAULT_LIMIT]);
     }
 
     public function addPackages($suborganizationName, $mirroredRepositoryId, array $packages)

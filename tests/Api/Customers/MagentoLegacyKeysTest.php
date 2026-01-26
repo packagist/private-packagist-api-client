@@ -10,6 +10,7 @@
 namespace PrivatePackagist\ApiClient\Api\Customers;
 
 use PHPUnit\Framework\MockObject\MockObject;
+use PrivatePackagist\ApiClient\Api\AbstractApi;
 use PrivatePackagist\ApiClient\Api\ApiTestCase;
 
 class MagentoLegacyKeysTest extends ApiTestCase
@@ -27,7 +28,7 @@ class MagentoLegacyKeysTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/api/customers/13/magento-legacy-keys/'))
+            ->with($this->equalTo('/api/customers/13/magento-legacy-keys/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all(13));

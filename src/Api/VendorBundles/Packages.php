@@ -20,7 +20,7 @@ class Packages extends AbstractApi
      */
     public function listPackages($vendorBundleIds)
     {
-        return $this->get(sprintf('/vendor-bundles/%s/packages/', $vendorBundleIds));
+        return $this->get(sprintf('/vendor-bundles/%s/packages/', $vendorBundleIds), ['limit' => self::DEFAULT_LIMIT]);
     }
 
     /**

@@ -13,7 +13,7 @@ class MirroredRepositories extends AbstractApi
 {
     public function all()
     {
-        return $this->get('/mirrored-repositories/');
+        return $this->get('/mirrored-repositories/', ['limit' => self::DEFAULT_LIMIT]);
     }
 
     public function create($name, $url, $mirroringBehavior, $credentials = null)
@@ -48,7 +48,7 @@ class MirroredRepositories extends AbstractApi
 
     public function listPackages($mirroredRepositoryId)
     {
-        return $this->get(sprintf('/mirrored-repositories/%s/packages/', $mirroredRepositoryId));
+        return $this->get(sprintf('/mirrored-repositories/%s/packages/', $mirroredRepositoryId), ['limit' => self::DEFAULT_LIMIT]);
     }
 
     public function addPackages($mirroredRepositoryId, array $packages)

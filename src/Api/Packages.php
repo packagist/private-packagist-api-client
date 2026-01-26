@@ -52,7 +52,9 @@ class Packages extends AbstractApi
             throw new InvalidArgumentException('Filter "origin" has to be one of: "' . implode('", "', self::AVAILABLE_ORIGINS) . '".');
         }
 
-        return $this->get('/packages/', $filters);
+        $filters = array_merge(['limit' => self::DEFAULT_LIMIT], $filters);
+
+        return $this->getCollection('/packages/', $filters);
     }
 
     public function show($packageIdOrName)
@@ -127,16 +129,18 @@ class Packages extends AbstractApi
 
     public function listCustomers($packageIdOrName)
     {
-        return $this->get(sprintf('/packages/%s/customers/', $packageIdOrName));
+        return $this->get(sprintf('/packages/%s/customers/', $packageIdOrName), ['limit' => self::DEFAULT_LIMIT]);
     }
 
     public function listDependents($packageName)
     {
-        return $this->get(sprintf('/packages/%s/dependents/', $packageName));
+        return $this->get(sprintf('/packages/%s/dependents/', $packageName), ['limit' => self::DEFAULT_LIMIT]);
     }
 
     public function listSecurityIssues($packageIdOrName, array $filters = [])
     {
+        $filters = array_merge(['limit' => self::DEFAULT_LIMIT], $filters);
+
         return $this->get(sprintf('/packages/%s/security-issues/', $packageIdOrName), $filters);
     }
 

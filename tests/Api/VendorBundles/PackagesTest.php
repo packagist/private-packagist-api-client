@@ -10,6 +10,7 @@
 namespace PrivatePackagist\ApiClient\Api\VendorBundles;
 
 use PHPUnit\Framework\MockObject\MockObject;
+use PrivatePackagist\ApiClient\Api\AbstractApi;
 use PrivatePackagist\ApiClient\Api\ApiTestCase;
 use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
 
@@ -29,7 +30,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->identicalTo('/vendor-bundles/1/packages/'))
+            ->with($this->identicalTo('/vendor-bundles/1/packages/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listPackages(1));

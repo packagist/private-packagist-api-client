@@ -39,7 +39,7 @@ class HttpPluginClientBuilder
     public function __construct(
         ?ClientInterface $httpClient = null,
         $requestFactory = null,
-        ?StreamFactoryInterface $streamFactory= null
+        ?StreamFactoryInterface $streamFactory = null
     ) {
         $requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
         if ($requestFactory instanceof RequestFactory) {
@@ -106,5 +106,21 @@ class HttpPluginClientBuilder
             $this->requestFactory,
             $this->streamFactory
         );
+    }
+
+    /**
+     * @return RequestFactory|RequestFactoryInterface
+     */
+    public function getRequestFactory()
+    {
+        return $this->requestFactory;
+    }
+
+    /**
+     * @return StreamFactoryInterface
+     */
+    public function getStreamFactory(): StreamFactoryInterface
+    {
+        return $this->streamFactory;
     }
 }

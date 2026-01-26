@@ -10,6 +10,7 @@
 namespace PrivatePackagist\ApiClient\Api\Suborganizations;
 
 use PHPUnit\Framework\MockObject\MockObject;
+use PrivatePackagist\ApiClient\Api\AbstractApi;
 use PrivatePackagist\ApiClient\Api\ApiTestCase;
 use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
 
@@ -29,7 +30,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/suborganizations/suborganization/packages/'))
+            ->with($this->equalTo('/suborganizations/suborganization/packages/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all($suborganizationName));
@@ -49,11 +50,16 @@ class PackagesTest extends ApiTestCase
             'origin' => \PrivatePackagist\ApiClient\Api\Packages::ORIGIN_PRIVATE,
         ];
 
+        $expectedQueryParams = [
+            'origin' => \PrivatePackagist\ApiClient\Api\Packages::ORIGIN_PRIVATE,
+            'limit' => AbstractApi::DEFAULT_LIMIT,
+        ];
+
         /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/suborganizations/suborganization/packages/'), $this->equalTo($filters))
+            ->with($this->equalTo('/suborganizations/suborganization/packages/'), $this->equalTo($expectedQueryParams))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all($suborganizationName, $filters));
@@ -207,7 +213,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/suborganizations/suborganization/packages/acme-website/core-package/dependents/'))
+            ->with($this->equalTo('/suborganizations/suborganization/packages/acme-website/core-package/dependents/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listDependents($suborganizationName, $packageName));

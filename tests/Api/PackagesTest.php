@@ -26,7 +26,7 @@ class PackagesTest extends ApiTestCase
         /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
+            ->method('getCollection')
             ->with($this->equalTo('/packages/'))
             ->willReturn($expected);
 
@@ -46,11 +46,16 @@ class PackagesTest extends ApiTestCase
             'origin' => Packages::ORIGIN_PRIVATE,
         ];
 
+        $expectedQueryParams = [
+            'origin' => Packages::ORIGIN_PRIVATE,
+            'limit' => AbstractApi::DEFAULT_LIMIT,
+        ];
+
         /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/packages/'), $this->equalTo($filters))
+            ->method('getCollection')
+            ->with($this->equalTo('/packages/'), $this->equalTo($expectedQueryParams))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all($filters));
@@ -273,7 +278,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/packages/composer/composer/customers/'))
+            ->with($this->equalTo('/packages/composer/composer/customers/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listCustomers('composer/composer'));
@@ -293,7 +298,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/packages/acme-website/core-package/dependents/'))
+            ->with($this->equalTo('/packages/acme-website/core-package/dependents/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listDependents($packageName));
@@ -322,7 +327,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/packages/acme-website/core-package/security-issues/'))
+            ->with($this->equalTo('/packages/acme-website/core-package/security-issues/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listSecurityIssues($packageName));

@@ -36,7 +36,7 @@ class TeamsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/teams/'))
+            ->with($this->equalTo('/teams/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all());
@@ -55,7 +55,7 @@ class TeamsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/teams/1/packages/'))
+            ->with($this->equalTo('/teams/1/packages/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->packages(1));
@@ -151,9 +151,6 @@ class TeamsTest extends ApiTestCase
             ->with($this->equalTo('/teams/123/'))
             ->willReturn($expected);
 
-        $permissions = new TeamPermissions;
-        $permissions->canEditTeamPackages = true;
-        $permissions->canViewVendorCustomers = true;
         $this->assertSame($expected, $api->show(123));
     }
 

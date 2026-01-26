@@ -10,6 +10,7 @@
 namespace PrivatePackagist\ApiClient\Api\Customers;
 
 use PHPUnit\Framework\MockObject\MockObject;
+use PrivatePackagist\ApiClient\Api\AbstractApi;
 use PrivatePackagist\ApiClient\Api\ApiTestCase;
 
 class VendorBundlesTest extends ApiTestCase
@@ -27,7 +28,7 @@ class VendorBundlesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/customers/1/vendor-bundles/'))
+            ->with($this->equalTo('/customers/1/vendor-bundles/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listVendorBundles(1));
