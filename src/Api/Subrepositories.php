@@ -18,7 +18,7 @@ class Subrepositories extends AbstractApi
 {
     public function all()
     {
-        return $this->get('/subrepositories/', ['limit' => self::DEFAULT_LIMIT]);
+        return $this->getCollection('/subrepositories/');
     }
 
     public function show($subrepositoryName)
@@ -38,7 +38,7 @@ class Subrepositories extends AbstractApi
 
     public function listTeams($subrepositoryName)
     {
-        return $this->get(sprintf('/subrepositories/%s/teams/', $subrepositoryName), ['limit' => self::DEFAULT_LIMIT]);
+        return $this->getCollection(sprintf('/subrepositories/%s/teams/', $subrepositoryName));
     }
 
     /**
@@ -76,12 +76,12 @@ class Subrepositories extends AbstractApi
     #[\Deprecated('Use Subrepositories::packages()->all() instead', '1.16.1')]
     public function listPackages($subrepositoryName)
     {
-        return $this->packages()->all($subrepositoryName, ['limit' => self::DEFAULT_LIMIT]);
+        return $this->packages()->all($subrepositoryName);
     }
 
     public function listTokens($subrepositoryName)
     {
-        return $this->get(sprintf('/subrepositories/%s/tokens/', $subrepositoryName), ['limit' => self::DEFAULT_LIMIT]);
+        return $this->getCollection(sprintf('/subrepositories/%s/tokens/', $subrepositoryName));
     }
 
     public function createToken($subrepositoryName, array $tokenData)

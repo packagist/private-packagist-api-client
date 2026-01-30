@@ -29,8 +29,8 @@ class VendorBundlesTest extends ApiTestCase
         /** @var VendorBundles&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->identicalTo('/vendor-bundles/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
+            ->method('getCollection')
+            ->with($this->identicalTo('/vendor-bundles/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all());

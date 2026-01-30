@@ -15,7 +15,7 @@ class VendorBundles extends AbstractApi
 {
     public function listVendorBundles($customerIdOrUrlName)
     {
-        return $this->get(sprintf('/customers/%s/vendor-bundles/', $customerIdOrUrlName), ['limit' => self::DEFAULT_LIMIT]);
+        return $this->getCollection(sprintf('/customers/%s/vendor-bundles/', $customerIdOrUrlName));
     }
 
     /**

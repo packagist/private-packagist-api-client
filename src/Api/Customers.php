@@ -16,7 +16,7 @@ class Customers extends AbstractApi
 {
     public function all()
     {
-        return $this->get('/customers/', ['limit' => self::DEFAULT_LIMIT]);
+        return $this->getCollection('/customers/');
     }
 
     public function show($customerIdOrUrlName)
@@ -70,7 +70,7 @@ class Customers extends AbstractApi
 
     public function listPackages($customerIdOrUrlName)
     {
-        return $this->get(sprintf('/customers/%s/packages/', $customerIdOrUrlName), ['limit' => self::DEFAULT_LIMIT]);
+        return $this->getCollection(sprintf('/customers/%s/packages/', $customerIdOrUrlName));
     }
 
     public function showPackage($customerIdOrUrlName, $packageIdOrName)

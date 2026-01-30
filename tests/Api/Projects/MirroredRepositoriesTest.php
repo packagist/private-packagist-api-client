@@ -10,7 +10,6 @@
 namespace PrivatePackagist\ApiClient\Api\Projects;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use PrivatePackagist\ApiClient\Api\AbstractApi;
 use PrivatePackagist\ApiClient\Api\ApiTestCase;
 
 class MirroredRepositoriesTest extends ApiTestCase
@@ -25,8 +24,8 @@ class MirroredRepositoriesTest extends ApiTestCase
         /** @var MirroredRepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/subrepositories/project/mirrored-repositories/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
+            ->method('getCollection')
+            ->with($this->equalTo('/subrepositories/project/mirrored-repositories/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all($projectName));
@@ -108,8 +107,8 @@ class MirroredRepositoriesTest extends ApiTestCase
         /** @var MirroredRepositories&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/subrepositories/project/mirrored-repositories/1/packages/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
+            ->method('getCollection')
+            ->with($this->equalTo('/subrepositories/project/mirrored-repositories/1/packages/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listPackages($projectName, 1));

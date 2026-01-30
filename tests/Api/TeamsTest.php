@@ -35,8 +35,8 @@ class TeamsTest extends ApiTestCase
         /** @var Teams&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/teams/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
+            ->method('getCollection')
+            ->with($this->equalTo('/teams/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all());
@@ -54,8 +54,8 @@ class TeamsTest extends ApiTestCase
         /** @var Teams&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/teams/1/packages/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
+            ->method('getCollection')
+            ->with($this->equalTo('/teams/1/packages/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->packages(1));

@@ -58,9 +58,8 @@ abstract class AbstractApi
      */
     protected function getCollection($path, array $parameters = [], array $headers = [])
     {
-        if (count($parameters) > 0) {
-            $path .= '?'.http_build_query($parameters);
-        }
+        $parameters = array_merge(['limit' => self::DEFAULT_LIMIT], $parameters);
+        $path .= '?'.http_build_query($parameters);
 
         $content = [];
         $nextUrl = $path;

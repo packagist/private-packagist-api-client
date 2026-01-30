@@ -28,8 +28,8 @@ class CustomersTest extends ApiTestCase
         /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/customers/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
+            ->method('getCollection')
+            ->with($this->equalTo('/customers/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all());
@@ -204,8 +204,8 @@ class CustomersTest extends ApiTestCase
         /** @var Customers&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/customers/1/packages/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
+            ->method('getCollection')
+            ->with($this->equalTo('/customers/1/packages/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listPackages(1));

@@ -15,7 +15,7 @@ class Tokens extends AbstractApi
 {
     public function all()
     {
-        return $this->get('/tokens/', ['limit' => self::DEFAULT_LIMIT]);
+        return $this->getCollection('/tokens/');
     }
 
     public function create(array $tokenData)

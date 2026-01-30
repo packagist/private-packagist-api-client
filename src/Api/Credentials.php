@@ -21,7 +21,7 @@ class Credentials extends AbstractApi
 
     public function all()
     {
-        return $this->get('/credentials/', ['limit' => self::DEFAULT_LIMIT]);
+        return $this->getCollection('/credentials/');
     }
 
     public function show($credentialId)

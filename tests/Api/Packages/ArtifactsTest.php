@@ -10,7 +10,6 @@
 namespace PrivatePackagist\ApiClient\Api\Packages;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use PrivatePackagist\ApiClient\Api\AbstractApi;
 use PrivatePackagist\ApiClient\Api\ApiTestCase;
 
 class ArtifactsTest extends ApiTestCase
@@ -88,8 +87,8 @@ class ArtifactsTest extends ApiTestCase
         /** @var Artifacts&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/packages/acme-website/package/artifacts/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
+            ->method('getCollection')
+            ->with($this->equalTo('/packages/acme-website/package/artifacts/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->showPackageArtifacts('acme-website/package'));

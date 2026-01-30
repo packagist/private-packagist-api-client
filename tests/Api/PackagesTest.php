@@ -46,16 +46,11 @@ class PackagesTest extends ApiTestCase
             'origin' => Packages::ORIGIN_PRIVATE,
         ];
 
-        $expectedQueryParams = [
-            'origin' => Packages::ORIGIN_PRIVATE,
-            'limit' => AbstractApi::DEFAULT_LIMIT,
-        ];
-
         /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('getCollection')
-            ->with($this->equalTo('/packages/'), $this->equalTo($expectedQueryParams))
+            ->with($this->equalTo('/packages/'), $this->equalTo($filters))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all($filters));
@@ -277,8 +272,8 @@ class PackagesTest extends ApiTestCase
         /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/packages/composer/composer/customers/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
+            ->method('getCollection')
+            ->with($this->equalTo('/packages/composer/composer/customers/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listCustomers('composer/composer'));
@@ -297,8 +292,8 @@ class PackagesTest extends ApiTestCase
         /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/packages/acme-website/core-package/dependents/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
+            ->method('getCollection')
+            ->with($this->equalTo('/packages/acme-website/core-package/dependents/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listDependents($packageName));
@@ -326,8 +321,8 @@ class PackagesTest extends ApiTestCase
         /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/packages/acme-website/core-package/security-issues/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
+            ->method('getCollection')
+            ->with($this->equalTo('/packages/acme-website/core-package/security-issues/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listSecurityIssues($packageName));

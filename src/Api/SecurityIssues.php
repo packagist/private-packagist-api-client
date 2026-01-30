@@ -48,9 +48,7 @@ class SecurityIssues extends AbstractApi
 
     public function all(array $filters = [])
     {
-        $filters = array_merge(['limit' => self::DEFAULT_LIMIT], $filters);
-
-        return $this->get('/security-issues/', $filters);
+        return $this->getCollection('/security-issues/', $filters);
     }
 
     public function show(int $issueId): array

@@ -22,8 +22,8 @@ class SuborganizationsTest extends ApiTestCase
         /** @var Suborganizations&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/suborganizations/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
+            ->method('getCollection')
+            ->with($this->equalTo('/suborganizations/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all());
@@ -88,8 +88,8 @@ class SuborganizationsTest extends ApiTestCase
         /** @var Suborganizations&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/suborganizations/suborganization/teams/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
+            ->method('getCollection')
+            ->with($this->equalTo('/suborganizations/suborganization/teams/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listTeams('suborganization'));
@@ -149,8 +149,8 @@ class SuborganizationsTest extends ApiTestCase
         /** @var Suborganizations&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/suborganizations/suborganization/tokens/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
+            ->method('getCollection')
+            ->with($this->equalTo('/suborganizations/suborganization/tokens/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listTokens('suborganization'));
