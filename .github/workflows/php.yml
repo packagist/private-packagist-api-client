@@ -40,7 +40,7 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: PHPUnit
-        run: ./vendor/bin/phpunit tests
+        run: ./vendor/bin/phpunit
 
       - name: PHP-CS-Fixer
         run: ./vendor/bin/php-cs-fixer fix --dry-run --diff
@@ -48,4 +48,4 @@ jobs:
           PHP_CS_FIXER_IGNORE_ENV: 1
 
       - name: PHPStan
-        run: ./vendor/bin/phpstan analyze src --no-progress
+        run: ./vendor/bin/phpstan analyze --no-progress
