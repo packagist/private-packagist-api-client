@@ -15,7 +15,7 @@ class MagentoLegacyKeys extends AbstractApi
 {
     public function all($customerIdOrUrlName)
     {
-        return $this->get(sprintf('/api/customers/%s/magento-legacy-keys/', $customerIdOrUrlName), ['limit' => self::DEFAULT_LIMIT]);
+        return $this->getCollection(sprintf('/api/customers/%s/magento-legacy-keys/', $customerIdOrUrlName));
     }
 
     public function create($customerIdOrUrlName, $publicKey, $privateKey)

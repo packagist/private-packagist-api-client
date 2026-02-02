@@ -34,7 +34,7 @@ class SecurityIssuesTest extends ApiTestCase
         /** @var SecurityIssues&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
+            ->method('getCollection')
             ->with($this->equalTo('/security-issues/'))
             ->willReturn($expected);
 
@@ -63,16 +63,11 @@ class SecurityIssuesTest extends ApiTestCase
             'security-issue-state' => SecurityIssues::STATE_OPEN,
         ];
 
-        $expectedQueryParams = [
-            'security-issue-state' => SecurityIssues::STATE_OPEN,
-            'limit' => AbstractApi::DEFAULT_LIMIT,
-        ];
-
         /** @var SecurityIssues&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/security-issues/'), $this->equalTo($expectedQueryParams))
+            ->method('getCollection')
+            ->with($this->equalTo('/security-issues/'), $this->equalTo($filters))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all($filters));

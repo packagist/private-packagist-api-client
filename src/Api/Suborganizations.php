@@ -15,7 +15,7 @@ class Suborganizations extends AbstractApi
 {
     public function all()
     {
-        return $this->get('/suborganizations/', ['limit' => self::DEFAULT_LIMIT]);
+        return $this->getCollection('/suborganizations/');
     }
 
     public function show($suborganizationName)
@@ -35,7 +35,7 @@ class Suborganizations extends AbstractApi
 
     public function listTeams($suborganizationName)
     {
-        return $this->get(sprintf('/suborganizations/%s/teams/', $suborganizationName), ['limit' => self::DEFAULT_LIMIT]);
+        return $this->getCollection(sprintf('/suborganizations/%s/teams/', $suborganizationName));
     }
 
     public function addOrEditTeams($suborganizationName, array $teams)
@@ -60,7 +60,7 @@ class Suborganizations extends AbstractApi
 
     public function listTokens($suborganizationName)
     {
-        return $this->get(sprintf('/suborganizations/%s/tokens/', $suborganizationName), ['limit' => self::DEFAULT_LIMIT]);
+        return $this->getCollection(sprintf('/suborganizations/%s/tokens/', $suborganizationName));
     }
 
     public function createToken($suborganizationName, array $tokenData)

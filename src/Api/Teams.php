@@ -15,7 +15,7 @@ class Teams extends AbstractApi
 {
     public function all()
     {
-        return $this->get('/teams/', ['limit' => self::DEFAULT_LIMIT]);
+        return $this->getCollection('/teams/');
     }
 
     public function create(string $name, TeamPermissions $permissions): array
@@ -82,7 +82,7 @@ class Teams extends AbstractApi
 
     public function packages($teamId)
     {
-        return $this->get(sprintf('/teams/%s/packages/', $teamId), ['limit' => self::DEFAULT_LIMIT]);
+        return $this->getCollection(sprintf('/teams/%s/packages/', $teamId));
     }
 
     public function addPackages($teamId, array $packages)

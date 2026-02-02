@@ -10,7 +10,6 @@
 namespace PrivatePackagist\ApiClient\Api\Projects;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use PrivatePackagist\ApiClient\Api\AbstractApi;
 use PrivatePackagist\ApiClient\Api\ApiTestCase;
 use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
 
@@ -29,8 +28,8 @@ class PackagesTest extends ApiTestCase
         /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/subrepositories/project/packages/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
+            ->method('getCollection')
+            ->with($this->equalTo('/subrepositories/project/packages/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all($projectName));
@@ -50,16 +49,11 @@ class PackagesTest extends ApiTestCase
             'origin' => \PrivatePackagist\ApiClient\Api\Packages::ORIGIN_PRIVATE,
         ];
 
-        $expectedQueryParams = [
-            'origin' => \PrivatePackagist\ApiClient\Api\Packages::ORIGIN_PRIVATE,
-            'limit' => AbstractApi::DEFAULT_LIMIT,
-        ];
-
         /** @var Packages&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/subrepositories/project/packages/'), $this->equalTo($expectedQueryParams))
+            ->method('getCollection')
+            ->with($this->equalTo('/subrepositories/project/packages/'), $this->equalTo($filters))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all($projectName, $filters));

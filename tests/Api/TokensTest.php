@@ -30,8 +30,8 @@ class TokensTest extends ApiTestCase
         /** @var Tokens&MockObject $api */
         $api = $this->getApiMock();
         $api->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/tokens/'), $this->identicalTo(['limit' => AbstractApi::DEFAULT_LIMIT]))
+            ->method('getCollection')
+            ->with($this->equalTo('/tokens/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->all());

@@ -25,9 +25,7 @@ class Packages extends AbstractApi
             throw new InvalidArgumentException('Filter "origin" has to be one of: "' . implode('", "', \PrivatePackagist\ApiClient\Api\Packages::AVAILABLE_ORIGINS) . '".');
         }
 
-        $filters = array_merge(['limit' => self::DEFAULT_LIMIT], $filters);
-
-        return $this->get(sprintf('/subrepositories/%s/packages/', $subrepositoryName), $filters);
+        return $this->getCollection(sprintf('/subrepositories/%s/packages/', $subrepositoryName), $filters);
     }
 
     public function show($subrepositoryName, $packageIdOrName)
@@ -70,6 +68,6 @@ class Packages extends AbstractApi
 
     public function listDependents($subrepositoryName, $packageIdOrName)
     {
-        return $this->get(sprintf('/subrepositories/%s/packages/%s/dependents/', $subrepositoryName, $packageIdOrName), ['limit' => self::DEFAULT_LIMIT]);
+        return $this->getCollection(sprintf('/subrepositories/%s/packages/%s/dependents/', $subrepositoryName, $packageIdOrName));
     }
 }
