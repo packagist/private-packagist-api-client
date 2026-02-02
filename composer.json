@@ -35,6 +35,9 @@
         "psr-4": { "PrivatePackagist\\ApiClient\\": "tests/"}
     },
     "scripts": {
+        "analyze": "phpstan analyze --no-progress",
+        "cs-fix": "php-cs-fixer fix",
+        "test": "phpunit",
         "toc": "./gh-md-toc --insert README.md"
     },
     "config": {
