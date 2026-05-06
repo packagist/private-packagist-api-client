@@ -10,6 +10,7 @@
 namespace PrivatePackagist\ApiClient\HttpClient\Plugin;
 
 use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\RequestInterface;
 
 class RequestSignatureTest extends PluginTestCase
 {
@@ -39,7 +40,7 @@ class RequestSignatureTest extends PluginTestCase
             'POST',
             '/packages/?foo=bar',
             [
-                'Authorization' => ["PACKAGIST-HMAC-SHA256 Key={$this->key}, Timestamp={$this->timestamp}, Cnonce={$this->nonce}, Signature=a6wxBLYrmz4Mwmv/TKBZR5WHFcSCRbsny2frobJMt24="],
+                'Authorization' => ["PACKAGIST-HMAC-SHA256 Key={$this->key}, Timestamp={$this->timestamp}, Cnonce={$this->nonce}, Version=2, Signature=ktD+pXXy+JCEAq9LJuq735Xe2tN3soymwdQlwHgsbmM="],
             ],
             json_encode(['foo' => 'bar'])
         );
@@ -47,6 +48,101 @@ class RequestSignatureTest extends PluginTestCase
         $promise = $this->plugin->handleRequest($request, $this->next, $this->first);
 
         $this->assertEquals($expected->getHeaders(), $promise->wait(true)->getHeaders());
+    }
+
+    public function testSignatureCoversQueryString()
+    {
+        $requestA = new Request('GET', '/packages/?page=1&limit=10');
+        $requestB = new Request('GET', '/packages/?page=2&limit=10');
+
+        $signatureA = $this->extractSignature($this->plugin->handleRequest($requestA, $this->next, $this->first)->wait(true));
+        $signatureB = $this->extractSignature($this->plugin->handleRequest($requestB, $this->next, $this->first)->wait(true));
+
+        $this->assertNotSame($signatureA, $signatureB);
+    }
+
+    public function testSignatureIgnoresQueryParamOrder()
+    {
+        $requestA = new Request('GET', '/packages/?page=1&limit=10');
+        $requestB = new Request('GET', '/packages/?limit=10&page=1');
+
+        $signatureA = $this->extractSignature($this->plugin->handleRequest($requestA, $this->next, $this->first)->wait(true));
+        $signatureB = $this->extractSignature($this->plugin->handleRequest($requestB, $this->next, $this->first)->wait(true));
+
+        $this->assertSame($signatureA, $signatureB);
+    }
+
+    public function testQueryParamCannotOverrideAuthField()
+    {
+        $withoutTamper = new Request('GET', '/packages/');
+        $withTamper = new Request('GET', '/packages/?key=evil&version=1&signature=evil');
+
+        $signatureA = $this->extractSignature($this->plugin->handleRequest($withoutTamper, $this->next, $this->first)->wait(true));
+        $signatureB = $this->extractSignature($this->plugin->handleRequest($withTamper, $this->next, $this->first)->wait(true));
+
+        $this->assertSame($signatureA, $signatureB);
+    }
+
+    public function testEmptyQueryStringMatchesNoQueryString()
+    {
+        $withoutQuery = new Request('GET', '/packages/');
+        $withEmptyQuery = new Request('GET', '/packages/?');
+
+        $signatureA = $this->extractSignature($this->plugin->handleRequest($withoutQuery, $this->next, $this->first)->wait(true));
+        $signatureB = $this->extractSignature($this->plugin->handleRequest($withEmptyQuery, $this->next, $this->first)->wait(true));
+
+        $this->assertSame($signatureA, $signatureB);
+    }
+
+    public function testEmptyValueQueryParamIsSigned()
+    {
+        $withoutParam = new Request('GET', '/packages/');
+        $withEmptyValue = new Request('GET', '/packages/?foo=');
+        $withValuelessParam = new Request('GET', '/packages/?foo');
+
+        $baseline = $this->extractSignature($this->plugin->handleRequest($withoutParam, $this->next, $this->first)->wait(true));
+        $emptyValue = $this->extractSignature($this->plugin->handleRequest($withEmptyValue, $this->next, $this->first)->wait(true));
+        $valueless = $this->extractSignature($this->plugin->handleRequest($withValuelessParam, $this->next, $this->first)->wait(true));
+
+        // The param participates in the signature even with an empty value
+        $this->assertNotSame($baseline, $emptyValue);
+        // ?foo and ?foo= parse identically in PHP — must sign identically
+        $this->assertSame($emptyValue, $valueless);
+    }
+
+    public function testUrlEncodingIsCanonical()
+    {
+        // %20 (percent-encoded space) and + (form-encoded space) must decode
+        // to the same value and therefore sign identically.
+        $percent = new Request('GET', '/packages/?foo=hello%20world');
+        $plus = new Request('GET', '/packages/?foo=hello+world');
+
+        $signaturePercent = $this->extractSignature($this->plugin->handleRequest($percent, $this->next, $this->first)->wait(true));
+        $signaturePlus = $this->extractSignature($this->plugin->handleRequest($plus, $this->next, $this->first)->wait(true));
+
+        $this->assertSame($signaturePercent, $signaturePlus);
+    }
+
+    public function testV2GetDeterministicSignature()
+    {
+        // Fixed reference vector: the server repo has a matching test asserting the same
+        // signature for the same inputs. If either side's algorithm drifts, both tests break.
+        $request = new Request('GET', 'https://example.com/api/packages/?limit=1&page=2');
+        $expected = "PACKAGIST-HMAC-SHA256 Key={$this->key}, Timestamp={$this->timestamp}, Cnonce={$this->nonce}, Version=2, Signature=";
+
+        $actual = $this->plugin->handleRequest($request, $this->next, $this->first)->wait(true)->getHeader('Authorization')[0];
+
+        $this->assertStringStartsWith($expected, $actual);
+        // Exact signature bytes — must match server test in private-packagist repo
+        $this->assertStringEndsWith('Signature=K2K5pvOobioNvIvAyOvjowOpIiKucdo/oGWZXKYDiqM=', $actual);
+    }
+
+    private function extractSignature(RequestInterface $request)
+    {
+        $header = $request->getHeader('Authorization')[0];
+        preg_match('/Signature=([^,]+)/', $header, $matches);
+
+        return $matches[1];
     }
 
     public function testPrefixRequestPathSmoke()
