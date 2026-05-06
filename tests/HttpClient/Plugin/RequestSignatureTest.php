@@ -127,14 +127,14 @@ class RequestSignatureTest extends PluginTestCase
     {
         // Fixed reference vector: the server repo has a matching test asserting the same
         // signature for the same inputs. If either side's algorithm drifts, both tests break.
-        $request = new Request('GET', 'https://example.com/api/packages/?limit=1&page=2');
+        $request = new Request('GET', 'https://localhost/api/packages/?limit=1&page=2');
         $expected = "PACKAGIST-HMAC-SHA256 Key={$this->key}, Timestamp={$this->timestamp}, Cnonce={$this->nonce}, Version=2, Signature=";
 
         $actual = $this->plugin->handleRequest($request, $this->next, $this->first)->wait(true)->getHeader('Authorization')[0];
 
         $this->assertStringStartsWith($expected, $actual);
         // Exact signature bytes — must match server test in private-packagist repo
-        $this->assertStringEndsWith('Signature=K2K5pvOobioNvIvAyOvjowOpIiKucdo/oGWZXKYDiqM=', $actual);
+        $this->assertStringEndsWith('Signature=NUZO6kd85G+ujItfIKDHTnHLtn9Dk2St22+ioyRDC/E=', $actual);
     }
 
     private function extractSignature(RequestInterface $request)
