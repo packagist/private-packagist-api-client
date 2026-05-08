@@ -9,7 +9,6 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
-use Composer\Pcre\Preg;
 use PrivatePackagist\ApiClient\Client;
 use PrivatePackagist\ApiClient\HttpClient\Message\ResponseMediator;
 
@@ -179,7 +178,7 @@ abstract class AbstractApi
     private function parseLinkHeader(string $header, string $type): ?string
     {
         foreach (explode(',', $header) as $relation) {
-            if (Preg::isMatch('/<(.*)>; rel="(.*)"/i', \trim($relation, ','), $match)) {
+            if (preg_match('/<(.*)>; rel="(.*)"/i', \trim($relation, ','), $match) === 1) {
                 /** @var string[] $match */
                 if (3 === count($match) && $match[2] === $type) {
                     return $match[1];
