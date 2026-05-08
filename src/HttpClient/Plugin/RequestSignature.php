@@ -16,6 +16,8 @@ class RequestSignature implements Plugin
 {
     use Plugin\VersionBridgePlugin;
 
+    const SIGNATURE_VERSION = '2';
+
     /** @var string */
     private $key;
     /** @var string */
@@ -48,6 +50,8 @@ class RequestSignature implements Plugin
             'key' => $this->key,
             'timestamp' => $this->getTimestamp(),
             'cnonce' => $this->getNonce(),
+            'version' => self::SIGNATURE_VERSION,
+            'query' => $this->normalizeQueryString($request->getUri()->getQuery()),
         ];
 
         $content = (string) $request->getBody();
@@ -56,10 +60,11 @@ class RequestSignature implements Plugin
         }
 
         $request = $request->withHeader('Authorization', sprintf(
-            'PACKAGIST-HMAC-SHA256 Key=%s, Timestamp=%s, Cnonce=%s, Signature=%s',
+            'PACKAGIST-HMAC-SHA256 Key=%s, Timestamp=%s, Cnonce=%s, Version=%s, Signature=%s',
             $params['key'],
             $params['timestamp'],
             $params['cnonce'],
+            $params['version'],
             $this->generateSignature($request, $params)
         ));
 
@@ -93,5 +98,22 @@ class RequestSignature implements Plugin
         uksort($params, 'strcmp');
 
         return http_build_query($params, '', '&', PHP_QUERY_RFC3986);
+    }
+
+    /**
+     * @param string $queryString
+     * @return string
+     */
+    private function normalizeQueryString($queryString)
+    {
+        if ($queryString === '') {
+            return '';
+        }
+
+        $queryParams = [];
+        parse_str($queryString, $queryParams);
+        uksort($queryParams, 'strcmp');
+
+        return http_build_query($queryParams, '', '&', PHP_QUERY_RFC3986);
     }
 }
