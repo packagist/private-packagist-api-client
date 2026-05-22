@@ -213,6 +213,24 @@ class PackagesTest extends ApiTestCase
         $this->assertSame($expected, $api->editCustomPackage($suborganizationName, 'acme-website/package', '{}'));
     }
 
+    public function testEditArtifactPackage()
+    {
+        $suborganizationName = 'suborganization';
+        $expected = [
+            'id' => 'job-id',
+            'status' => 'queued',
+        ];
+
+        /** @var Packages&MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('put')
+            ->with($this->equalTo('/suborganizations/suborganization/packages/acme-website/package/'), $this->equalTo(['repoType' => 'artifact', 'artifactIds' => [1, 3]]))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->editArtifactPackage($suborganizationName, 'acme-website/package', [1, 3]));
+    }
+
     public function testRemove()
     {
         $suborganizationName = 'suborganization';
