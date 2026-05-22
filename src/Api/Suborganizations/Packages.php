@@ -11,6 +11,7 @@ namespace PrivatePackagist\ApiClient\Api\Suborganizations;
 
 use PrivatePackagist\ApiClient\Api\AbstractApi;
 use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
+use PrivatePackagist\ApiClient\Payload\ArtifactPackageConfig;
 use PrivatePackagist\ApiClient\Payload\CustomPackageConfig;
 use PrivatePackagist\ApiClient\Payload\VcsPackageConfig;
 
@@ -40,6 +41,13 @@ class Packages extends AbstractApi
     public function createCustomPackage($suborganizationName, $customJson, $credentialId = null, $defaultSuborganizationAccess = null)
     {
         $data = new CustomPackageConfig($customJson, $credentialId, $defaultSuborganizationAccess);
+
+        return $this->post(sprintf('/suborganizations/%s/packages/', $suborganizationName), $data->toParameters());
+    }
+
+    public function createArtifactPackage($suborganizationName, array $artifactPackageFileIds, $defaultSubrepositoryAccess = null)
+    {
+        $data = new ArtifactPackageConfig($artifactPackageFileIds, $defaultSubrepositoryAccess);
 
         return $this->post(sprintf('/suborganizations/%s/packages/', $suborganizationName), $data->toParameters());
     }
