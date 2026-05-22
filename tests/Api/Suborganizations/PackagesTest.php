@@ -159,7 +159,7 @@ class PackagesTest extends ApiTestCase
         $this->assertSame($expected, $api->createArtifactPackage($suborganizationName, [42]));
     }
 
-    public function testCreateArtifactPackageWithDefaultSubrepositoryAccess()
+    public function testCreateArtifactPackageWithDefaultSuborganizationAccess()
     {
         $suborganizationName = 'suborganization';
         $expected = [
@@ -171,7 +171,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
-            ->with($this->equalTo('/suborganizations/suborganization/packages/'), $this->equalTo(['repoType' => 'artifact', 'artifactIds' => [42], 'defaultSubrepositoryAccess' => 'no-access']))
+            ->with($this->equalTo('/suborganizations/suborganization/packages/'), $this->equalTo(['repoType' => 'artifact', 'artifactIds' => [42], 'defaultSuborganizationAccess' => 'no-access']))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->createArtifactPackage($suborganizationName, [42], 'no-access'));
