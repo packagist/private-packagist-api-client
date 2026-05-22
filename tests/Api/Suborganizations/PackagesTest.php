@@ -141,6 +141,42 @@ class PackagesTest extends ApiTestCase
         ];
     }
 
+    public function testCreateArtifactPackage()
+    {
+        $suborganizationName = 'suborganization';
+        $expected = [
+            'id' => 'job-id',
+            'status' => 'queued',
+        ];
+
+        /** @var Packages&MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('post')
+            ->with($this->equalTo('/suborganizations/suborganization/packages/'), $this->equalTo(['repoType' => 'artifact', 'artifactIds' => [42]]))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->createArtifactPackage($suborganizationName, [42]));
+    }
+
+    public function testCreateArtifactPackageWithDefaultSubrepositoryAccess()
+    {
+        $suborganizationName = 'suborganization';
+        $expected = [
+            'id' => 'job-id',
+            'status' => 'queued',
+        ];
+
+        /** @var Packages&MockObject $api */
+        $api = $this->getApiMock();
+        $api->expects($this->once())
+            ->method('post')
+            ->with($this->equalTo('/suborganizations/suborganization/packages/'), $this->equalTo(['repoType' => 'artifact', 'artifactIds' => [42], 'defaultSubrepositoryAccess' => 'no-access']))
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $api->createArtifactPackage($suborganizationName, [42], 'no-access'));
+    }
+
     public function testEditVcsPackage()
     {
         $suborganizationName = 'suborganization';

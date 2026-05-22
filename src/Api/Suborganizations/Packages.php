@@ -10,6 +10,7 @@
 namespace PrivatePackagist\ApiClient\Api\Suborganizations;
 
 use PrivatePackagist\ApiClient\Api\AbstractApi;
+use PrivatePackagist\ApiClient\Api\Suborganizations\Packages\Artifacts;
 use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
 use PrivatePackagist\ApiClient\Payload\ArtifactPackageConfig;
 use PrivatePackagist\ApiClient\Payload\CustomPackageConfig;
@@ -74,5 +75,10 @@ class Packages extends AbstractApi
     public function listDependents($suborganizationName, $packageIdOrName)
     {
         return $this->getCollection(sprintf('/suborganizations/%s/packages/%s/dependents/', $suborganizationName, $packageIdOrName));
+    }
+
+    public function artifacts()
+    {
+        return new Artifacts($this->client, $this->client->getResponseMediator());
     }
 }
