@@ -67,9 +67,9 @@ class Packages extends AbstractApi
         return $this->put(sprintf('/suborganizations/%s/packages/%s/', $suborganizationName, $packageIdOrName), $data->toParameters());
     }
 
-    public function editArtifactPackage($suborganizationName, $packageIdOrName, array $artifactPackageFileIds, $defaultSuborganizationAccess = null)
+    public function editArtifactPackage($suborganizationName, $packageIdOrName, array $artifactPackageFileIds)
     {
-        $data = new ArtifactPackageConfig($artifactPackageFileIds, $defaultSuborganizationAccess);
+        $data = new ArtifactPackageConfig($artifactPackageFileIds, null);
 
         return $this->put(sprintf('/suborganizations/%s/packages/%s/', $suborganizationName, $packageIdOrName), $data->toParameters());
     }
