@@ -33,30 +33,30 @@ class Packages extends AbstractApi
         return $this->get(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageIdOrName));
     }
 
-    public function createVcsPackage($subrepositoryName, $url, $credentialId = null, $type = 'vcs', $defaultSubrepositoryAccess = null)
+    public function createVcsPackage($subrepositoryName, $url, $credentialId = null, $type = 'vcs', $defaultSuborganizationAccess = null)
     {
-        $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSubrepositoryAccess);
+        $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSuborganizationAccess);
 
         return $this->post(sprintf('/subrepositories/%s/packages/', $subrepositoryName), $data->toParameters());
     }
 
-    public function createCustomPackage($subrepositoryName, $customJson, $credentialId = null, $defaultSubrepositoryAccess = null)
+    public function createCustomPackage($subrepositoryName, $customJson, $credentialId = null, $defaultSuborganizationAccess = null)
     {
-        $data = new CustomPackageConfig($customJson, $credentialId, $defaultSubrepositoryAccess);
+        $data = new CustomPackageConfig($customJson, $credentialId, $defaultSuborganizationAccess);
 
         return $this->post(sprintf('/subrepositories/%s/packages/', $subrepositoryName), $data->toParameters());
     }
 
-    public function editVcsPackage($subrepositoryName, $packageIdOrName, $url, $credentialId = null, $type = 'vcs', $defaultSubrepositoryAccess = null)
+    public function editVcsPackage($subrepositoryName, $packageIdOrName, $url, $credentialId = null, $type = 'vcs', $defaultSuborganizationAccess = null)
     {
-        $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSubrepositoryAccess);
+        $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSuborganizationAccess);
 
         return $this->put(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageIdOrName), $data->toParameters());
     }
 
-    public function editCustomPackage($subrepositoryName, $packageIdOrName, $customJson, $credentialId = null, $defaultSubrepositoryAccess = null)
+    public function editCustomPackage($subrepositoryName, $packageIdOrName, $customJson, $credentialId = null, $defaultSuborganizationAccess = null)
     {
-        $data = new CustomPackageConfig($customJson, $credentialId, $defaultSubrepositoryAccess);
+        $data = new CustomPackageConfig($customJson, $credentialId, $defaultSuborganizationAccess);
 
         return $this->put(sprintf('/subrepositories/%s/packages/%s/', $subrepositoryName, $packageIdOrName), $data->toParameters());
     }

@@ -60,23 +60,23 @@ class Packages extends AbstractApi
         return $this->get(sprintf('/packages/%s/', $packageIdOrName));
     }
 
-    public function createVcsPackage($url, $credentialId = null, $type = 'vcs', $defaultSubrepositoryAccess = null)
+    public function createVcsPackage($url, $credentialId = null, $type = 'vcs', $defaultSuborganizationAccess = null)
     {
-        $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSubrepositoryAccess);
+        $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSuborganizationAccess);
 
         return $this->post('/packages/', $data->toParameters());
     }
 
-    public function createCustomPackage($customJson, $credentialId = null, $defaultSubrepositoryAccess = null)
+    public function createCustomPackage($customJson, $credentialId = null, $defaultSuborganizationAccess = null)
     {
-        $data = new CustomPackageConfig($customJson, $credentialId, $defaultSubrepositoryAccess);
+        $data = new CustomPackageConfig($customJson, $credentialId, $defaultSuborganizationAccess);
 
         return $this->post('/packages/', $data->toParameters());
     }
 
-    public function createArtifactPackage(array $artifactPackageFileIds, $defaultSubrepositoryAccess = null)
+    public function createArtifactPackage(array $artifactPackageFileIds, $defaultSuborganizationAccess = null)
     {
-        $data = new ArtifactPackageConfig($artifactPackageFileIds, $defaultSubrepositoryAccess);
+        $data = new ArtifactPackageConfig($artifactPackageFileIds, $defaultSuborganizationAccess);
 
         return $this->post('/packages/', $data->toParameters());
     }
@@ -90,16 +90,16 @@ class Packages extends AbstractApi
         return $this->editVcsPackage($packageName, $url, $credentialId);
     }
 
-    public function editVcsPackage($packageIdOrName, $url, $credentialId = null, $type = 'vcs', $defaultSubrepositoryAccess = null)
+    public function editVcsPackage($packageIdOrName, $url, $credentialId = null, $type = 'vcs', $defaultSuborganizationAccess = null)
     {
-        $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSubrepositoryAccess);
+        $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSuborganizationAccess);
 
         return $this->put(sprintf('/packages/%s/', $packageIdOrName), $data->toParameters());
     }
 
-    public function editArtifactPackage($packageIdOrName, array $artifactPackageFileIds, $defaultSubrepositoryAccess = null)
+    public function editArtifactPackage($packageIdOrName, array $artifactPackageFileIds, $defaultSuborganizationAccess = null)
     {
-        $data = new ArtifactPackageConfig($artifactPackageFileIds, $defaultSubrepositoryAccess);
+        $data = new ArtifactPackageConfig($artifactPackageFileIds, $defaultSuborganizationAccess);
 
         return $this->put(sprintf('/packages/%s/', $packageIdOrName), $data->toParameters());
     }
@@ -113,9 +113,9 @@ class Packages extends AbstractApi
         return $this->editCustomPackage($packageName, $customJson, $credentialId);
     }
 
-    public function editCustomPackage($packageIdOrName, $customJson, $credentialId = null, $defaultSubrepositoryAccess = null)
+    public function editCustomPackage($packageIdOrName, $customJson, $credentialId = null, $defaultSuborganizationAccess = null)
     {
-        $data = new CustomPackageConfig($customJson, $credentialId, $defaultSubrepositoryAccess);
+        $data = new CustomPackageConfig($customJson, $credentialId, $defaultSuborganizationAccess);
 
         return $this->put(sprintf('/packages/%s/', $packageIdOrName), $data->toParameters());
     }

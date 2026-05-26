@@ -18,20 +18,20 @@ class ArtifactPackageConfig
     /** @var int[] */
     private $artifactPackageFileIds;
     /** @var ?string */
-    private $defaultSubrepositoryAccess;
+    private $defaultSuborganizationAccess;
 
     /**
      * @param int[] $artifactPackageFileIds
-     * @param ?string $defaultSubrepositoryAccess
+     * @param ?string $defaultSuborganizationAccess
      */
-    public function __construct(array $artifactPackageFileIds, $defaultSubrepositoryAccess)
+    public function __construct(array $artifactPackageFileIds, $defaultSuborganizationAccess)
     {
         $this->artifactPackageFileIds = $artifactPackageFileIds;
-        $this->defaultSubrepositoryAccess = $defaultSubrepositoryAccess;
+        $this->defaultSuborganizationAccess = $defaultSuborganizationAccess;
     }
 
     /**
-     * @return array{repoType: string, artifactIds: int[], defaultSubrepositoryAccess?: string}
+     * @return array{repoType: string, artifactIds: int[], defaultSuborganizationAccess?: string}
      */
     public function toParameters(): array
     {
@@ -40,8 +40,8 @@ class ArtifactPackageConfig
             'artifactIds' => $this->artifactPackageFileIds,
         ];
 
-        if ($this->defaultSubrepositoryAccess) {
-            $data['defaultSubrepositoryAccess'] = $this->defaultSubrepositoryAccess;
+        if ($this->defaultSuborganizationAccess) {
+            $data['defaultSuborganizationAccess'] = $this->defaultSuborganizationAccess;
         }
 
         return $data;
