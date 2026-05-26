@@ -20,14 +20,14 @@ class CustomPackageConfig
     /** @var ?int */
     private $credentialId;
     /** @var ?string */
-    private $defaultSubrepositoryAccess;
+    private $defaultSuborganizationAccess;
 
     /**
      * @param string|array|object $customJson
      * @param ?int $credentialId
-     * @param ?string $defaultSubrepositoryAccess
+     * @param ?string $defaultSuborganizationAccess
      */
-    public function __construct($customJson, $credentialId, $defaultSubrepositoryAccess)
+    public function __construct($customJson, $credentialId, $defaultSuborganizationAccess)
     {
         if (is_array($customJson) || is_object($customJson)) {
             $customJson = json_encode($customJson);
@@ -35,11 +35,11 @@ class CustomPackageConfig
 
         $this->customJson = $customJson;
         $this->credentialId = $credentialId;
-        $this->defaultSubrepositoryAccess = $defaultSubrepositoryAccess;
+        $this->defaultSuborganizationAccess = $defaultSuborganizationAccess;
     }
 
     /**
-     * @return array{repoType: string, repoConfig: string, credentials: ?int, defaultSubrepositoryAccess?: string}
+     * @return array{repoType: string, repoConfig: string, credentials: ?int, defaultSuborganizationAccess?: string}
      */
     public function toParameters(): array
     {
@@ -49,8 +49,8 @@ class CustomPackageConfig
             'credentials' => $this->credentialId,
         ];
 
-        if ($this->defaultSubrepositoryAccess) {
-            $data['defaultSubrepositoryAccess'] = $this->defaultSubrepositoryAccess;
+        if ($this->defaultSuborganizationAccess) {
+            $data['defaultSuborganizationAccess'] = $this->defaultSuborganizationAccess;
         }
 
         return $data;

@@ -106,7 +106,7 @@ class PackagesTest extends ApiTestCase
         $this->assertSame($expected, $api->createVcsPackage('localhost'));
     }
 
-    public function testCreateVcsPackageWithDefaultSubrepositoryAccess()
+    public function testCreateVcsPackageWithDefaultSuborganizationAccess()
     {
         $expected = [
             'id' => 'job-id',
@@ -117,7 +117,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
-            ->with($this->equalTo('/packages/'), $this->equalTo(['repoType' => 'vcs', 'repoUrl' => 'localhost', 'credentials' => null, 'defaultSubrepositoryAccess' => 'no-access']))
+            ->with($this->equalTo('/packages/'), $this->equalTo(['repoType' => 'vcs', 'repoUrl' => 'localhost', 'credentials' => null, 'defaultSuborganizationAccess' => 'no-access']))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->createVcsPackage('localhost', null, 'vcs', 'no-access'));
@@ -126,7 +126,7 @@ class PackagesTest extends ApiTestCase
     /**
      * @dataProvider customProvider
      */
-    public function testCreateCustomPackage($customJson, $defaultSubrepositoryAccess, array $expectedPayload)
+    public function testCreateCustomPackage($customJson, $defaultSuborganizationAccess, array $expectedPayload)
     {
         $expected = [
             'id' => 'job-id',
@@ -140,7 +140,7 @@ class PackagesTest extends ApiTestCase
             ->with($this->equalTo('/packages/'), $this->equalTo($expectedPayload))
             ->willReturn($expected);
 
-        $this->assertSame($expected, $api->createCustomPackage($customJson, null, $defaultSubrepositoryAccess));
+        $this->assertSame($expected, $api->createCustomPackage($customJson, null, $defaultSuborganizationAccess));
     }
 
     public function customProvider()
@@ -149,11 +149,11 @@ class PackagesTest extends ApiTestCase
             ['{}', null, ['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null]],
             [new \stdClass(), null, ['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null]],
             [[], null, ['repoType' => 'package', 'repoConfig' => '[]', 'credentials' => null]],
-            ['{}', 'no-access', ['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null, 'defaultSubrepositoryAccess' => 'no-access']],
+            ['{}', 'no-access', ['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null, 'defaultSuborganizationAccess' => 'no-access']],
         ];
     }
 
-    public function testCreateArtifactPackageWithDefaultSubrepositoryAccess()
+    public function testCreateArtifactPackageWithDefaultSuborganizationAccess()
     {
         $expected = [
             'id' => 'job-id',
@@ -164,7 +164,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('post')
-            ->with($this->equalTo('/packages/'), $this->equalTo(['repoType' => 'artifact', 'artifactIds' => [42], 'defaultSubrepositoryAccess' => 'no-access']))
+            ->with($this->equalTo('/packages/'), $this->equalTo(['repoType' => 'artifact', 'artifactIds' => [42], 'defaultSuborganizationAccess' => 'no-access']))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->createArtifactPackage([42], 'no-access'));

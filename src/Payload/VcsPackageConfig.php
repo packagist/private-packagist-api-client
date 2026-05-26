@@ -22,24 +22,24 @@ class VcsPackageConfig
     /** @var string */
     private $type;
     /** @var ?string */
-    private $defaultSubrepositoryAccess;
+    private $defaultSuborganizationAccess;
 
     /**
      * @param string $url
      * @param ?int $credentialId
      * @param string $type
-     * @param ?string $defaultSubrepositoryAccess
+     * @param ?string $defaultSuborganizationAccess
      */
-    public function __construct($url, $credentialId, $type, $defaultSubrepositoryAccess)
+    public function __construct($url, $credentialId, $type, $defaultSuborganizationAccess)
     {
         $this->url = $url;
         $this->credentialId = $credentialId;
         $this->type = $type;
-        $this->defaultSubrepositoryAccess = $defaultSubrepositoryAccess;
+        $this->defaultSuborganizationAccess = $defaultSuborganizationAccess;
     }
 
     /**
-     * @return array{repoType: string, repoUrl: string, credentials: ?int, defaultSubrepositoryAccess?: string}
+     * @return array{repoType: string, repoUrl: string, credentials: ?int, defaultSuborganizationAccess?: string}
      */
     public function toParameters(): array
     {
@@ -49,8 +49,8 @@ class VcsPackageConfig
             'credentials' => $this->credentialId,
         ];
 
-        if ($this->defaultSubrepositoryAccess) {
-            $data['defaultSubrepositoryAccess'] = $this->defaultSubrepositoryAccess;
+        if ($this->defaultSuborganizationAccess) {
+            $data['defaultSuborganizationAccess'] = $this->defaultSuborganizationAccess;
         }
 
         return $data;
