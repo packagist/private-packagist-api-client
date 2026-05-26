@@ -752,7 +752,8 @@ $response = $client->suborganizations()->packages()->artifacts()->create($suborg
 $newArtifactId = $response['id'];
 
 // 3. let's say we don't want to have the artifact file id = 41 and use the newly uploaded file instead
-$artifactIds = array_shift($artifactIds);
+array_shift($artifactIds);
+$artifactIds[] = $newArtifactId;
 $artifactIds[] = $newArtifactId;
 $client->suborganizations()->packages()->editArtifactPackage($suborganizationName, 'acme-website/package', $artifactIds);
 ```
