@@ -71,6 +71,10 @@
          * [Edit a custom package in a suborganization](#edit-a-custom-package-in-a-suborganization)
          * [Delete a package from a suborganization](#delete-a-package-from-a-suborganization)
          * [List all dependents of a suborganization package](#list-all-dependents-of-a-suborganization-package)
+         * [Create an artifact package file in a suborganization](#create-an-artifact-package-file-in-a-suborganization)
+         * [Create an artifact package in a suborganization](#create-an-artifact-package-in-a-suborganization)
+         * [Add an artifact file to an existing package in a suborganization](#add-an-artifact-file-to-an-existing-package-in-a-suborganization)
+         * [Update or replace artifact files of a package in a suborganization](#update-or-replace-artifact-files-of-a-package-in-a-suborganization)
          * [List a suborganization's authentication tokens](#list-a-suborganizations-authentication-tokens)
          * [Create a suborganization authentication token](#create-a-suborganization-authentication-token)
          * [Delete a suborganization authentication token](#delete-a-suborganization-authentication-token)
@@ -701,6 +705,57 @@ $suborganizationName = 'suborganization';
 $client->suborganizations()->packages()->listDependents($suborganizationName, 'acme-website/package');
 ```
 Returns a list of packages.
+
+#### Create an artifact package file in a suborganization
+
+```php
+$suborganizationName = 'suborganization';
+$fileName = 'package1.zip'; // your package archive artifact containing a valid composer.json in root directory
+$file = file_get_contents($fileName);
+$client->suborganizations()->packages()->artifacts()->create($suborganizationName, $file, 'application/zip', $fileName);
+```
+
+#### Create an artifact package in a suborganization
+
+```php
+$suborganizationName = 'suborganization';
+$fileName = 'package1.zip';
+$file = file_get_contents($fileName);
+$response = $client->suborganizations()->packages()->artifacts()->create($suborganizationName, $file, 'application/zip', $fileName);
+$artifactId = $response['id'];
+$client->suborganizations()->packages()->createArtifactPackage($suborganizationName, [$artifactId]);
+```
+
+#### Add an artifact file to an existing package in a suborganization
+
+```php
+$suborganizationName = 'suborganization';
+$packageName = 'acme/artifact';
+$fileName = 'package1.zip';
+$file = file_get_contents($fileName);
+$client->suborganizations()->packages()->artifacts()->add($suborganizationName, $packageName, $file, 'application/zip', $fileName);
+```
+
+#### Update or replace artifact files of a package in a suborganization
+
+```php
+$suborganizationName = 'suborganization';
+// in case you want to replace the artifact file with a newly uploaded one
+// 1. get current artifact ids
+$result = $client->suborganizations()->packages()->artifacts()->showPackageArtifacts($suborganizationName, 'acme-website/package');
+$artifactIds = array_column($result, 'id'); // [41, 42]
+
+// 2. upload the new artifact file
+$fileName = 'package1.zip';
+$file = file_get_contents($fileName);
+$response = $client->suborganizations()->packages()->artifacts()->create($suborganizationName, $file, 'application/zip', $fileName);
+$newArtifactId = $response['id'];
+
+// 3. let's say we don't want to have the artifact file id = 41 and use the newly uploaded file instead
+array_shift($artifactIds);
+$artifactIds[] = $newArtifactId;
+$client->suborganizations()->packages()->editArtifactPackage($suborganizationName, 'acme-website/package', $artifactIds);
+```
 
 #### List a suborganization's authentication tokens
 ```php

@@ -10,7 +10,9 @@
 namespace PrivatePackagist\ApiClient\Api\Suborganizations;
 
 use PrivatePackagist\ApiClient\Api\AbstractApi;
+use PrivatePackagist\ApiClient\Api\Suborganizations\Packages\Artifacts;
 use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
+use PrivatePackagist\ApiClient\Payload\ArtifactPackageConfig;
 use PrivatePackagist\ApiClient\Payload\CustomPackageConfig;
 use PrivatePackagist\ApiClient\Payload\VcsPackageConfig;
 
@@ -44,6 +46,13 @@ class Packages extends AbstractApi
         return $this->post(sprintf('/suborganizations/%s/packages/', $suborganizationName), $data->toParameters());
     }
 
+    public function createArtifactPackage($suborganizationName, array $artifactPackageFileIds)
+    {
+        $data = new ArtifactPackageConfig($artifactPackageFileIds, null);
+
+        return $this->post(sprintf('/suborganizations/%s/packages/', $suborganizationName), $data->toParameters());
+    }
+
     public function editVcsPackage($suborganizationName, $packageIdOrName, $url, $credentialId = null, $type = 'vcs', $defaultSuborganizationAccess = null)
     {
         $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSuborganizationAccess);
@@ -58,6 +67,13 @@ class Packages extends AbstractApi
         return $this->put(sprintf('/suborganizations/%s/packages/%s/', $suborganizationName, $packageIdOrName), $data->toParameters());
     }
 
+    public function editArtifactPackage($suborganizationName, $packageIdOrName, array $artifactPackageFileIds)
+    {
+        $data = new ArtifactPackageConfig($artifactPackageFileIds, null);
+
+        return $this->put(sprintf('/suborganizations/%s/packages/%s/', $suborganizationName, $packageIdOrName), $data->toParameters());
+    }
+
     public function remove($suborganizationName, $packageIdOrName)
     {
         return $this->delete(sprintf('/suborganizations/%s/packages/%s/', $suborganizationName, $packageIdOrName));
@@ -66,5 +82,10 @@ class Packages extends AbstractApi
     public function listDependents($suborganizationName, $packageIdOrName)
     {
         return $this->getCollection(sprintf('/suborganizations/%s/packages/%s/dependents/', $suborganizationName, $packageIdOrName));
+    }
+
+    public function artifacts()
+    {
+        return new Artifacts($this->client, $this->client->getResponseMediator());
     }
 }
