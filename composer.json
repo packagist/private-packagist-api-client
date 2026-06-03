@@ -16,14 +16,15 @@
         "composer-runtime-api": "^2.0",
         "php-http/client-common": "^1.9 || ^2.0",
         "php-http/discovery": "^1.0",
+        "private-packagist/oidc-identities": "^1.0.1",
         "psr/http-client-implementation": "^1.0",
-        "php-http/message-factory": "^1.0",
-        "psr/http-message-implementation": "^1.0",
-        "private-packagist/oidc-identities": "^1.0.1"
+        "psr/http-factory": "^1.0",
+        "psr/http-message-implementation": "^1.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
         "guzzlehttp/guzzle": "^7.0",
+        "php-http/message-factory": "^1.0",
         "php-http/mock-client": "^1.0",
         "phpstan/phpstan": "^1.2",
         "phpunit/phpunit": "^8.0 || ^9.0"
@@ -43,6 +44,7 @@
     "config": {
         "allow-plugins": {
             "php-http/discovery": true
-        }
+        },
+        "sort-packages": true
     }
 }
