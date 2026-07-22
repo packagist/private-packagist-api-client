@@ -12,6 +12,10 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   zizmor:
     name: Run zizmor 🌈
@@ -29,4 +33,4 @@ jobs:
         with:
           advanced-security: false
           annotations: true
-          online-audits: false
+          persona: 'pedantic'
