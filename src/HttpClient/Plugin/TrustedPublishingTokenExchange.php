@@ -43,7 +43,7 @@ final class TrustedPublishingTokenExchange implements Plugin
         $this->httpPluginClientBuilder->removePlugin(self::class);
 
         $privatePackagistHttpclient = $this->httpPluginClientBuilder->getHttpClient();
-        $audience = json_decode((string) $privatePackagistHttpclient->get('/oidc/audience')->getBody(), true);
+        $audience = json_decode((string) $privatePackagistHttpclient->get('/oidc/audience/' . $this->organizationUrlName)->getBody(), true);
         if (!isset($audience['audience'])) {
             throw new \RuntimeException('Unable to get audience');
         }
