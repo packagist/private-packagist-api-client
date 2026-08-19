@@ -14,6 +14,7 @@ use GuzzleHttp\Psr7\Response;
 use Http\Mock\Client;
 use Http\Promise\FulfilledPromise;
 use PHPUnit\Framework\MockObject\MockObject;
+use PrivatePackagist\ApiClient\Exception\TrustedPublishingTokenExchangeException;
 use PrivatePackagist\ApiClient\HttpClient\HttpPluginClientBuilder;
 use PrivatePackagist\OIDC\Identities\Token;
 use PrivatePackagist\OIDC\Identities\TokenGeneratorInterface;
@@ -83,5 +84,26 @@ class TrustedPublishingTokenExchangeTest extends PluginTestCase
         $this->expectExceptionMessage('Unable to generate OIDC token');
 
         $this->plugin->handleRequest($request, $this->next, $this->first);
+    }
+
+    public function testTokenExchangeFails(): void
+    {
+        $request = new Request('GET', '/api/packages/acme/package');
+
+        $this->tokenGenerator
+            ->expects($this->once())
+            ->method('generate')
+            ->with($this->identicalTo('test'))
+            ->willReturn(Token::fromTokenString('test.test.test'));
+
+        $this->httpClient->addResponse(new Response(200, [], json_encode(['audience' => 'test'])));
+        $this->httpClient->addResponse(new Response(401, [], json_encode(['status' => 'error', 'message' => $message = 'OIDC token has already been exchanged for an API token'])));
+
+        $this->expectException(TrustedPublishingTokenExchangeException::class);
+        $this->expectExceptionMessage($message);
+
+        $this->plugin->handleRequest($request, function (RequestInterface $request) {
+            return new FulfilledPromise($request);
+        }, $this->first);
     }
 }

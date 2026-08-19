@@ -10,6 +10,7 @@
 namespace PrivatePackagist\ApiClient\HttpClient\Plugin;
 
 use Http\Client\Common\Plugin;
+use PrivatePackagist\ApiClient\Exception\TrustedPublishingTokenExchangeException;
 use PrivatePackagist\ApiClient\HttpClient\HttpPluginClientBuilder;
 use PrivatePackagist\OIDC\Identities\TokenGeneratorInterface;
 use Psr\Http\Message\RequestInterface;
@@ -53,12 +54,12 @@ final class TrustedPublishingTokenExchange implements Plugin
             throw new \RuntimeException('Unable to generate OIDC token');
         }
 
-        $apiCredentials = json_decode((string) $privatePackagistHttpclient->post('/oidc/token-exchange/' . $this->organizationUrlName . '/' . $this->packageName, ['Authorization' => 'Bearer ' . $token->token])->getBody(), true);
-        if (!isset($apiCredentials['key'], $apiCredentials['secret'])) {
-            throw new \RuntimeException('Unable to exchange token');
+        $response = json_decode((string) $privatePackagistHttpclient->post('/oidc/token-exchange/' . $this->organizationUrlName . '/' . $this->packageName, ['Authorization' => 'Bearer ' . $token->token])->getBody(), true);
+        if (!isset($response['key'], $response['secret'])) {
+            throw TrustedPublishingTokenExchangeException::fromResponse($response);
         }
 
-        $this->httpPluginClientBuilder->addPlugin($requestSignature = new RequestSignature($apiCredentials['key'], $apiCredentials['secret']));
+        $this->httpPluginClientBuilder->addPlugin($requestSignature = new RequestSignature($response['key'], $response['secret']));
 
         return $requestSignature->handleRequest($request, $next, $first);
     }
