@@ -47,10 +47,10 @@ class TrustedPublishingTokenExchangeTest extends PluginTestCase
         $this->tokenGenerator
             ->expects($this->once())
             ->method('generate')
-            ->with($this->identicalTo('test'))
+            ->with($this->identicalTo('private-packagist-trusted-publishing:organization'))
             ->willReturn(Token::fromTokenString('test.test.test'));
 
-        $this->httpClient->addResponse(new Response(200, [], json_encode(['audience' => 'test'])));
+        $this->httpClient->addResponse(new Response(200, [], json_encode(['audience' => 'private-packagist-trusted-publishing:organization'])));
         $this->httpClient->addResponse(new Response(200, [], json_encode(['key' => 'key', 'secret' => 'secret'])));
 
         $this->plugin->handleRequest($request, function (RequestInterface $request) use (&$requestAfterPlugin) {
@@ -61,7 +61,7 @@ class TrustedPublishingTokenExchangeTest extends PluginTestCase
 
         $requests = $this->httpClient->getRequests();
         $this->assertCount(2, $requests);
-        $this->assertSame('/oidc/audience', (string) $requests[0]->getUri());
+        $this->assertSame('/oidc/audience/organization', (string) $requests[0]->getUri());
         $this->assertSame('/oidc/token-exchange/organization/acme/package', (string) $requests[1]->getUri());
 
         $this->assertStringContainsString('PACKAGIST-HMAC-SHA256 Key=key', $requestAfterPlugin->getHeader('Authorization')[0]);
@@ -74,10 +74,10 @@ class TrustedPublishingTokenExchangeTest extends PluginTestCase
         $this->tokenGenerator
             ->expects($this->once())
             ->method('generate')
-            ->with($this->identicalTo('test'))
+            ->with($this->identicalTo('private-packagist-trusted-publishing:organization'))
             ->willReturn(null);
 
-        $this->httpClient->addResponse(new Response(200, [], json_encode(['audience' => 'test'])));
+        $this->httpClient->addResponse(new Response(200, [], json_encode(['audience' => 'private-packagist-trusted-publishing:organization'])));
 
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Unable to generate OIDC token');
