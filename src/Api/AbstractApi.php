@@ -101,8 +101,12 @@ abstract class AbstractApi
      * @param array $headers
      * @return array|string
      */
-    protected function post($path, array $parameters = [], array $headers = [])
-    {
+    protected function post(
+        $path,
+        #[\SensitiveParameter]
+        array $parameters = [],
+        array $headers = []
+    ) {
         $response = $this->client->getHttpClient()->post(
             $path,
             array_merge($headers, [
@@ -134,8 +138,12 @@ abstract class AbstractApi
      * @param array $headers
      * @return array|string
      */
-    protected function put($path, array $parameters = [], array $headers = [])
-    {
+    protected function put(
+        $path,
+        #[\SensitiveParameter]
+        array $parameters = [],
+        array $headers = []
+    ) {
         $response = $this->client->getHttpClient()->put(
             $path,
             array_merge($headers, [
@@ -154,8 +162,12 @@ abstract class AbstractApi
      * @param array $headers
      * @return array|string
      */
-    protected function delete($path, array $parameters = [], array $headers = [])
-    {
+    protected function delete(
+        $path,
+        #[\SensitiveParameter]
+        array $parameters = [],
+        array $headers = []
+    ) {
         $response = $this->client->getHttpClient()->delete(
             $path,
             array_merge($headers, [
