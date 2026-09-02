@@ -9,8 +9,11 @@
 
 namespace PrivatePackagist\ApiClient\Api;
 
+use Http\Discovery\Psr17FactoryDiscovery;
 use PrivatePackagist\ApiClient\Client;
+use PrivatePackagist\ApiClient\Exception\RuntimeException;
 use PrivatePackagist\ApiClient\HttpClient\Message\ResponseMediator;
+use Psr\Http\Message\UriInterface;
 
 abstract class AbstractApi
 {
@@ -83,6 +86,9 @@ abstract class AbstractApi
             $nextUrl = null;
             if ($response->hasHeader('Link')) {
                 $nextUrl = $this->parseLinkHeader($response->getHeaderLine('Link'), 'next');
+                if ($nextUrl !== null) {
+                    $this->assertSameOriginAsPrivatePackagist($nextUrl);
+                }
             }
         } while ($nextUrl !== null);
 
@@ -168,6 +174,58 @@ abstract class AbstractApi
     protected function createJsonBody(array $parameters)
     {
         return (count($parameters) === 0) ? null : json_encode($parameters);
+    }
+
+    /**
+     * The "next" link is chosen by the server. Following it unchecked would let any response steer a
+     * signed, authenticated request at an arbitrary host and feed its reply back to the caller as if
+     * it came from Private Packagist, so only same-origin links are followed. Links without a host
+     * are fine: AddHostPlugin resolves those against the configured URL.
+     *
+     * @param string $nextUrl
+     * @return void
+     */
+    private function assertSameOriginAsPrivatePackagist($nextUrl)
+    {
+        try {
+            $uri = Psr17FactoryDiscovery::findUriFactory()->createUri($nextUrl);
+        } catch (\InvalidArgumentException $e) {
+            throw new RuntimeException(sprintf('Pagination link "%s" is not a valid URL.', $nextUrl), 0, $e);
+        }
+
+        if ($uri->getHost() === '') {
+            return;
+        }
+
+        $privatePackagistUrl = $this->client->getPrivatePackagistUrl();
+        if (strcasecmp($uri->getScheme(), $privatePackagistUrl->getScheme()) === 0
+            && strcasecmp($uri->getHost(), $privatePackagistUrl->getHost()) === 0
+            && $this->effectivePort($uri) === $this->effectivePort($privatePackagistUrl)
+        ) {
+            return;
+        }
+
+        throw new RuntimeException(sprintf(
+            'Refusing to follow the pagination link "%s": it points outside the configured Private Packagist URL "%s".',
+            $nextUrl,
+            (string) $privatePackagistUrl
+        ));
+    }
+
+    /**
+     * @return int|null
+     */
+    private function effectivePort(UriInterface $uri)
+    {
+        $port = $uri->getPort();
+        if ($port !== null) {
+            return $port;
+        }
+
+        $defaultPorts = ['http' => 80, 'https' => 443];
+        $scheme = strtolower($uri->getScheme());
+
+        return isset($defaultPorts[$scheme]) ? $defaultPorts[$scheme] : null;
     }
 
     /**
