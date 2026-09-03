@@ -18,6 +18,7 @@ use PrivatePackagist\ApiClient\HttpClient\Plugin\PathPrepend;
 use PrivatePackagist\ApiClient\HttpClient\Plugin\RequestSignature;
 use PrivatePackagist\ApiClient\HttpClient\Plugin\TrustedPublishingTokenExchange;
 use PrivatePackagist\OIDC\Identities\TokenGenerator;
+use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -169,6 +170,15 @@ class Client
     public function getPrivatePackagistUrl()
     {
         return $this->privatePackagistUrl;
+    }
+
+    /**
+     * @internal
+     * @return StreamFactoryInterface
+     */
+    public function getStreamFactory()
+    {
+        return $this->getHttpClientBuilder()->getStreamFactory();
     }
 
     protected function getHttpClientBuilder()
