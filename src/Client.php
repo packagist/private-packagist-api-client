@@ -18,6 +18,7 @@ use PrivatePackagist\ApiClient\HttpClient\Plugin\PathPrepend;
 use PrivatePackagist\ApiClient\HttpClient\Plugin\RequestSignature;
 use PrivatePackagist\ApiClient\HttpClient\Plugin\TrustedPublishingTokenExchange;
 use PrivatePackagist\OIDC\Identities\TokenGenerator;
+use Psr\Http\Message\UriInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -29,6 +30,8 @@ class Client
     private $responseMediator;
     /** @var LoggerInterface */
     private $logger;
+    /** @var UriInterface */
+    private $privatePackagistUrl;
 
     /** @param string $privatePackagistUrl */
     public function __construct(?HttpPluginClientBuilder $httpClientBuilder = null, $privatePackagistUrl = null, ?ResponseMediator $responseMediator = null, ?LoggerInterface  $logger = null)
@@ -37,8 +40,9 @@ class Client
         $privatePackagistUrl = $privatePackagistUrl ? : 'https://packagist.com';
         $this->responseMediator = $responseMediator ? : new ResponseMediator();
         $this->logger = $logger ? : new NullLogger();
+        $this->privatePackagistUrl = Psr17FactoryDiscovery::findUriFactory()->createUri($privatePackagistUrl);
 
-        $builder->addPlugin(new Plugin\AddHostPlugin(Psr17FactoryDiscovery::findUriFactory()->createUri($privatePackagistUrl)));
+        $builder->addPlugin(new Plugin\AddHostPlugin($this->privatePackagistUrl));
         $builder->addPlugin(new PathPrepend('/api'));
         $builder->addPlugin(new Plugin\RedirectPlugin());
         $headers = [
@@ -157,6 +161,14 @@ class Client
     public function getResponseMediator()
     {
         return $this->responseMediator;
+    }
+
+    /**
+     * @return UriInterface
+     */
+    public function getPrivatePackagistUrl()
+    {
+        return $this->privatePackagistUrl;
     }
 
     protected function getHttpClientBuilder()
