@@ -23,7 +23,7 @@ class Artifacts extends AbstractApi
 
     public function add($packageIdOrName, $file, $contentType, $fileName)
     {
-        return $this->postFile('/packages/'.$packageIdOrName.'/artifacts/', $file, array_filter([
+        return $this->postFile($this->buildPath('/packages/%s/artifacts/', $packageIdOrName), $file, array_filter([
             'Content-Type' => $contentType,
             'X-FILENAME' => $fileName
         ]));
@@ -31,11 +31,11 @@ class Artifacts extends AbstractApi
 
     public function show($artifactId)
     {
-        return $this->get(sprintf('/packages/artifacts/%s/', $artifactId));
+        return $this->get($this->buildPath('/packages/artifacts/%s/', $artifactId));
     }
 
     public function showPackageArtifacts($packageIdOrName)
     {
-        return $this->getCollection(sprintf('/packages/%s/artifacts/', $packageIdOrName));
+        return $this->getCollection($this->buildPath('/packages/%s/artifacts/', $packageIdOrName));
     }
 }

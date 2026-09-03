@@ -16,7 +16,7 @@ class MirroredRepositories extends AbstractApi
 {
     public function all($suborganizationName)
     {
-        return $this->getCollection(sprintf('/suborganizations/%s/mirrored-repositories/', $suborganizationName));
+        return $this->getCollection($this->buildPath('/suborganizations/%s/mirrored-repositories/', $suborganizationName));
     }
 
     public function add($suborganizationName, array $mirroredRepositories)
@@ -27,38 +27,38 @@ class MirroredRepositories extends AbstractApi
             }
         }
 
-        return $this->post(sprintf('/suborganizations/%s/mirrored-repositories/', $suborganizationName), $mirroredRepositories);
+        return $this->post($this->buildPath('/suborganizations/%s/mirrored-repositories/', $suborganizationName), $mirroredRepositories);
     }
 
     public function show($suborganizationName, $mirroredRepositoryId)
     {
-        return $this->get(sprintf('/suborganizations/%s/mirrored-repositories/%s/', $suborganizationName, $mirroredRepositoryId));
+        return $this->get($this->buildPath('/suborganizations/%s/mirrored-repositories/%s/', $suborganizationName, $mirroredRepositoryId));
     }
 
     public function edit($suborganizationName, $mirroredRepositoryId, $mirroringBehavior)
     {
-        return $this->put(sprintf('/suborganizations/%s/mirrored-repositories/%s/', $suborganizationName, $mirroredRepositoryId), [
+        return $this->put($this->buildPath('/suborganizations/%s/mirrored-repositories/%s/', $suborganizationName, $mirroredRepositoryId), [
             'mirroringBehavior' => $mirroringBehavior,
         ]);
     }
 
     public function remove($suborganizationName, $mirroredRepositoryId)
     {
-        return $this->delete(sprintf('/suborganizations/%s/mirrored-repositories/%s/', $suborganizationName, $mirroredRepositoryId));
+        return $this->delete($this->buildPath('/suborganizations/%s/mirrored-repositories/%s/', $suborganizationName, $mirroredRepositoryId));
     }
 
     public function listPackages($suborganizationName, $mirroredRepositoryId)
     {
-        return $this->getCollection(sprintf('/suborganizations/%s/mirrored-repositories/%s/packages/', $suborganizationName, $mirroredRepositoryId));
+        return $this->getCollection($this->buildPath('/suborganizations/%s/mirrored-repositories/%s/packages/', $suborganizationName, $mirroredRepositoryId));
     }
 
     public function addPackages($suborganizationName, $mirroredRepositoryId, array $packages)
     {
-        return $this->post(sprintf('/suborganizations/%s/mirrored-repositories/%s/packages/', $suborganizationName, $mirroredRepositoryId), $packages);
+        return $this->post($this->buildPath('/suborganizations/%s/mirrored-repositories/%s/packages/', $suborganizationName, $mirroredRepositoryId), $packages);
     }
 
     public function removePackages($suborganizationName, $mirroredRepositoryId)
     {
-        return $this->delete(sprintf('/suborganizations/%s/mirrored-repositories/%s/packages/', $suborganizationName, $mirroredRepositoryId));
+        return $this->delete($this->buildPath('/suborganizations/%s/mirrored-repositories/%s/packages/', $suborganizationName, $mirroredRepositoryId));
     }
 }

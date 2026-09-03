@@ -14,6 +14,7 @@ use Http\Client\HttpClient;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use PrivatePackagist\ApiClient\Client;
+use PrivatePackagist\ApiClient\Exception\InvalidArgumentException;
 use PrivatePackagist\ApiClient\Exception\RuntimeException;
 use PrivatePackagist\ApiClient\Exception\HttpTransportException;
 use PrivatePackagist\ApiClient\HttpClient\HttpPluginClientBuilder;
@@ -268,6 +269,94 @@ class AbstractApiTest extends TestCase
 
         $this->assertSame(array_merge($page1, $page2), $api->testGetCollection('/packages/', ['limit' => AbstractApi::DEFAULT_LIMIT]));
     }
+
+    /** @dataProvider providePathArguments */
+    public function testBuildPathEncodesArguments($argument, $expectedPath)
+    {
+        $this->assertSame($expectedPath, $this->api->testBuildPath('/packages/%s/', $argument));
+    }
+
+    public function providePathArguments()
+    {
+        return [
+            'plain name' => ['acme-customer', '/packages/acme-customer/'],
+            'a package name keeps its separator, encoded' => ['acme/package', '/packages/acme%2Fpackage/'],
+            'dots in a name are legal' => ['symfony/polyfill-php7.2', '/packages/symfony%2Fpolyfill-php7.2/'],
+            'integer id' => [42, '/packages/42/'],
+            'fragment cannot end the path' => ['#', '/packages/%23/'],
+            'query cannot be smuggled' => ['?limit=1', '/packages/%3Flimit%3D1/'],
+            'space' => ['a b', '/packages/a%20b/'],
+            'percent is escaped so encoding cannot be forged' => ['%2F', '/packages/%252F/'],
+            'traversal stays inside one segment' => ['../../foo', '/packages/..%2F..%2Ffoo/'],
+            'empty inner segment' => ['acme//package', '/packages/acme%2F%2Fpackage/'],
+            'leading separator' => ['/acme', '/packages/%2Facme/'],
+        ];
+    }
+
+    /** @dataProvider provideRejectedPathArguments */
+    public function testBuildPathRejectsArgument($argument, $expectedMessage)
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($expectedMessage);
+
+        $this->api->testBuildPath('/packages/%s/', $argument);
+    }
+
+    public function provideRejectedPathArguments()
+    {
+        return [
+            'empty' => ['', "Path arguments must not be empty, '.', or '..'"],
+            'null' => [null, 'Path arguments must be a string or an integer, NULL given.'],
+            'array' => [[], 'Path arguments must be a string or an integer, array given.'],
+            // rawurlencode() leaves these two intact, so they are the only values that still reach
+            // the wire as a dot segment once the separators around them are encoded.
+            'current directory' => ['.', "Path arguments must not be empty, '.', or '..'"],
+            'parent directory' => ['..', "Path arguments must not be empty, '.', or '..'"],
+        ];
+    }
+
+    /**
+     * The signature is computed over the path after the URI has been parsed, so a truncated path is
+     * signed as if it had been asked for. This asserts on the wire, not on the string handed to
+     * delete(), because that is where the truncation used to happen.
+     */
+    public function testInjectedPathArgumentCannotChangeTheEndpointOnTheWire()
+    {
+        $client = new Client(new HttpPluginClientBuilder($this->httpClient), 'https://packagist.example');
+
+        $this->httpClient
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->willReturnCallback(function (RequestInterface $request) {
+                $this->assertSame('/api/customers/acme-customer/packages/%23/', $request->getUri()->getPath());
+                $this->assertSame('', $request->getUri()->getQuery());
+                $this->assertSame('', $request->getUri()->getFragment());
+
+                return new Response(200, ['Content-Type' => 'application/json'], '[]');
+            });
+
+        $client->customers()->removePackage('acme-customer', '#');
+    }
+
+    /**
+     * The plugin chain rewrites the URI on the way out, so this pins down that an encoded package
+     * name survives it neither decoded nor encoded a second time.
+     */
+    public function testEncodedPackageNameReachesTheWireIntact()
+    {
+        $client = new Client(new HttpPluginClientBuilder($this->httpClient), 'https://packagist.example');
+
+        $this->httpClient
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->willReturnCallback(function (RequestInterface $request) {
+                $this->assertSame('/api/customers/acme-customer/packages/acme%2Fpackage/', $request->getUri()->getPath());
+
+                return new Response(200, ['Content-Type' => 'application/json'], '[]');
+            });
+
+        $client->customers()->removePackage('acme-customer', 'acme/package');
+    }
 }
 
 /**
@@ -278,5 +367,10 @@ class TestableAbstractApi extends AbstractApi
     public function testGetCollection($path, array $parameters = [], array $headers = [])
     {
         return $this->getCollection($path, $parameters, $headers);
+    }
+
+    public function testBuildPath($template, ...$arguments)
+    {
+        return $this->buildPath($template, ...$arguments);
     }
 }

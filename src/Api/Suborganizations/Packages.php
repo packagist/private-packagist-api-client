@@ -24,64 +24,64 @@ class Packages extends AbstractApi
             throw new InvalidArgumentException('Filter "origin" has to be one of: "' . implode('", "', \PrivatePackagist\ApiClient\Api\Packages::AVAILABLE_ORIGINS) . '".');
         }
 
-        return $this->getCollection(sprintf('/suborganizations/%s/packages/', $suborganizationName), $filters);
+        return $this->getCollection($this->buildPath('/suborganizations/%s/packages/', $suborganizationName), $filters);
     }
 
     public function show($suborganizationName, $packageIdOrName)
     {
-        return $this->get(sprintf('/suborganizations/%s/packages/%s/', $suborganizationName, $packageIdOrName));
+        return $this->get($this->buildPath('/suborganizations/%s/packages/%s/', $suborganizationName, $packageIdOrName));
     }
 
     public function createVcsPackage($suborganizationName, $url, $credentialId = null, $type = 'vcs', $defaultSuborganizationAccess = null)
     {
         $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSuborganizationAccess);
 
-        return $this->post(sprintf('/suborganizations/%s/packages/', $suborganizationName), $data->toParameters());
+        return $this->post($this->buildPath('/suborganizations/%s/packages/', $suborganizationName), $data->toParameters());
     }
 
     public function createCustomPackage($suborganizationName, $customJson, $credentialId = null, $defaultSuborganizationAccess = null)
     {
         $data = new CustomPackageConfig($customJson, $credentialId, $defaultSuborganizationAccess);
 
-        return $this->post(sprintf('/suborganizations/%s/packages/', $suborganizationName), $data->toParameters());
+        return $this->post($this->buildPath('/suborganizations/%s/packages/', $suborganizationName), $data->toParameters());
     }
 
     public function createArtifactPackage($suborganizationName, array $artifactPackageFileIds)
     {
         $data = new ArtifactPackageConfig($artifactPackageFileIds, null);
 
-        return $this->post(sprintf('/suborganizations/%s/packages/', $suborganizationName), $data->toParameters());
+        return $this->post($this->buildPath('/suborganizations/%s/packages/', $suborganizationName), $data->toParameters());
     }
 
     public function editVcsPackage($suborganizationName, $packageIdOrName, $url, $credentialId = null, $type = 'vcs', $defaultSuborganizationAccess = null)
     {
         $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSuborganizationAccess);
 
-        return $this->put(sprintf('/suborganizations/%s/packages/%s/', $suborganizationName, $packageIdOrName), $data->toParameters());
+        return $this->put($this->buildPath('/suborganizations/%s/packages/%s/', $suborganizationName, $packageIdOrName), $data->toParameters());
     }
 
     public function editCustomPackage($suborganizationName, $packageIdOrName, $customJson, $credentialId = null, $defaultSuborganizationAccess = null)
     {
         $data = new CustomPackageConfig($customJson, $credentialId, $defaultSuborganizationAccess);
 
-        return $this->put(sprintf('/suborganizations/%s/packages/%s/', $suborganizationName, $packageIdOrName), $data->toParameters());
+        return $this->put($this->buildPath('/suborganizations/%s/packages/%s/', $suborganizationName, $packageIdOrName), $data->toParameters());
     }
 
     public function editArtifactPackage($suborganizationName, $packageIdOrName, array $artifactPackageFileIds)
     {
         $data = new ArtifactPackageConfig($artifactPackageFileIds, null);
 
-        return $this->put(sprintf('/suborganizations/%s/packages/%s/', $suborganizationName, $packageIdOrName), $data->toParameters());
+        return $this->put($this->buildPath('/suborganizations/%s/packages/%s/', $suborganizationName, $packageIdOrName), $data->toParameters());
     }
 
     public function remove($suborganizationName, $packageIdOrName)
     {
-        return $this->delete(sprintf('/suborganizations/%s/packages/%s/', $suborganizationName, $packageIdOrName));
+        return $this->delete($this->buildPath('/suborganizations/%s/packages/%s/', $suborganizationName, $packageIdOrName));
     }
 
     public function listDependents($suborganizationName, $packageIdOrName)
     {
-        return $this->getCollection(sprintf('/suborganizations/%s/packages/%s/dependents/', $suborganizationName, $packageIdOrName));
+        return $this->getCollection($this->buildPath('/suborganizations/%s/packages/%s/dependents/', $suborganizationName, $packageIdOrName));
     }
 
     public function artifacts()

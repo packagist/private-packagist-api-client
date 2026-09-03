@@ -88,7 +88,7 @@ class TeamsTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo('/teams/1/packages/acme-website/package/'))
+            ->with($this->equalTo('/teams/1/packages/acme-website%2Fpackage/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->removePackage(1, 'acme-website/package'));

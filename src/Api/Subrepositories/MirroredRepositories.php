@@ -19,7 +19,7 @@ class MirroredRepositories extends AbstractApi
 {
     public function all($subrepositoryName)
     {
-        return $this->getCollection(sprintf('/subrepositories/%s/mirrored-repositories/', $subrepositoryName));
+        return $this->getCollection($this->buildPath('/subrepositories/%s/mirrored-repositories/', $subrepositoryName));
     }
 
     public function add($subrepositoryName, array $mirroredRepositories)
@@ -30,38 +30,38 @@ class MirroredRepositories extends AbstractApi
             }
         }
 
-        return $this->post(sprintf('/subrepositories/%s/mirrored-repositories/', $subrepositoryName), $mirroredRepositories);
+        return $this->post($this->buildPath('/subrepositories/%s/mirrored-repositories/', $subrepositoryName), $mirroredRepositories);
     }
 
     public function show($subrepositoryName, $mirroredRepositoryId)
     {
-        return $this->get(sprintf('/subrepositories/%s/mirrored-repositories/%s/', $subrepositoryName, $mirroredRepositoryId));
+        return $this->get($this->buildPath('/subrepositories/%s/mirrored-repositories/%s/', $subrepositoryName, $mirroredRepositoryId));
     }
 
     public function edit($subrepositoryName, $mirroredRepositoryId, $mirroringBehavior)
     {
-        return $this->put(sprintf('/subrepositories/%s/mirrored-repositories/%s/', $subrepositoryName, $mirroredRepositoryId), [
+        return $this->put($this->buildPath('/subrepositories/%s/mirrored-repositories/%s/', $subrepositoryName, $mirroredRepositoryId), [
             'mirroringBehavior' => $mirroringBehavior,
         ]);
     }
 
     public function remove($subrepositoryName, $mirroredRepositoryId)
     {
-        return $this->delete(sprintf('/subrepositories/%s/mirrored-repositories/%s/', $subrepositoryName, $mirroredRepositoryId));
+        return $this->delete($this->buildPath('/subrepositories/%s/mirrored-repositories/%s/', $subrepositoryName, $mirroredRepositoryId));
     }
 
     public function listPackages($subrepositoryName, $mirroredRepositoryId)
     {
-        return $this->getCollection(sprintf('/subrepositories/%s/mirrored-repositories/%s/packages/', $subrepositoryName, $mirroredRepositoryId));
+        return $this->getCollection($this->buildPath('/subrepositories/%s/mirrored-repositories/%s/packages/', $subrepositoryName, $mirroredRepositoryId));
     }
 
     public function addPackages($subrepositoryName, $mirroredRepositoryId, array $packages)
     {
-        return $this->post(sprintf('/subrepositories/%s/mirrored-repositories/%s/packages/', $subrepositoryName, $mirroredRepositoryId), $packages);
+        return $this->post($this->buildPath('/subrepositories/%s/mirrored-repositories/%s/packages/', $subrepositoryName, $mirroredRepositoryId), $packages);
     }
 
     public function removePackages($subrepositoryName, $mirroredRepositoryId)
     {
-        return $this->delete(sprintf('/subrepositories/%s/mirrored-repositories/%s/packages/', $subrepositoryName, $mirroredRepositoryId));
+        return $this->delete($this->buildPath('/subrepositories/%s/mirrored-repositories/%s/packages/', $subrepositoryName, $mirroredRepositoryId));
     }
 }

@@ -88,7 +88,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/subrepositories/project/packages/acme-website/package/'))
+            ->with($this->equalTo('/subrepositories/project/packages/acme-website%2Fpackage/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->show($projectName, 'acme-website/package'));
@@ -153,7 +153,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
-            ->with($this->equalTo('/subrepositories/project/packages/acme-website/package/'), $this->equalTo(['repoType' => 'vcs', 'repoUrl' => 'localhost', 'credentials' => null]))
+            ->with($this->equalTo('/subrepositories/project/packages/acme-website%2Fpackage/'), $this->equalTo(['repoType' => 'vcs', 'repoUrl' => 'localhost', 'credentials' => null]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->editVcsPackage($projectName, 'acme-website/package', 'localhost'));
@@ -171,7 +171,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
-            ->with($this->equalTo('/subrepositories/project/packages/acme-website/package/'), $this->equalTo(['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null]))
+            ->with($this->equalTo('/subrepositories/project/packages/acme-website%2Fpackage/'), $this->equalTo(['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->editCustomPackage($projectName, 'acme-website/package', '{}'));
@@ -186,7 +186,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo('/subrepositories/project/packages/acme-website/package/'))
+            ->with($this->equalTo('/subrepositories/project/packages/acme-website%2Fpackage/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->remove($projectName, 'acme-website/package'));

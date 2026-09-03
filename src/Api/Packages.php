@@ -57,7 +57,7 @@ class Packages extends AbstractApi
 
     public function show($packageIdOrName)
     {
-        return $this->get(sprintf('/packages/%s/', $packageIdOrName));
+        return $this->get($this->buildPath('/packages/%s/', $packageIdOrName));
     }
 
     public function createVcsPackage($url, $credentialId = null, $type = 'vcs', $defaultSuborganizationAccess = null)
@@ -94,14 +94,14 @@ class Packages extends AbstractApi
     {
         $data = new VcsPackageConfig($url, $credentialId, $type, $defaultSuborganizationAccess);
 
-        return $this->put(sprintf('/packages/%s/', $packageIdOrName), $data->toParameters());
+        return $this->put($this->buildPath('/packages/%s/', $packageIdOrName), $data->toParameters());
     }
 
     public function editArtifactPackage($packageIdOrName, array $artifactPackageFileIds, $defaultSuborganizationAccess = null)
     {
         $data = new ArtifactPackageConfig($artifactPackageFileIds, $defaultSuborganizationAccess);
 
-        return $this->put(sprintf('/packages/%s/', $packageIdOrName), $data->toParameters());
+        return $this->put($this->buildPath('/packages/%s/', $packageIdOrName), $data->toParameters());
     }
 
     /**
@@ -117,37 +117,37 @@ class Packages extends AbstractApi
     {
         $data = new CustomPackageConfig($customJson, $credentialId, $defaultSuborganizationAccess);
 
-        return $this->put(sprintf('/packages/%s/', $packageIdOrName), $data->toParameters());
+        return $this->put($this->buildPath('/packages/%s/', $packageIdOrName), $data->toParameters());
     }
 
     public function remove($packageIdOrName)
     {
-        return $this->delete(sprintf('/packages/%s/', $packageIdOrName));
+        return $this->delete($this->buildPath('/packages/%s/', $packageIdOrName));
     }
 
     public function listCustomers($packageIdOrName)
     {
-        return $this->getCollection(sprintf('/packages/%s/customers/', $packageIdOrName));
+        return $this->getCollection($this->buildPath('/packages/%s/customers/', $packageIdOrName));
     }
 
     public function listDependents($packageName)
     {
-        return $this->getCollection(sprintf('/packages/%s/dependents/', $packageName));
+        return $this->getCollection($this->buildPath('/packages/%s/dependents/', $packageName));
     }
 
     public function listSecurityIssues($packageIdOrName, array $filters = [])
     {
-        return $this->getCollection(sprintf('/packages/%s/security-issues/', $packageIdOrName), $filters);
+        return $this->getCollection($this->buildPath('/packages/%s/security-issues/', $packageIdOrName), $filters);
     }
 
     public function showSecurityMonitoringConfig($packageIdOrName)
     {
-        return $this->get(sprintf('/packages/%s/security-monitoring/', $packageIdOrName));
+        return $this->get($this->buildPath('/packages/%s/security-monitoring/', $packageIdOrName));
     }
 
     public function editSecurityMonitoringConfig($packageIdOrName, array $config)
     {
-        return $this->put(sprintf('/packages/%s/security-monitoring/', $packageIdOrName), $config);
+        return $this->put($this->buildPath('/packages/%s/security-monitoring/', $packageIdOrName), $config);
     }
 
     public function artifacts()

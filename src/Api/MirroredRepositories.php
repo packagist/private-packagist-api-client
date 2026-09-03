@@ -28,12 +28,12 @@ class MirroredRepositories extends AbstractApi
 
     public function show($mirroredRepositoryId)
     {
-        return $this->get(sprintf('/mirrored-repositories/%s/', $mirroredRepositoryId));
+        return $this->get($this->buildPath('/mirrored-repositories/%s/', $mirroredRepositoryId));
     }
 
     public function edit($mirroredRepositoryId, $name, $url, $mirroringBehavior, $credentials = null)
     {
-        return $this->put(sprintf('/mirrored-repositories/%s/', $mirroredRepositoryId), [
+        return $this->put($this->buildPath('/mirrored-repositories/%s/', $mirroredRepositoryId), [
             'name' => $name,
             'url' => $url,
             'mirroringBehavior' => $mirroringBehavior,
@@ -43,21 +43,21 @@ class MirroredRepositories extends AbstractApi
 
     public function remove($mirroredRepositoryId)
     {
-        return $this->delete(sprintf('/mirrored-repositories/%s/', $mirroredRepositoryId));
+        return $this->delete($this->buildPath('/mirrored-repositories/%s/', $mirroredRepositoryId));
     }
 
     public function listPackages($mirroredRepositoryId)
     {
-        return $this->getCollection(sprintf('/mirrored-repositories/%s/packages/', $mirroredRepositoryId));
+        return $this->getCollection($this->buildPath('/mirrored-repositories/%s/packages/', $mirroredRepositoryId));
     }
 
     public function addPackages($mirroredRepositoryId, array $packages)
     {
-        return $this->post(sprintf('/mirrored-repositories/%s/packages/', $mirroredRepositoryId), $packages);
+        return $this->post($this->buildPath('/mirrored-repositories/%s/packages/', $mirroredRepositoryId), $packages);
     }
 
     public function removePackages($mirroredRepositoryId)
     {
-        return $this->delete(sprintf('/mirrored-repositories/%s/packages/', $mirroredRepositoryId));
+        return $this->delete($this->buildPath('/mirrored-repositories/%s/packages/', $mirroredRepositoryId));
     }
 }

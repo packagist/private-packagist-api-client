@@ -29,7 +29,7 @@ class Tokens extends AbstractApi
 
     public function remove($tokenId)
     {
-        return $this->delete(sprintf('/tokens/%s/', $tokenId));
+        return $this->delete($this->buildPath('/tokens/%s/', $tokenId));
     }
 
     public function regenerate($tokenId, array $confirmation)
@@ -38,6 +38,6 @@ class Tokens extends AbstractApi
             throw new InvalidArgumentException('Confirmation is required to regenerate the Composer repository token.');
         }
 
-        return $this->post(sprintf('/tokens/%s/regenerate', $tokenId), $confirmation);
+        return $this->post($this->buildPath('/tokens/%s/regenerate', $tokenId), $confirmation);
     }
 }

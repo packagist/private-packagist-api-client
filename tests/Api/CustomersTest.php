@@ -233,7 +233,7 @@ class CustomersTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/customers/1/packages/composer/composer/'))
+            ->with($this->equalTo('/customers/1/packages/composer%2Fcomposer/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->showPackage(1, 'composer/composer'));
@@ -282,7 +282,7 @@ class CustomersTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo(sprintf('/customers/1/packages/%s/', $packageName)))
+            ->with($this->equalTo('/customers/1/packages/composer%2Fcomposer/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->removePackage(1, $packageName));

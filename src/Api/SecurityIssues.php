@@ -53,16 +53,16 @@ class SecurityIssues extends AbstractApi
 
     public function show(int $issueId): array
     {
-        return $this->get('/security-issues/' . $issueId);
+        return $this->get($this->buildPath('/security-issues/%s', $issueId));
     }
 
     public function open(int $issueId): array
     {
-        return $this->post('/security-issues/' . $issueId . '/open');
+        return $this->post($this->buildPath('/security-issues/%s/open', $issueId));
     }
 
     public function close(int $issueId, string $state): array
     {
-        return $this->post('/security-issues/' . $issueId . '/close/' . $state);
+        return $this->post($this->buildPath('/security-issues/%s/close/%s', $issueId, $state));
     }
 }

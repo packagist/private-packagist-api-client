@@ -21,7 +21,7 @@ class Customers extends AbstractApi
 
     public function show($customerIdOrUrlName)
     {
-        return $this->get(sprintf('/customers/%s/', $customerIdOrUrlName));
+        return $this->get($this->buildPath('/customers/%s/', $customerIdOrUrlName));
     }
 
     public function create($name, $accessToVersionControlSource = false, $urlName = null, $minimumAccessibleStability = null, $assignAllPackages = false)
@@ -50,32 +50,32 @@ class Customers extends AbstractApi
 
     public function edit($customerIdOrUrlName, array $customer)
     {
-        return $this->put(sprintf('/customers/%s/', $customerIdOrUrlName), $customer);
+        return $this->put($this->buildPath('/customers/%s/', $customerIdOrUrlName), $customer);
     }
 
     public function remove($customerIdOrUrlName)
     {
-        return $this->delete(sprintf('/customers/%s/', $customerIdOrUrlName));
+        return $this->delete($this->buildPath('/customers/%s/', $customerIdOrUrlName));
     }
 
     public function enable($customerIdOrUrlName)
     {
-        return $this->put(sprintf('/customers/%s/enable', $customerIdOrUrlName));
+        return $this->put($this->buildPath('/customers/%s/enable', $customerIdOrUrlName));
     }
 
     public function disable($customerIdOrUrlName)
     {
-        return $this->put(sprintf('/customers/%s/disable', $customerIdOrUrlName));
+        return $this->put($this->buildPath('/customers/%s/disable', $customerIdOrUrlName));
     }
 
     public function listPackages($customerIdOrUrlName)
     {
-        return $this->getCollection(sprintf('/customers/%s/packages/', $customerIdOrUrlName));
+        return $this->getCollection($this->buildPath('/customers/%s/packages/', $customerIdOrUrlName));
     }
 
     public function showPackage($customerIdOrUrlName, $packageIdOrName)
     {
-        return $this->get(sprintf('/customers/%s/packages/%s/', $customerIdOrUrlName, $packageIdOrName));
+        return $this->get($this->buildPath('/customers/%s/packages/%s/', $customerIdOrUrlName, $packageIdOrName));
     }
 
     /**
@@ -95,7 +95,7 @@ class Customers extends AbstractApi
             }
         }
 
-        return $this->post(sprintf('/customers/%s/packages/', $customerIdOrUrlName), $packages);
+        return $this->post($this->buildPath('/customers/%s/packages/', $customerIdOrUrlName), $packages);
     }
 
     /**
@@ -109,7 +109,7 @@ class Customers extends AbstractApi
 
     public function removePackage($customerIdOrUrlName, $packageIdOrName)
     {
-        return $this->delete(sprintf('/customers/%s/packages/%s/', $customerIdOrUrlName, $packageIdOrName));
+        return $this->delete($this->buildPath('/customers/%s/packages/%s/', $customerIdOrUrlName, $packageIdOrName));
     }
 
     public function regenerateToken($customerIdOrUrlName, array $confirmation)
@@ -118,7 +118,7 @@ class Customers extends AbstractApi
             throw new InvalidArgumentException('Confirmation is required to regenerate the Composer repository token.');
         }
 
-        return $this->post(sprintf('/customers/%s/token/regenerate', $customerIdOrUrlName), $confirmation);
+        return $this->post($this->buildPath('/customers/%s/token/regenerate', $customerIdOrUrlName), $confirmation);
     }
 
     public function magentoLegacyKeys()

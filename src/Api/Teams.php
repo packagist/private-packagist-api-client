@@ -36,7 +36,7 @@ class Teams extends AbstractApi
 
     public function show($teamId)
     {
-        return $this->get(sprintf('/teams/%s/', $teamId));
+        return $this->get($this->buildPath('/teams/%s/', $teamId));
     }
 
     public function edit($teamId, string $name, TeamPermissions $permissions): array
@@ -52,46 +52,46 @@ class Teams extends AbstractApi
             ],
         ];
 
-        return $this->put(sprintf('/teams/%s/', $teamId), $parameters);
+        return $this->put($this->buildPath('/teams/%s/', $teamId), $parameters);
     }
 
     public function grantAccessToAllPackages($teamId): array
     {
-        return $this->put(sprintf('/teams/%s/all-package-access/grant', $teamId));
+        return $this->put($this->buildPath('/teams/%s/all-package-access/grant', $teamId));
     }
 
     public function revokeAccessToAllPackages($teamId): array
     {
-        return $this->put(sprintf('/teams/%s/all-package-access/revoke', $teamId));
+        return $this->put($this->buildPath('/teams/%s/all-package-access/revoke', $teamId));
     }
 
     public function remove($teamId): array
     {
-        return $this->delete(sprintf('/teams/%s/', $teamId));
+        return $this->delete($this->buildPath('/teams/%s/', $teamId));
     }
 
     public function addMember($teamId, $userId): array
     {
-        return $this->put(sprintf('/teams/%s/members/%s/', $teamId, $userId));
+        return $this->put($this->buildPath('/teams/%s/members/%s/', $teamId, $userId));
     }
 
     public function removeMember($teamId, $userId): array
     {
-        return $this->delete(sprintf('/teams/%s/members/%s/', $teamId, $userId));
+        return $this->delete($this->buildPath('/teams/%s/members/%s/', $teamId, $userId));
     }
 
     public function packages($teamId)
     {
-        return $this->getCollection(sprintf('/teams/%s/packages/', $teamId));
+        return $this->getCollection($this->buildPath('/teams/%s/packages/', $teamId));
     }
 
     public function addPackages($teamId, array $packages)
     {
-        return $this->post(sprintf('/teams/%s/packages/', $teamId), $packages);
+        return $this->post($this->buildPath('/teams/%s/packages/', $teamId), $packages);
     }
 
     public function removePackage($teamId, $packageName)
     {
-        return $this->delete(sprintf('/teams/%s/packages/%s/', $teamId, $packageName));
+        return $this->delete($this->buildPath('/teams/%s/packages/%s/', $teamId, $packageName));
     }
 }

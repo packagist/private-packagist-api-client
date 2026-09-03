@@ -88,7 +88,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/suborganizations/suborganization/packages/acme-website/package/'))
+            ->with($this->equalTo('/suborganizations/suborganization/packages/acme-website%2Fpackage/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->show($suborganizationName, 'acme-website/package'));
@@ -171,7 +171,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
-            ->with($this->equalTo('/suborganizations/suborganization/packages/acme-website/package/'), $this->equalTo(['repoType' => 'vcs', 'repoUrl' => 'localhost', 'credentials' => null]))
+            ->with($this->equalTo('/suborganizations/suborganization/packages/acme-website%2Fpackage/'), $this->equalTo(['repoType' => 'vcs', 'repoUrl' => 'localhost', 'credentials' => null]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->editVcsPackage($suborganizationName, 'acme-website/package', 'localhost'));
@@ -189,7 +189,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
-            ->with($this->equalTo('/suborganizations/suborganization/packages/acme-website/package/'), $this->equalTo(['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null]))
+            ->with($this->equalTo('/suborganizations/suborganization/packages/acme-website%2Fpackage/'), $this->equalTo(['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->editCustomPackage($suborganizationName, 'acme-website/package', '{}'));
@@ -207,7 +207,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
-            ->with($this->equalTo('/suborganizations/suborganization/packages/acme-website/package/'), $this->equalTo(['repoType' => 'artifact', 'artifactIds' => [1, 3]]))
+            ->with($this->equalTo('/suborganizations/suborganization/packages/acme-website%2Fpackage/'), $this->equalTo(['repoType' => 'artifact', 'artifactIds' => [1, 3]]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->editArtifactPackage($suborganizationName, 'acme-website/package', [1, 3]));
@@ -222,7 +222,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo('/suborganizations/suborganization/packages/acme-website/package/'))
+            ->with($this->equalTo('/suborganizations/suborganization/packages/acme-website%2Fpackage/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->remove($suborganizationName, 'acme-website/package'));
@@ -243,7 +243,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('getCollection')
-            ->with($this->equalTo('/suborganizations/suborganization/packages/acme-website/core-package/dependents/'))
+            ->with($this->equalTo('/suborganizations/suborganization/packages/acme-website%2Fcore-package/dependents/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listDependents($suborganizationName, $packageName));

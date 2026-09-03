@@ -83,7 +83,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/packages/acme-website/package/'))
+            ->with($this->equalTo('/packages/acme-website%2Fpackage/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->show('acme-website/package'));
@@ -198,7 +198,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
-            ->with($this->equalTo('/packages/acme-website/package/'), $this->equalTo(['repoType' => 'vcs', 'repoUrl' => 'localhost', 'credentials' => null]))
+            ->with($this->equalTo('/packages/acme-website%2Fpackage/'), $this->equalTo(['repoType' => 'vcs', 'repoUrl' => 'localhost', 'credentials' => null]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->editVcsPackage('acme-website/package', 'localhost'));
@@ -215,7 +215,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
-            ->with($this->equalTo('/packages/acme-website/package/'), $this->equalTo(['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null]))
+            ->with($this->equalTo('/packages/acme-website%2Fpackage/'), $this->equalTo(['repoType' => 'package', 'repoConfig' => '{}', 'credentials' => null]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->editCustomPackage('acme-website/package', '{}'));
@@ -232,7 +232,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
-            ->with($this->equalTo('/packages/acme-website/package/'), $this->equalTo(['repoType' => 'artifact', 'artifactIds' => [1, 3]]))
+            ->with($this->equalTo('/packages/acme-website%2Fpackage/'), $this->equalTo(['repoType' => 'artifact', 'artifactIds' => [1, 3]]))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->editArtifactPackage('acme-website/package', [1, 3]));
@@ -246,7 +246,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
-            ->with($this->equalTo('/packages/acme-website/package/'))
+            ->with($this->equalTo('/packages/acme-website%2Fpackage/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->remove('acme-website/package'));
@@ -273,7 +273,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('getCollection')
-            ->with($this->equalTo('/packages/composer/composer/customers/'))
+            ->with($this->equalTo('/packages/composer%2Fcomposer/customers/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listCustomers('composer/composer'));
@@ -293,7 +293,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('getCollection')
-            ->with($this->equalTo('/packages/acme-website/core-package/dependents/'))
+            ->with($this->equalTo('/packages/acme-website%2Fcore-package/dependents/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listDependents($packageName));
@@ -322,7 +322,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('getCollection')
-            ->with($this->equalTo('/packages/acme-website/core-package/security-issues/'))
+            ->with($this->equalTo('/packages/acme-website%2Fcore-package/security-issues/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->listSecurityIssues($packageName));
@@ -342,7 +342,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('/packages/acme-website/core-package/security-monitoring/'))
+            ->with($this->equalTo('/packages/acme-website%2Fcore-package/security-monitoring/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->showSecurityMonitoringConfig($packageName));
@@ -363,7 +363,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('put')
-            ->with($this->equalTo('/packages/acme-website/core-package/security-monitoring/'), $this->equalTo($editedConfig))
+            ->with($this->equalTo('/packages/acme-website%2Fcore-package/security-monitoring/'), $this->equalTo($editedConfig))
             ->willReturn($editedConfig);
 
         $this->assertSame($editedConfig, $api->editSecurityMonitoringConfig($packageName, $editedConfig));
