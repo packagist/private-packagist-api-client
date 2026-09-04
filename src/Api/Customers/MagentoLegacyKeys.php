@@ -18,8 +18,12 @@ class MagentoLegacyKeys extends AbstractApi
         return $this->getCollection(sprintf('/api/customers/%s/magento-legacy-keys/', $customerIdOrUrlName));
     }
 
-    public function create($customerIdOrUrlName, $publicKey, $privateKey)
-    {
+    public function create(
+        $customerIdOrUrlName,
+        $publicKey,
+        #[\SensitiveParameter]
+        $privateKey
+    ) {
         return $this->post(sprintf('/api/customers/%s/magento-legacy-keys/', $customerIdOrUrlName), [
             'publicKey' => $publicKey,
             'privateKey' => $privateKey,

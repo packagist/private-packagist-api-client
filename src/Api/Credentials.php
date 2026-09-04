@@ -29,8 +29,14 @@ class Credentials extends AbstractApi
         return $this->get(sprintf('/credentials/%s/', $credentialId));
     }
 
-    public function create($description, $type, $domain, $username, $credential)
-    {
+    public function create(
+        $description,
+        $type,
+        $domain,
+        $username,
+        #[\SensitiveParameter]
+        $credential
+    ) {
         return $this->post('/credentials/', [
             'description' => $description,
             'type' => $type,
@@ -44,13 +50,23 @@ class Credentials extends AbstractApi
      * @deprecated Use edit instead
      */
     #[\Deprecated('Use Credentials::edit instead', '1.11.0')]
-    public function update($credentialId, $type, $username, $credential)
-    {
+    public function update(
+        $credentialId,
+        $type,
+        $username,
+        #[\SensitiveParameter]
+        $credential
+    ) {
         return $this->edit($credentialId, $type, $username, $credential);
     }
 
-    public function edit($credentialId, $type, $username, $credential)
-    {
+    public function edit(
+        $credentialId,
+        $type,
+        $username,
+        #[\SensitiveParameter]
+        $credential
+    ) {
         return $this->put(sprintf('/credentials/%s/', $credentialId), [
             'username' => $username,
             'credential' => $credential,

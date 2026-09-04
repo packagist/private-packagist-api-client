@@ -13,6 +13,7 @@ use Http\Discovery\Psr17FactoryDiscovery;
 use PrivatePackagist\ApiClient\Client;
 use PrivatePackagist\ApiClient\Exception\RuntimeException;
 use PrivatePackagist\ApiClient\HttpClient\Message\ResponseMediator;
+use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
 abstract class AbstractApi
@@ -101,15 +102,19 @@ abstract class AbstractApi
      * @param array $headers
      * @return array|string
      */
-    protected function post($path, array $parameters = [], array $headers = [])
-    {
+    protected function post(
+        $path,
+        #[\SensitiveParameter]
+        array $parameters = [],
+        array $headers = []
+    ) {
         $response = $this->client->getHttpClient()->post(
             $path,
             array_merge($headers, [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
             ]),
-            $this->createJsonBody($parameters)
+            $this->createBodyStream($this->createJsonBody($parameters))
         );
 
         return $this->responseMediator->getContent($response);
@@ -122,7 +127,7 @@ abstract class AbstractApi
             array_merge($headers, [
                 'Accept' => 'application/json',
             ]),
-            $rawFileContent
+            $this->createBodyStream($rawFileContent)
         );
 
         return $this->responseMediator->getContent($response);
@@ -134,15 +139,19 @@ abstract class AbstractApi
      * @param array $headers
      * @return array|string
      */
-    protected function put($path, array $parameters = [], array $headers = [])
-    {
+    protected function put(
+        $path,
+        #[\SensitiveParameter]
+        array $parameters = [],
+        array $headers = []
+    ) {
         $response = $this->client->getHttpClient()->put(
             $path,
             array_merge($headers, [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
             ]),
-            $this->createJsonBody($parameters)
+            $this->createBodyStream($this->createJsonBody($parameters))
         );
 
         return $this->responseMediator->getContent($response);
@@ -154,15 +163,19 @@ abstract class AbstractApi
      * @param array $headers
      * @return array|string
      */
-    protected function delete($path, array $parameters = [], array $headers = [])
-    {
+    protected function delete(
+        $path,
+        #[\SensitiveParameter]
+        array $parameters = [],
+        array $headers = []
+    ) {
         $response = $this->client->getHttpClient()->delete(
             $path,
             array_merge($headers, [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
             ]),
-            $this->createJsonBody($parameters)
+            $this->createBodyStream($this->createJsonBody($parameters))
         );
 
         return $this->responseMediator->getContent($response);
@@ -171,9 +184,26 @@ abstract class AbstractApi
      * @param array $parameters
      * @return null|string
      */
-    protected function createJsonBody(array $parameters)
-    {
+    protected function createJsonBody(
+        #[\SensitiveParameter]
+        array $parameters
+    ) {
         return (count($parameters) === 0) ? null : json_encode($parameters);
+    }
+
+    /**
+     * @param string|null $body
+     * @return StreamInterface|null
+     */
+    private function createBodyStream(
+        #[\SensitiveParameter]
+        $body
+    ) {
+        if ($body === null || $body === '') {
+            return null;
+        }
+
+        return $this->client->getStreamFactory()->createStream($body);
     }
 
     /**

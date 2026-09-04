@@ -15,6 +15,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use PrivatePackagist\ApiClient\Client;
 use PrivatePackagist\ApiClient\Exception\RuntimeException;
+use PrivatePackagist\ApiClient\Exception\HttpTransportException;
 use PrivatePackagist\ApiClient\HttpClient\HttpPluginClientBuilder;
 use Psr\Http\Message\RequestInterface;
 
@@ -89,6 +90,70 @@ class AbstractApiTest extends TestCase
         $result = $this->api->testGetCollection('/packages/', ['limit' => AbstractApi::DEFAULT_LIMIT]);
 
         $this->assertSame(array_merge($page1, $page2), $result);
+    }
+
+    public function testRequestPayloadIsSentUnchanged()
+    {
+        $sentRequest = null;
+        $this->httpClient
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->willReturnCallback(function (RequestInterface $request) use (&$sentRequest) {
+                $sentRequest = $request;
+
+                return new Response(200, ['Content-Type' => 'application/json'], json_encode(['id' => 1]));
+            });
+
+        $credentials = new Credentials(new Client(new HttpPluginClientBuilder($this->httpClient)));
+        $credentials->create('description', 'http-basic', 'github.com', 'username', 'a-secret');
+
+        $this->assertNotNull($sentRequest);
+        $this->assertSame(
+            '{"description":"description","type":"http-basic","domain":"github.com","username":"username","credential":"a-secret"}',
+            (string) $sentRequest->getBody()
+        );
+    }
+
+    public function testRequestPayloadIsNotCapturedAsAStackTraceArgument()
+    {
+        if (!class_exists(\SensitiveParameter::class)) {
+            $this->markTestSkipped('#[\SensitiveParameter] only redacts arguments as of PHP 8.2.');
+        }
+
+        $secret = 'the-credential-that-must-not-leak';
+
+        $this->httpClient
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->willReturn(new Response(500, ['Content-Type' => 'application/json'], json_encode(['message' => 'boom'])));
+
+        $credentials = new Credentials(new Client(new HttpPluginClientBuilder($this->httpClient)));
+
+        try {
+            $credentials->create('description', 'http-basic', 'github.com', 'username', $secret);
+            $this->fail('Expected the error response to raise an exception.');
+        } catch (HttpTransportException $e) {
+            $this->assertPayloadNotInStackTrace($e, $secret);
+        }
+    }
+
+    /**
+     * @param string $secret
+     */
+    private function assertPayloadNotInStackTrace(\Throwable $exception, $secret)
+    {
+        foreach ($exception->getTrace() as $frame) {
+            $this->assertStringNotContainsString(
+                $secret,
+                print_r(isset($frame['args']) ? $frame['args'] : [], true),
+                sprintf(
+                    'Payload exposed in stack trace argument of %s%s%s().',
+                    isset($frame['class']) ? $frame['class'] : '',
+                    isset($frame['type']) ? $frame['type'] : '',
+                    $frame['function']
+                )
+            );
+        }
     }
 
     /**
