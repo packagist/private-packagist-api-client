@@ -77,7 +77,7 @@ class PackagesTest extends ApiTestCase
         $api = $this->getApiMock();
         $api->expects($this->once())
             ->method('delete')
-            ->with($this->identicalTo(sprintf('/vendor-bundles/1/packages/%s/', $packageName)))
+            ->with($this->identicalTo('/vendor-bundles/1/packages/composer%2Fcomposer/'))
             ->willReturn($expected);
 
         $this->assertSame($expected, $api->removePackage(1, $packageName));

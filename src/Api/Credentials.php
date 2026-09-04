@@ -26,7 +26,7 @@ class Credentials extends AbstractApi
 
     public function show($credentialId)
     {
-        return $this->get(sprintf('/credentials/%s/', $credentialId));
+        return $this->get($this->buildPath('/credentials/%s/', $credentialId));
     }
 
     public function create(
@@ -67,7 +67,7 @@ class Credentials extends AbstractApi
         #[\SensitiveParameter]
         $credential
     ) {
-        return $this->put(sprintf('/credentials/%s/', $credentialId), [
+        return $this->put($this->buildPath('/credentials/%s/', $credentialId), [
             'username' => $username,
             'credential' => $credential,
             'type' => $type,
@@ -76,6 +76,6 @@ class Credentials extends AbstractApi
 
     public function remove($credentialId)
     {
-        return $this->delete(sprintf('/credentials/%s/', $credentialId));
+        return $this->delete($this->buildPath('/credentials/%s/', $credentialId));
     }
 }

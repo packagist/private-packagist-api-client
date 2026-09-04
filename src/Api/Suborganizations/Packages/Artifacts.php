@@ -15,7 +15,7 @@ class Artifacts extends AbstractApi
 {
     public function create($suborganizationName, $file, $contentType, $fileName)
     {
-        return $this->postFile(sprintf('/suborganizations/%s/packages/artifacts/', $suborganizationName), $file, array_filter([
+        return $this->postFile($this->buildPath('/suborganizations/%s/packages/artifacts/', $suborganizationName), $file, array_filter([
             'Content-Type' => $contentType,
             'X-FILENAME' => $fileName
         ]));
@@ -23,7 +23,7 @@ class Artifacts extends AbstractApi
 
     public function add($suborganizationName, $packageIdOrName, $file, $contentType, $fileName)
     {
-        return $this->postFile(sprintf('/suborganizations/%s/packages/%s/artifacts/', $suborganizationName, $packageIdOrName), $file, array_filter([
+        return $this->postFile($this->buildPath('/suborganizations/%s/packages/%s/artifacts/', $suborganizationName, $packageIdOrName), $file, array_filter([
             'Content-Type' => $contentType,
             'X-FILENAME' => $fileName
         ]));
@@ -31,11 +31,11 @@ class Artifacts extends AbstractApi
 
     public function show($suborganizationName, $artifactId)
     {
-        return $this->get(sprintf('/suborganizations/%s/packages/artifacts/%s/', $suborganizationName, $artifactId));
+        return $this->get($this->buildPath('/suborganizations/%s/packages/artifacts/%s/', $suborganizationName, $artifactId));
     }
 
     public function showPackageArtifacts($suborganizationName, $packageIdOrName)
     {
-        return $this->getCollection(sprintf('/suborganizations/%s/packages/%s/artifacts/', $suborganizationName, $packageIdOrName));
+        return $this->getCollection($this->buildPath('/suborganizations/%s/packages/%s/artifacts/', $suborganizationName, $packageIdOrName));
     }
 }

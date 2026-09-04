@@ -15,7 +15,7 @@ class VendorBundles extends AbstractApi
 {
     public function listVendorBundles($customerIdOrUrlName)
     {
-        return $this->getCollection(sprintf('/customers/%s/vendor-bundles/', $customerIdOrUrlName));
+        return $this->getCollection($this->buildPath('/customers/%s/vendor-bundles/', $customerIdOrUrlName));
     }
 
     /**
@@ -25,7 +25,7 @@ class VendorBundles extends AbstractApi
      */
     public function addOrEditVendorBundle($customerIdOrUrlName, $vendorBundleId, $expirationDate = null)
     {
-        return $this->post(sprintf('/customers/%s/vendor-bundles/', $customerIdOrUrlName), [
+        return $this->post($this->buildPath('/customers/%s/vendor-bundles/', $customerIdOrUrlName), [
             'vendorBundleId' => $vendorBundleId,
             'expirationDate' => $expirationDate,
         ]);
@@ -37,6 +37,6 @@ class VendorBundles extends AbstractApi
      */
     public function removeVendorBundle($customerIdOrUrlName, $vendorBundleId)
     {
-        return $this->delete(sprintf('/customers/%s/vendor-bundles/%s/', $customerIdOrUrlName, $vendorBundleId));
+        return $this->delete($this->buildPath('/customers/%s/vendor-bundles/%s/', $customerIdOrUrlName, $vendorBundleId));
     }
 }

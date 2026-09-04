@@ -25,7 +25,7 @@ class VendorBundles extends AbstractApi
      */
     public function show($vendorBundleId)
     {
-        return $this->get(sprintf('/vendor-bundles/%s/', $vendorBundleId));
+        return $this->get($this->buildPath('/vendor-bundles/%s/', $vendorBundleId));
     }
 
     /**
@@ -53,7 +53,7 @@ class VendorBundles extends AbstractApi
      */
     public function edit($vendorBundleId, array $bundle)
     {
-        return $this->put(sprintf('/vendor-bundles/%s/', $vendorBundleId), $bundle);
+        return $this->put($this->buildPath('/vendor-bundles/%s/', $vendorBundleId), $bundle);
     }
 
     /**
@@ -61,7 +61,7 @@ class VendorBundles extends AbstractApi
      */
     public function remove($vendorBundleId)
     {
-        return $this->delete(sprintf('/vendor-bundles/%s/', $vendorBundleId));
+        return $this->delete($this->buildPath('/vendor-bundles/%s/', $vendorBundleId));
     }
 
     public function packages(): \PrivatePackagist\ApiClient\Api\VendorBundles\Packages

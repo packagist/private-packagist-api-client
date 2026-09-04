@@ -20,7 +20,7 @@ class Suborganizations extends AbstractApi
 
     public function show($suborganizationName)
     {
-        return $this->get(sprintf('/suborganizations/%s/', $suborganizationName));
+        return $this->get($this->buildPath('/suborganizations/%s/', $suborganizationName));
     }
 
     public function create($name)
@@ -30,12 +30,12 @@ class Suborganizations extends AbstractApi
 
     public function remove($suborganizationName)
     {
-        return $this->delete(sprintf('/suborganizations/%s/', $suborganizationName));
+        return $this->delete($this->buildPath('/suborganizations/%s/', $suborganizationName));
     }
 
     public function listTeams($suborganizationName)
     {
-        return $this->getCollection(sprintf('/suborganizations/%s/teams/', $suborganizationName));
+        return $this->getCollection($this->buildPath('/suborganizations/%s/teams/', $suborganizationName));
     }
 
     public function addOrEditTeams($suborganizationName, array $teams)
@@ -50,27 +50,27 @@ class Suborganizations extends AbstractApi
             }
         }
 
-        return $this->post(sprintf('/suborganizations/%s/teams/', $suborganizationName), $teams);
+        return $this->post($this->buildPath('/suborganizations/%s/teams/', $suborganizationName), $teams);
     }
 
     public function removeTeam($suborganizationName, $teamId)
     {
-        return $this->delete(sprintf('/suborganizations/%s/teams/%s/', $suborganizationName, $teamId));
+        return $this->delete($this->buildPath('/suborganizations/%s/teams/%s/', $suborganizationName, $teamId));
     }
 
     public function listTokens($suborganizationName)
     {
-        return $this->getCollection(sprintf('/suborganizations/%s/tokens/', $suborganizationName));
+        return $this->getCollection($this->buildPath('/suborganizations/%s/tokens/', $suborganizationName));
     }
 
     public function createToken($suborganizationName, array $tokenData)
     {
-        return $this->post(sprintf('/suborganizations/%s/tokens/', $suborganizationName), $tokenData);
+        return $this->post($this->buildPath('/suborganizations/%s/tokens/', $suborganizationName), $tokenData);
     }
 
     public function removeToken($suborganizationName, $tokenId)
     {
-        return $this->delete(sprintf('/suborganizations/%s/tokens/%s/', $suborganizationName, $tokenId));
+        return $this->delete($this->buildPath('/suborganizations/%s/tokens/%s/', $suborganizationName, $tokenId));
     }
 
     public function regenerateToken($suborganizationName, $tokenId, array $confirmation)
@@ -79,7 +79,7 @@ class Suborganizations extends AbstractApi
             throw new InvalidArgumentException('Confirmation is required to regenerate the Composer repository token.');
         }
 
-        return $this->post(sprintf('/suborganizations/%s/tokens/%s/regenerate', $suborganizationName, $tokenId), $confirmation);
+        return $this->post($this->buildPath('/suborganizations/%s/tokens/%s/regenerate', $suborganizationName, $tokenId), $confirmation);
     }
 
     public function packages()

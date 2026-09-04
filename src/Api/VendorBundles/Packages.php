@@ -20,7 +20,7 @@ class Packages extends AbstractApi
      */
     public function listPackages($vendorBundleIds)
     {
-        return $this->getCollection(sprintf('/vendor-bundles/%s/packages/', $vendorBundleIds));
+        return $this->getCollection($this->buildPath('/vendor-bundles/%s/packages/', $vendorBundleIds));
     }
 
     /**
@@ -36,7 +36,7 @@ class Packages extends AbstractApi
             }
         }
 
-        return $this->post(sprintf('/vendor-bundles/%s/packages/', $vendorBundleId), $packages);
+        return $this->post($this->buildPath('/vendor-bundles/%s/packages/', $vendorBundleId), $packages);
     }
 
     /**
@@ -45,6 +45,6 @@ class Packages extends AbstractApi
      */
     public function removePackage($vendorBundleId, $packageIdOrName)
     {
-        return $this->delete(sprintf('/vendor-bundles/%s/packages/%s/', $vendorBundleId, $packageIdOrName));
+        return $this->delete($this->buildPath('/vendor-bundles/%s/packages/%s/', $vendorBundleId, $packageIdOrName));
     }
 }

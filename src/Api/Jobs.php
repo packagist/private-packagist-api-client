@@ -13,6 +13,6 @@ class Jobs extends AbstractApi
 {
     public function show($jobId)
     {
-        return $this->get(sprintf('/jobs/%s', $jobId));
+        return $this->get($this->buildPath('/jobs/%s', $jobId));
     }
 }

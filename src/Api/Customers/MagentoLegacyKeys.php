@@ -15,7 +15,7 @@ class MagentoLegacyKeys extends AbstractApi
 {
     public function all($customerIdOrUrlName)
     {
-        return $this->getCollection(sprintf('/api/customers/%s/magento-legacy-keys/', $customerIdOrUrlName));
+        return $this->getCollection($this->buildPath('/api/customers/%s/magento-legacy-keys/', $customerIdOrUrlName));
     }
 
     public function create(
@@ -24,7 +24,7 @@ class MagentoLegacyKeys extends AbstractApi
         #[\SensitiveParameter]
         $privateKey
     ) {
-        return $this->post(sprintf('/api/customers/%s/magento-legacy-keys/', $customerIdOrUrlName), [
+        return $this->post($this->buildPath('/api/customers/%s/magento-legacy-keys/', $customerIdOrUrlName), [
             'publicKey' => $publicKey,
             'privateKey' => $privateKey,
         ]);
@@ -32,6 +32,6 @@ class MagentoLegacyKeys extends AbstractApi
 
     public function remove($customerIdOrUrlName, $publicKey)
     {
-        return $this->delete(sprintf('/api/customers/%s/magento-legacy-keys/%s/', $customerIdOrUrlName, $publicKey));
+        return $this->delete($this->buildPath('/api/customers/%s/magento-legacy-keys/%s/', $customerIdOrUrlName, $publicKey));
     }
 }

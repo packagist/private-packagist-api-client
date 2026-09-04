@@ -23,7 +23,7 @@ class Subrepositories extends AbstractApi
 
     public function show($subrepositoryName)
     {
-        return $this->get(sprintf('/subrepositories/%s/', $subrepositoryName));
+        return $this->get($this->buildPath('/subrepositories/%s/', $subrepositoryName));
     }
 
     public function create($name)
@@ -33,12 +33,12 @@ class Subrepositories extends AbstractApi
 
     public function remove($subrepositoryName)
     {
-        return $this->delete(sprintf('/subrepositories/%s/', $subrepositoryName));
+        return $this->delete($this->buildPath('/subrepositories/%s/', $subrepositoryName));
     }
 
     public function listTeams($subrepositoryName)
     {
-        return $this->getCollection(sprintf('/subrepositories/%s/teams/', $subrepositoryName));
+        return $this->getCollection($this->buildPath('/subrepositories/%s/teams/', $subrepositoryName));
     }
 
     /**
@@ -62,12 +62,12 @@ class Subrepositories extends AbstractApi
             }
         }
 
-        return $this->post(sprintf('/subrepositories/%s/teams/', $subrepositoryName), $teams);
+        return $this->post($this->buildPath('/subrepositories/%s/teams/', $subrepositoryName), $teams);
     }
 
     public function removeTeam($subrepositoryName, $teamId)
     {
-        return $this->delete(sprintf('/subrepositories/%s/teams/%s/', $subrepositoryName, $teamId));
+        return $this->delete($this->buildPath('/subrepositories/%s/teams/%s/', $subrepositoryName, $teamId));
     }
 
     /**
@@ -81,17 +81,17 @@ class Subrepositories extends AbstractApi
 
     public function listTokens($subrepositoryName)
     {
-        return $this->getCollection(sprintf('/subrepositories/%s/tokens/', $subrepositoryName));
+        return $this->getCollection($this->buildPath('/subrepositories/%s/tokens/', $subrepositoryName));
     }
 
     public function createToken($subrepositoryName, array $tokenData)
     {
-        return $this->post(sprintf('/subrepositories/%s/tokens/', $subrepositoryName), $tokenData);
+        return $this->post($this->buildPath('/subrepositories/%s/tokens/', $subrepositoryName), $tokenData);
     }
 
     public function removeToken($subrepositoryName, $tokenId)
     {
-        return $this->delete(sprintf('/subrepositories/%s/tokens/%s/', $subrepositoryName, $tokenId));
+        return $this->delete($this->buildPath('/subrepositories/%s/tokens/%s/', $subrepositoryName, $tokenId));
     }
 
     public function regenerateToken($subrepositoryName, $tokenId, array $confirmation)
@@ -100,7 +100,7 @@ class Subrepositories extends AbstractApi
             throw new InvalidArgumentException('Confirmation is required to regenerate the Composer repository token.');
         }
 
-        return $this->post(sprintf('/subrepositories/%s/tokens/%s/regenerate', $subrepositoryName, $tokenId), $confirmation);
+        return $this->post($this->buildPath('/subrepositories/%s/tokens/%s/regenerate', $subrepositoryName, $tokenId), $confirmation);
     }
 
     public function packages()

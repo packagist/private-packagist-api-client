@@ -8,3 +8,13 @@ parameters:
 
     ignoreErrors:
         - '#Attribute class Deprecated does not exist#'
+        # The proxy exists to hand a path straight through to the protected method under test.
+        -
+            message: '#must be a literal string or built with \$this->buildPath\(\)#'
+            path: tests/Api/AbstractApiTest.php
+
+services:
+    -
+        class: PrivatePackagist\ApiClient\PHPStan\RequestPathRule
+        tags:
+            - phpstan.rules.rule
